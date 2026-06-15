@@ -1,0 +1,205 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+     viewBox="0 0 810 1440" width="810" height="1440">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=Space+Mono:wght@400;700&amp;display=swap');
+    </style>
+
+    <!-- Drop shadow for cards -->
+    <filter id="card-shadow" x="-6%" y="-4%" width="114%" height="116%">
+      <feDropShadow dx="0" dy="4" stdDeviation="10" flood-color="#101C3F" flood-opacity="0.10"/>
+    </filter>
+  </defs>
+
+  <!-- ─────────────────────────────────────────
+       BACKGROUND
+  ───────────────────────────────────────── -->
+  <rect width="810" height="1440" fill="#F5F7FA"/>
+
+  <!-- 3D cluster asset — bottom right bleed, clipped -->
+  <!-- The source SVG viewBox is 0 0 1920 1080 for the light version (left panel, x:53 y:112 w:1920 h:1080) -->
+  <!-- We want it to appear ~300px wide, bleeding off the right edge, sitting bottom-right -->
+  <clipPath id="cluster-clip">
+    <!-- Allow bottom-right quadrant only -->
+    <rect x="380" y="980" width="430" height="460"/>
+  </clipPath>
+  <g clip-path="url(#cluster-clip)" opacity="0.72">
+    <!-- Scale + position the left panel of the source asset.
+         Source light panel: x=53,y=112 w=1920,h=1080 within a 4186×1288 canvas.
+         We want the cluster (centred around x~1000,y~640 in source) to land bottom-right.
+         Transform: translate to place it, then scale down. -->
+    <g transform="translate(810, 1440) scale(0.28) translate(-5400, -3800)">
+      <!-- Outer blob -->
+      <path d="M588.22 469.49C588.22 469.49 427.86 498.84 419.27 629.53C413.3 720.39 506.92 758.97 545.1 771.29C545.1 771.29 479.78 1008.35 801.32 1047.59C1032.33 1075.79 1132.53 950.84 1132.53 950.84C1132.53 950.84 1271.07 1002.44 1356.45 947.8C1441.83 893.15 1429.88 816.03 1429.88 816.03C1429.88 816.03 1557.95 778.74 1593.82 684.82C1629.68 590.9 1522.1 537.64 1464.04 513.91C1464.04 513.91 1527.37 350.22 1337.67 275.82C1074.92 172.78 890.06 332.97 890.06 332.97C890.06 332.97 804.64 274.63 679.73 326.82C567.44 373.74 588.22 469.49 588.22 469.49Z" fill="#F5F7FA" stroke="#1C1E23" stroke-width="2" stroke-miterlimit="10"/>
+      <!-- Face highlights -->
+      <path d="M633.28 461.5L806.76 492.43L869.11 358.83C869.11 358.83 792.94 312.83 706.39 350.69C615.03 390.65 633.29 461.5 633.29 461.5H633.28Z" fill="none" stroke="#1C1E23" stroke-width="2" stroke-miterlimit="10"/>
+      <path d="M641.06 462.89C641.06 462.89 693.6 350.53 851.13 397.34" fill="none" stroke="#1C1E23" stroke-width="2" stroke-miterlimit="10"/>
+      <path d="M843.07 594.67L805.37 525.73L611.69 492.43C611.69 492.43 448.81 532.02 463.01 640.25C474.23 725.77 569.09 741.68 569.09 741.68L843.07 594.67Z" fill="none" stroke="#1C1E23" stroke-width="2" stroke-miterlimit="10"/>
+      <path d="M466.7 657.7C466.7 657.7 502.73 551.07 625.89 540.08L810.81 572.17L827.62 602.97" fill="none" stroke="#1C1E23" stroke-width="2" stroke-miterlimit="10"/>
+      <path d="M891.07 586.15L847.98 508.76L914.93 355.21C914.93 355.21 1055.65 252.63 1212.01 276.09C1368.37 299.54 1461.1 404.09 1422.89 509.07L1137.32 664.73L891.08 586.16Z" fill="none" stroke="#1C1E23" stroke-width="2" stroke-miterlimit="10"/>
+      <path d="M593.28 769.55L869.11 613.19L1121.95 701.15L1169.57 769.54L1108.14 925.9C1108.14 925.9 930.44 1059.5 739.58 996.64C585.5 945.89 568.7 841.02 593.27 769.55Z" fill="none" stroke="#1C1E23" stroke-width="2" stroke-miterlimit="10"/>
+      <path d="M1209.77 755.03L1169.56 694.33L1443.19 542.83C1443.19 542.83 1595.97 597.89 1542.59 694.33C1489.2 790.77 1402.99 789.65 1402.99 789.65L1209.78 755.03Z" fill="none" stroke="#1C1E23" stroke-width="2" stroke-miterlimit="10"/>
+      <path d="M1209.77 789.65L1381.76 819.63L1386.23 862.24C1386.23 862.24 1324.13 994.43 1156.24 927.35L1209.77 789.64Z" fill="none" stroke="#1C1E23" stroke-width="2" stroke-miterlimit="10"/>
+      <!-- Shadow fills for depth -->
+      <path d="M641.46 463.97C641.46 463.97 694 351.61 851.53 398.42L880.72 352.5C880.72 352.5 779.51 309.07 712.88 340.18C646.25 371.29 589.96 411.94 619.79 451.18C626.89 460.51 626.89 468.65 626.89 468.65L641.46 463.97Z" fill="#E6EBF2"/>
+      <path d="M469.23 659.01C469.23 659.01 505.26 552.38 628.42 541.39L813.34 573.48L830.15 604.28L863.19 587.22L809.28 493.75L660.08 485.33L524.68 493.75L442.01 636.54L469.23 659.01Z" fill="#E6EBF2"/>
+      <path d="M862.76 531.54L921.62 400.4C921.62 400.4 1041.88 306.9 1198.51 321.52C1340.02 334.72 1409.42 401.41 1433.56 462.88L1462.31 325.76L1271.9 214L931.76 236.28L767.18 485.37L862.76 531.54Z" fill="#E6EBF2"/>
+      <path d="M587.34 856.58L602.07 808.08L875.68 663.19L1125.99 744.61L1158.43 799.09L1186.38 707.26L1136.99 634.59L870.09 551.73L594.91 696.42L557.26 756.01L587.34 856.58Z" fill="#E6EBF2"/>
+      <path d="M1189.12 723.85L1446.48 585.9C1446.48 585.9 1524.01 609.27 1553.09 664.72L1574.03 617.05L1502.36 548.94L1435.27 525.72L1169.57 670.53L1156.24 680.77L1180.03 728.15L1189.12 723.85Z" fill="#E6EBF2"/>
+      <path d="M1169.82 931.75L1211.62 837.69L1386.49 864.22L1392.32 863.44L1392.1 804.64L1196.37 771.26L1151.86 861.28L1144.86 936.1L1165.46 939.81L1169.82 931.75Z" fill="#E6EBF2"/>
+    </g>
+  </g>
+
+  <!-- ─────────────────────────────────────────
+       HEADLINE BLOCK  (no coloured hero band)
+  ───────────────────────────────────────── -->
+  <!-- Big bold headline — dark ink, directly on grey background -->
+  <text x="48" y="102" font-family="'Inter', Arial, sans-serif" font-weight="900"
+        font-size="72" fill="#1C1E23" letter-spacing="-1">Your Title</text>
+  <text x="48" y="182" font-family="'Inter', Arial, sans-serif" font-weight="900"
+        font-size="72" fill="#1C1E23" letter-spacing="-1">Goes Here</text>
+
+  <!-- Subtitle / intro body -->
+  <text x="48" y="228" font-family="'Inter', Arial, sans-serif" font-weight="400"
+        font-size="24" fill="#343741">
+    Your subtitle sentence goes here. Make it
+  </text>
+  <text x="48" y="258" font-family="'Inter', Arial, sans-serif" font-weight="400"
+        font-size="24" fill="#343741">
+    <tspan font-weight="700" fill="#1C1E23">bold for the key idea</tspan>
+    <tspan> and regular for context.</tspan>
+  </text>
+
+  <!-- ─────────────────────────────────────────
+       CARD 1  —  Teal tab
+  ───────────────────────────────────────── -->
+  <g filter="url(#card-shadow)">
+    <rect x="48" y="292" width="272" height="38" rx="6" fill="#FFFFFF"/>
+    <rect x="48" y="292" width="6" height="38" rx="3" fill="#48EFCF"/>
+    <rect x="48" y="316" width="714" height="318" rx="16" fill="#FFFFFF" stroke="#101C3F" stroke-width="1.5"/>
+  </g>
+  <text x="66" y="317" font-family="'Space Mono', monospace" font-weight="700"
+        font-size="14" fill="#1C1E23" letter-spacing="1.5">SECTION ONE · SUBTITLE</text>
+
+  <!-- Card content -->
+  <text x="72" y="358" font-family="'Inter', Arial, sans-serif" font-weight="700"
+        font-size="20" fill="#1C1E23">Lead sentence in bold sets the context.</text>
+  <text x="72" y="358" font-family="'Inter', Arial, sans-serif" font-weight="400"
+        font-size="20" fill="#343741" dy="0"/>
+
+  <!-- Bullets (left column ~55%) -->
+  <text x="72" y="396" font-family="'Inter', Arial, sans-serif" font-size="18" fill="#343741">
+    <tspan>• First bullet point explaining a concept</tspan>
+  </text>
+  <text x="72" y="422" font-family="'Inter', Arial, sans-serif" font-size="18" fill="#343741">
+    <tspan>  or key behaviour here.</tspan>
+  </text>
+  <text x="72" y="452" font-family="'Inter', Arial, sans-serif" font-size="18" fill="#343741">
+    • Second point with supporting detail.
+  </text>
+  <text x="72" y="480" font-family="'Inter', Arial, sans-serif" font-size="18" fill="#343741">
+    • Third point that rounds out the section.
+  </text>
+  <!-- Inline code tag -->
+  <rect x="72" y="500" width="186" height="30" rx="5" fill="#F5F7FA" stroke="#D3DAE6" stroke-width="1"/>
+  <text x="84" y="520" font-family="'Space Mono', monospace" font-size="14" fill="#343741">some_field_name</text>
+
+  <!-- Code block (right column ~45%) — white BG, bordered -->
+  <rect x="398" y="338" width="344" height="278" rx="10"
+        fill="#FAFBFD" stroke="#D3DAE6" stroke-width="1.2"/>
+  <text x="418" y="370" font-family="'Space Mono', monospace" font-size="14" fill="#007C6E">POST /my-index/_doc</text>
+  <text x="418" y="394" font-family="'Space Mono', monospace" font-size="14" fill="#343741">{</text>
+  <text x="418" y="418" font-family="'Space Mono', monospace" font-size="14" fill="#0B64DD">  "title": <tspan fill="#00875A">"Hello"</tspan><tspan fill="#6A717D">,  // → text</tspan></text>
+  <text x="418" y="442" font-family="'Space Mono', monospace" font-size="14" fill="#0B64DD">  "views": <tspan fill="#00875A">42</tspan><tspan fill="#6A717D">,     // → long</tspan></text>
+  <text x="418" y="466" font-family="'Space Mono', monospace" font-size="14" fill="#0B64DD">  "created": <tspan fill="#00875A">"2026-05-22"</tspan></text>
+  <text x="418" y="490" font-family="'Space Mono', monospace" font-size="14" fill="#6A717D">           <tspan>// → date</tspan></text>
+  <text x="418" y="514" font-family="'Space Mono', monospace" font-size="14" fill="#343741">}</text>
+
+  <!-- ─────────────────────────────────────────
+       CARD 2  —  Elastic Blue tab
+  ───────────────────────────────────────── -->
+  <g filter="url(#card-shadow)">
+    <rect x="48" y="660" width="390" height="38" rx="6" fill="#FFFFFF"/>
+    <rect x="48" y="660" width="6" height="38" rx="3" fill="#0B64DD"/>
+    <rect x="48" y="684" width="714" height="318" rx="16" fill="#FFFFFF" stroke="#101C3F" stroke-width="1.5"/>
+  </g>
+  <text x="66" y="685" font-family="'Space Mono', monospace" font-weight="700"
+        font-size="14" fill="#1C1E23" letter-spacing="1.5">SECTION TWO · RECOMMENDED</text>
+
+  <text x="72" y="726" font-family="'Inter', Arial, sans-serif" font-weight="700"
+        font-size="20" fill="#1C1E23">Second card lead sentence in bold.</text>
+
+  <text x="72" y="764" font-family="'Inter', Arial, sans-serif" font-size="18" fill="#343741">
+    • First bullet point explaining a key idea
+  </text>
+  <text x="72" y="790" font-family="'Inter', Arial, sans-serif" font-size="18" fill="#343741">
+    <tspan>  or concept for this section.</tspan>
+  </text>
+  <text x="72" y="820" font-family="'Inter', Arial, sans-serif" font-size="18" fill="#343741">
+    • Second point with additional detail.
+  </text>
+  <text x="72" y="848" font-family="'Inter', Arial, sans-serif" font-size="18" fill="#343741">
+    • Third point finishing the section.
+  </text>
+  <rect x="72" y="868" width="164" height="30" rx="5" fill="#F5F7FA" stroke="#D3DAE6" stroke-width="1"/>
+  <text x="84" y="888" font-family="'Space Mono', monospace" font-size="14" fill="#343741">properties</text>
+
+  <rect x="398" y="706" width="344" height="278" rx="10"
+        fill="#FAFBFD" stroke="#D3DAE6" stroke-width="1.2"/>
+  <text x="418" y="738" font-family="'Space Mono', monospace" font-size="14" fill="#007C6E">PUT /my-index</text>
+  <text x="418" y="762" font-family="'Space Mono', monospace" font-size="14" fill="#343741">{</text>
+  <text x="418" y="786" font-family="'Space Mono', monospace" font-size="14" fill="#0B64DD">  "mappings": {</text>
+  <text x="418" y="810" font-family="'Space Mono', monospace" font-size="14" fill="#343741">    "properties": {</text>
+  <text x="418" y="834" font-family="'Space Mono', monospace" font-size="14" fill="#0B64DD">      "title": <tspan fill="#343741">{ </tspan><tspan fill="#00875A">"type": "text"</tspan><tspan fill="#343741"> }</tspan></text>
+  <text x="418" y="858" font-family="'Space Mono', monospace" font-size="14" fill="#0B64DD">      "loc": <tspan fill="#343741">{ </tspan><tspan fill="#00875A">"type": "geo_point"</tspan><tspan fill="#343741"> }</tspan></text>
+  <text x="418" y="882" font-family="'Space Mono', monospace" font-size="14" fill="#343741">    }</text>
+  <text x="418" y="906" font-family="'Space Mono', monospace" font-size="14" fill="#343741">  }</text>
+  <text x="418" y="930" font-family="'Space Mono', monospace" font-size="14" fill="#343741">}</text>
+
+  <!-- ─────────────────────────────────────────
+       CARD 3  —  Pink tab
+  ───────────────────────────────────────── -->
+  <g filter="url(#card-shadow)">
+    <rect x="48" y="1028" width="298" height="38" rx="6" fill="#FFFFFF"/>
+    <rect x="48" y="1028" width="6" height="38" rx="3" fill="#F04E98"/>
+    <rect x="48" y="1052" width="714" height="318" rx="16" fill="#FFFFFF" stroke="#101C3F" stroke-width="1.5"/>
+  </g>
+  <text x="66" y="1053" font-family="'Space Mono', monospace" font-weight="700"
+        font-size="14" fill="#1C1E23" letter-spacing="1.5">SECTION THREE · SCHEMA</text>
+
+  <text x="72" y="1094" font-family="'Inter', Arial, sans-serif" font-weight="700"
+        font-size="20" fill="#1C1E23">Third card bold lead sentence here.</text>
+
+  <text x="72" y="1132" font-family="'Inter', Arial, sans-serif" font-size="18" fill="#343741">
+    • First bullet point for the third section.
+  </text>
+  <text x="72" y="1158" font-family="'Inter', Arial, sans-serif" font-size="18" fill="#343741">
+    • Second point with more supporting context
+  </text>
+  <text x="72" y="1184" font-family="'Inter', Arial, sans-serif" font-size="18" fill="#343741">
+    <tspan>  and a second line if needed.</tspan>
+  </text>
+  <text x="72" y="1214" font-family="'Inter', Arial, sans-serif" font-size="18" fill="#343741">
+    • Third point wrapping up.
+  </text>
+  <rect x="72" y="1234" width="132" height="30" rx="5" fill="#F5F7FA" stroke="#D3DAE6" stroke-width="1"/>
+  <text x="84" y="1254" font-family="'Space Mono', monospace" font-size="14" fill="#343741">emit(value)</text>
+
+  <rect x="398" y="1074" width="344" height="278" rx="10"
+        fill="#FAFBFD" stroke="#D3DAE6" stroke-width="1.2"/>
+  <text x="418" y="1106" font-family="'Space Mono', monospace" font-size="14" fill="#007C6E">PUT /my-index/_mapping</text>
+  <text x="418" y="1130" font-family="'Space Mono', monospace" font-size="14" fill="#343741">{</text>
+  <text x="418" y="1154" font-family="'Space Mono', monospace" font-size="14" fill="#0B64DD">  "runtime": {</text>
+  <text x="418" y="1178" font-family="'Space Mono', monospace" font-size="14" fill="#343741">    "day_of_week": {</text>
+  <text x="418" y="1202" font-family="'Space Mono', monospace" font-size="14" fill="#0B64DD">      "type": <tspan fill="#00875A">"keyword"</tspan><tspan fill="#343741">,</tspan></text>
+  <text x="418" y="1226" font-family="'Space Mono', monospace" font-size="14" fill="#0B64DD">      "script": <tspan fill="#00875A">"emit(...)"</tspan></text>
+  <text x="418" y="1250" font-family="'Space Mono', monospace" font-size="14" fill="#343741">    }</text>
+  <text x="418" y="1274" font-family="'Space Mono', monospace" font-size="14" fill="#343741">  }</text>
+  <text x="418" y="1298" font-family="'Space Mono', monospace" font-size="14" fill="#343741">}</text>
+
+  <!-- ─────────────────────────────────────────
+       FOOTER
+  ───────────────────────────────────────── -->
+  <text x="48" y="1412" font-family="'Space Mono', monospace" font-weight="400"
+        font-size="13" fill="#6A717D" letter-spacing="1.8">SOURCE · elastic.co/search-labs/blog/your-article-slug</text>
+</svg>
