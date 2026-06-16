@@ -93,12 +93,21 @@ Use `<tspan>` elements inside a single `<text>` for syntax highlighting:
 
 
 ### Section Accent Colors
-Each card section has a colored accent strip at the top of its header tab. The color communicates the "level" of the concept:
-- **Green** (`#36B37E`) = easy/starter
-- **Blue** (`#0B64DD`) = recommended/production
-- **Pink** (`#E0558A`) = advanced/specialized
+Each card section has a colored accent strip at the top of its header tab. Use a **different color for each card** from the Elastic brand palette to add visual variety. There is no semantic meaning to the color assignments — they are purely decorative highlights.
 
-All three tabs use the same structural pattern: a white rounded-rect tab with a thin (5px) colored strip across the top. Do **not** add extra decorative ribbons or dual-color effects unless the reference explicitly shows them.
+**Preferred accent palette** (from Elastic branding):
+| Color | Hex |
+|-------|-----|
+| Yellow | `#FEC514` |
+| Teal | `#48EFCF` |
+| Coral | `#FF957D` |
+| Pink | `#F04E98` |
+| Blue | `#0B64DD` |
+| Navy | `#153385` |
+
+If more than 6 cards are needed, these additional colors can be used: `#101C3F`, `#343741`, `#36B37E`, `#E0558A`.
+
+All tabs use the same structural pattern: a white rounded-rect tab with a thin (5px) colored strip across the top. Do **not** add extra decorative ribbons or dual-color effects unless the reference explicitly shows them.
 
 ### Layout Grid
 - **Canvas**: 860px wide, height flexible (size to fit content — no fixed aspect ratio required). Typical range: 1100–1300px tall depending on number of sections.
@@ -163,7 +172,13 @@ This applies to all inline code in prose: `dynamic_templates`, `properties`, `em
 ### Background Decorations
 - **Grid pattern**: 40px squares, very light (`#CBD2DC`, opacity 0.5, stroke-width 0.5)
 - **Radiating lines**: bottom-right corner, emanating from corner point, opacity 0.12
-- **Cluster watermark**: the Elastic 3D cluster SVG path, opacity 0.05, scaled ~0.26, positioned in bottom-right
+- **Cluster watermark**: Use `assets/elastic-cluster-3d-lightonly.svg` — include the full SVG content (all paths, masks, shading) at **large scale (~0.8) and full opacity** (`opacity="1"`). The cluster's own colors (`#e6ebf2` fills, `#1c1e23` strokes, `#f5f7fa` panels) are already light/subtle, so no additional opacity reduction is needed. Position it **behind all cards** (immediately after the background rect/grid in SVG layer order), clipped with a `<clipPath>` to the card area (e.g. starting from y≈300). It should be large and bold, spanning most of the lower canvas and overflowing the right edge — see `references/example.svg` for the layering approach.
+
+### Elastic Logo
+- Place the full-color horizontal Elastic logo (`assets/logo-elastic-horizontal-color.svg`) in the **bottom-right footer area**, in line with the SOURCE text.
+- Scale: `scale(0.16)` — renders at about 82×48px.
+- Position: inside the footer `<g>` group, at approximately `translate(740, -2)` relative to the footer group origin.
+- The logo SVG contains all brand colors (yellow, teal, pink, blue, green) and the "elastic" wordmark — include all paths directly.
 
 ---
 
@@ -193,6 +208,44 @@ Alternatively, use `filterUnits="objectBoundingBox"` with percentage-based regio
 **Problem**: Section header text with `letter-spacing: 2.2` is wider than expected, overflowing the tab.
 **Solution**: Estimate ~1.3× the normal text width when using letter-spacing values > 1. Test and measure.
 
+### 6. Two-column grid layouts
+**Problem**: Adapting the single-column card pattern from `example.svg` to a 2-column grid layout.
+**Solution**: Use `<g transform="translate(x, y)">` for each card's position. For an 860px canvas:
+- Left column: `translate(36, y)`
+- Right column: `translate(440, y)`
+- Card width: 384px (= (860 - 72 - 20) / 2, where 72 = margins, 20 = gap)
+- Row gap: ~38–42px between card rows
+
+All coordinates inside a card group are **local** (relative to the group origin), making it easy to copy/adjust cards without recalculating absolute positions.
+
+### 7. Diagram areas inside cards
+**Problem**: Reference images contain vector diagrams (coordinate plots, arrows) alongside text.
+**Solution**: Use a `<rect>` with subtle fill (`#F8F9FC`) and border (`#D3DAE6`) as the diagram container. Size ~150×138px on the left side of the card. Draw axes with light strokes, vectors with colored lines + circles for points, and dashed lines for projections. Keep diagrams schematic — exact geometric accuracy isn't needed; visual clarity is.
+
+### 8. Formula/math badges
+**Problem**: Formulas with subscripts, special characters (Σ, √, ‖, ², ÷) need careful rendering.
+**Solution**: Use Unicode characters directly in `<tspan>` elements: `Σ`, `√`, `²`, `÷`, `‖`, `·`. Subscripts like `ᵢ` (Unicode subscript i) render correctly in monospace fonts. Avoid trying to position subscripts manually with font-size changes — use Unicode subscript characters when available.
+
+### 9. Card dead space — keep cards tight
+**Problem**: Cards end up with large gaps between the last content (e.g. formula badge at y≈154) and the footer separator line (e.g. at y≈210).
+**Solution**: Place the footer separator ~14–16px below the last content element. For example, if the formula badge bottom is at y=154, put the separator at y=168, footer text at y=188, and card height at ~198. **Always check for dead space** after initial layout — it's one of the most common issues.
+
+### 10. Text sizing — match reference scale
+**Problem**: Initial text sizes (13.5px body, 42px title) appear noticeably smaller than the reference images when rendered.
+**Solution**: Use larger text sizes that match the reference proportions:
+- Title: **48px** (not 42)
+- Subtitle: **16.5px** (not 15)
+- Card body text: **15.5px** (not 13.5)
+- Card footer text: **12px** (not 10)
+- Summary callout title: **24px** (not 21)
+- Summary callout body: **14px** (not 12.5)
+
+Always compare the rendered output side-by-side with the reference image to verify text scale.
+
+### 11. Cluster watermark — use full asset, large and bold
+**Problem**: Using a simplified silhouette path at low opacity produces a faint grey blob instead of the detailed 3D cluster.
+**Solution**: Include the full `elastic-cluster-3d-lightonly.svg` content (all paths, masks, shading groups) at **large scale (0.8+) and opacity 1.0**. The asset's own colors are already subtle. Place it behind all cards using SVG layer order + `<clipPath>` clipping. Do NOT reduce opacity further — the natural colors are the right level of subtlety.
+
 ---
 
 ## File Structure
@@ -207,10 +260,12 @@ designer/
 │   ├── example.svg       ← Completed example infographic (SVG source)
 │   └── example.png       ← Completed example infographic (rendered)
 ├── assets/
-│   └── elastic-3d-cluster.svg  ← Cluster logo (two variants: light bg + blue bg)
+│   ├── elastic-cluster-3d-lightonly.svg  ← 3D cluster decoration (light bg variant, use this one)
+│   ├── elastic-3d-cluster.svg           ← Full cluster (both variants)
+│   └── logo-elastic-horizontal-color.svg ← Elastic horizontal logo (full color)
 └── old-examples/
-    ├── mappings.jpeg     ← Original reference for example.svg
-    └── vec-sims.jpeg     ← Another reference image (different layout)
+    ├── mappings.jpeg     ← Original reference for example.svg (single-column, 3-card)
+    └── vec-sims.jpeg     ← Another reference image (2-column grid, 5 metric cards + summary)
 ```
 
 ## Iterative Workflow

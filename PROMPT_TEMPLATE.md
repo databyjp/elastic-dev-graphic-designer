@@ -16,7 +16,7 @@ I need you to create an SVG infographic in the Elastic dev-advocacy style.
 4. `assets/elastic-3d-cluster.svg` — the Elastic cluster logo to use as background decoration.
 
 **Reference image to recreate:**
-[INSERT PATH TO REFERENCE IMAGE, e.g. `old-examples/vec-sims.jpeg`]
+old-examples/vec-sims.jpeg
 
 Analyse the reference image and recreate it as an SVG. Match the layout, content, and visual style. Key points:
 
@@ -39,6 +39,6 @@ Write the SVG to `output.svg` and render to `output.png`.
 ## Notes for adapting this template
 
 - **Different layouts**: The example SVG uses a single-column, 3-card layout. Other infographics (e.g. `old-examples/vec-sims.jpeg`) use 2-column grids, diagram illustrations, formula badges, or summary callouts. The agent should adapt the card structure from `example.svg` to fit the new layout.
-- **Diagrams/illustrations**: If the reference contains vector diagrams (e.g. coordinate plots, arrows), these need to be drawn as SVG paths. This is significantly more complex than text-only cards. Consider simplifying or noting that diagram recreation is a stretch goal.
+- **Diagrams/illustrations**: If the reference contains vector diagrams (e.g. coordinate plots, arrows), these need to be drawn as SVG paths. This is significantly more complex than text-only cards. Consider asking the user to complete those parts, as it may be relatively easy for the use to complete these parts.
 - **Content extraction**: The agent needs to read and understand the reference image to extract all text content, code snippets, and structural hierarchy. Providing a text transcript alongside the image can help.
 - **Iterative refinement**: Expect 3–5 render-review-adjust cycles. The first render will have spacing issues; this is normal.
