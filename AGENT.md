@@ -21,8 +21,13 @@ This project creates SVG infographics (e.g. Elastic dev-advocacy cheat-sheets) a
 
 ## Typography & Font Sizing
 
+### Monospace Font Choice
+- **Preferred**: `'Space Mono'` (Elastic brand-aligned), with fallback to `'JetBrains Mono', monospace`
+- resvg only uses locally installed fonts. If Space Mono isn't installed, JetBrains Mono is a solid fallback.
+- Previous iterations used Source Code Pro / Courier New / Helvetica — `Space Mono` or `JetBrains Mono` give a more distinctive, branded look.
+
 ### Monospace Character Width Rule
-**At `font-size: 12.5` with Source Code Pro / Courier New, each character is approximately 7.5px wide.**
+**At `font-size: 12.5` with monospace fonts, each character is approximately 7.5px wide.**
 
 This is critical for aligning code blocks. Use this formula:
 ```
@@ -37,6 +42,10 @@ For other monospace sizes, scale proportionally:
 | 12.5      | ~7.5px           |
 | 13        | ~7.8px           |
 | 14        | ~8.4px           |
+
+### Code Block Line Spacing
+- Default 22px line intervals feel too loose for code. **Use 18px intervals** for tighter, more reference-card-like density.
+- This applies to the y-coordinate spacing between consecutive `<text>` elements in code blocks.
 
 ### Proportional (Inter) Text
 - **Do not try to calculate exact pixel widths** for proportional fonts. They vary by character.
@@ -70,7 +79,7 @@ Use `<tspan>` elements inside a single `<text>` for syntax highlighting:
 | Background | `#F0F3F8` | Page fill |
 | Card fill | `white` | Card backgrounds |
 | Card border | `#D3DAE6` | Subtle borders |
-| Title text | `#1C1E23` | Headings, bold text |
+| Title text | `#1C1E23` | Headings (font-weight 900), bold text |
 | Body text | `#3D4250` | Paragraphs, bullets |
 | Muted text | `#98A2B3` | Code comments |
 | Code key | `#0B64DD` | JSON keys, PUT/GET verbs |
@@ -92,15 +101,18 @@ Each card section has a colored accent strip at the top of its header tab. The c
 All three tabs use the same structural pattern: a white rounded-rect tab with a thin (5px) colored strip across the top. Do **not** add extra decorative ribbons or dual-color effects unless the reference explicitly shows them.
 
 ### Layout Grid
-- **Canvas**: 860 × 1280 (roughly 2:3 aspect ratio)
+- **Canvas**: 860px wide, height flexible (size to fit content — no fixed aspect ratio required). Typical range: 1100–1300px tall depending on number of sections.
 - **Outer margin**: 36–44px
 - **Card width**: 788px (= 860 - 2×36)
 - **Card padding**: 24–26px internal
+- **Card border**: `stroke="#8B95A5" stroke-width="2"` (dark, thick — not subtle)
+- **Card shadow**: prominent `feDropShadow` with `stdDeviation="6"`, `dx="2" dy="4"`, `flood-opacity="0.18"`
 - **Card corner radius**: 10px
-- **Code block**: starts at x=406 inside card, width=368, corner radius=8px
+- **Code block**: right-aligned in card, corner radius=8px. Width and left edge vary per section — **size each code block to fit its content**. Wider code (e.g. long strings) needs a wider box. Don't force all code blocks to identical dimensions.
 - **Bullet text column**: x=52 (after 40px indent + 12px for bullet)
 - **Bullet text max width**: ~340px (to leave room for code block)
 - **Section gap**: ~45px between cards
+- **Bottom padding in cards/code blocks**: Keep tight — ~20px below the last content element. Avoid dead space.
 
 ### Card Structure Pattern
 ```
@@ -108,7 +120,6 @@ All three tabs use the same structural pattern: a white rounded-rect tab with a 
 │ ┌──[ACCENT BAR]──────────────┐              │
 │ │  SECTION HEADER LABEL      │              │
 │ └────────────────────────────┘              │
-│                                             │
 │ Bold intro sentence. Regular continuation.  │
 │                                             │
 │ • Bullet point 1           ┌─────────────┐  │
@@ -119,6 +130,17 @@ All three tabs use the same structural pattern: a white rounded-rect tab with a 
 └─────────────────────────────────────────────┘
 ```
 
+Keep padding tight — the original reference looks dense/compact. Avoid excessive whitespace between the intro sentence and first bullet, or between bullets.
+
+### Removing Dead Space & Adjusting Canvas Height
+Cards and code blocks should be sized to fit their content snugly (~20px padding below the last text element). When shrinking cards:
+
+1. **Shrink from the bottom** — modify the bottom y-coordinates in card `<path>` elements and code block `<path>`/`<rect>` elements
+2. **Shift subsequent sections up** using `transform="translate(0, -Npx)"` on section `<g>` groups, where N = cumulative pixels saved by previous sections
+3. **Reduce canvas height** to match: update the root `<svg>` `height`, `viewBox`, background `<path>`, and any `<filter>` elements that reference the canvas dimensions
+
+This approach is much simpler than recalculating every absolute y-coordinate within a section — the `translate` on the group moves everything uniformly.
+
 ### Header Tab
 - Positioned at y=-15 relative to card top (overlapping the border)
 - Height: 30px, rounded corners (rx=5)
@@ -127,9 +149,16 @@ All three tabs use the same structural pattern: a white rounded-rect tab with a 
 - Use `·` (middle dot) as separator between title parts
 
 ### Inline Code Badges
-- Background rect with `rx="4"`, fill `#E6EBF2`
+- Background rect with `rx="4"`, fill `#E0E5ED`, stroke `#C5CCD8`
 - Add ~8px horizontal padding, ~4px vertical padding around the text
-- Monospace font at 12.5px
+- Monospace font at 13.5px
+
+**Spacing is ad-hoc, not formulaic.** Since inline badges sit between proportional (Inter) text, you cannot calculate their x-position from the preceding text width — proportional fonts vary per character. Instead:
+1. Render once with an estimated position
+2. Visually check the gap between the preceding word and the badge
+3. Adjust the badge rect + text x-coordinates until the gap looks natural (~4–6px)
+
+This applies to all inline code in prose: `dynamic_templates`, `properties`, `emit()`, `Painless`, `Update mapping API`, etc.
 
 ### Background Decorations
 - **Grid pattern**: 40px squares, very light (`#CBD2DC`, opacity 0.5, stroke-width 0.5)
@@ -148,13 +177,17 @@ All three tabs use the same structural pattern: a white rounded-rect tab with a 
 **Problem**: Text renders in a fallback serif font.
 **Solution**: Ensure the font is installed on the system. resvg does NOT load web fonts. Use `font-family` fallback chains with `system-ui` and `-apple-system`.
 
+**For monospace**: Use `'Space Mono', 'JetBrains Mono', monospace` — Space Mono may not be installed everywhere, so always include a fallback that IS installed.
+
 ### 3. `<defs>` placement
 **Problem**: `<clipPath>` or other defs inside a `<g>` may not work in all renderers.
 **Solution**: Place all `<defs>` at the top level of the SVG, or at least ensure IDs are globally unique. (resvg handles nested defs but it's safer to hoist them.)
 
 ### 4. Card shadow clipping
-**Problem**: Drop shadow filter gets clipped by the SVG viewport.
-**Solution**: Use `x="-2%" y="-1%" width="104%" height="104%"` on the filter element to expand the filter region.
+**Problem**: Drop shadow filter gets clipped.
+**Solution**: When using `filterUnits="userSpaceOnUse"` (absolute coordinates), the filter region must cover the element **in its local coordinate space** (before any `transform`). If a group has `transform="translate(0,-95)"` but the card inside goes to y=1173, the filter `height` must be ≥1173 + shadow extent — even if the canvas is only 1120px tall. Shrinking filter dimensions to match the canvas will clip content that exists beyond the canvas height in local space.
+
+Alternatively, use `filterUnits="objectBoundingBox"` with percentage-based regions (e.g. `x="-5%" width="110%"`) to avoid this entirely.
 
 ### 5. Letter-spacing widens header tabs
 **Problem**: Section header text with `letter-spacing: 2.2` is wider than expected, overflowing the tab.
