@@ -1,210 +1,218 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="860" height="1280" viewBox="0 0 860 1280">
   <defs>
-    <filter id="cardShadow" x="-2%" y="-1%" width="104%" height="104%">
-      <feDropShadow dx="0" dy="1" stdDeviation="3" flood-color="#1C1E23" flood-opacity="0.06"/>
+    <!-- Heavy card shadow - prominent and dark like the original -->
+    <filter id="cardShadow" x="-4%" y="-3%" width="110%" height="112%">
+      <feDropShadow dx="2" dy="4" stdDeviation="6" flood-color="#1C1E23" flood-opacity="0.18"/>
     </filter>
+    <!-- Subtle line pattern for background -->
     <pattern id="gridLines" width="40" height="40" patternUnits="userSpaceOnUse">
-      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#CBD2DC" stroke-width="0.5" opacity="0.5"/>
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#B0B8C8" stroke-width="0.6" opacity="0.45"/>
     </pattern>
+
   </defs>
 
   <!-- Background -->
-  <rect width="860" height="1280" fill="#F0F3F8"/>
+  <rect width="860" height="1280" fill="#EAEFF5"/>
   <rect width="860" height="1280" fill="url(#gridLines)"/>
 
-  <!-- Corner decoration: radiating lines bottom-right -->
-  <g opacity="0.12" stroke="#98A2B3" stroke-width="0.8" fill="none">
-    <line x1="860" y1="1280" x2="680" y2="1100"/>
-    <line x1="860" y1="1280" x2="720" y2="1080"/>
-    <line x1="860" y1="1280" x2="760" y2="1070"/>
-    <line x1="860" y1="1280" x2="790" y2="1060"/>
-    <line x1="860" y1="1280" x2="660" y2="1140"/>
-    <line x1="860" y1="1280" x2="640" y2="1180"/>
-    <line x1="860" y1="1280" x2="630" y2="1220"/>
-    <line x1="860" y1="1280" x2="810" y2="1050"/>
-    <line x1="860" y1="1280" x2="830" y2="1060"/>
-    <line x1="860" y1="1280" x2="850" y2="1080"/>
-    <line x1="860" y1="1280" x2="620" y2="1260"/>
+  <!-- Cluster watermark bottom-right — full cluster shape from asset -->
+  <g opacity="0.07" transform="translate(490, 910) scale(0.30)">
+    <!-- Outer cloud shape -->
+    <path d="M588.22 469.49C588.22 469.49 427.86 498.84 419.27 629.53C413.3 720.39 506.92 758.97 545.1 771.29C545.1 771.29 479.78 1008.35 801.32 1047.59C1032.33 1075.79 1132.53 950.84 1132.53 950.84C1132.53 950.84 1271.07 1002.44 1356.45 947.8C1441.83 893.15 1429.88 816.03 1429.88 816.03C1429.88 816.03 1557.95 778.74 1593.82 684.82C1629.68 590.9 1522.1 537.64 1464.04 513.91C1464.04 513.91 1527.37 350.22 1337.67 275.82C1074.92 172.78 890.06 332.97 890.06 332.97C890.06 332.97 804.64 274.63 679.73 326.82C567.44 373.74 588.22 469.49 588.22 469.49Z" fill="#1C1E23" stroke="#1C1E23" stroke-width="2"/>
+    <!-- Internal facets for honeycomb/3D feel -->
+    <path d="M633.28 461.5L806.76 492.43L869.11 358.83C869.11 358.83 792.94 312.83 706.39 350.69C615.03 390.65 633.29 461.5 633.29 461.5H633.28Z" fill="#1C1E23" stroke="#2A2D33" stroke-width="1.5"/>
+    <path d="M843.07 594.67L805.37 525.73L611.69 492.43C611.69 492.43 448.81 532.02 463.01 640.25C474.23 725.77 569.09 741.68 569.09 741.68L843.07 594.67Z" fill="#1C1E23" stroke="#2A2D33" stroke-width="1.5"/>
+    <path d="M891.07 586.15L847.98 508.76L914.93 355.21C914.93 355.21 1055.65 252.63 1212.01 276.09C1368.37 299.54 1461.1 404.09 1422.89 509.07L1137.32 664.73L891.08 586.16L891.07 586.15Z" fill="#1C1E23" stroke="#2A2D33" stroke-width="1.5"/>
+    <path d="M593.28 769.55L869.11 613.19L1121.95 701.15L1169.57 769.54L1108.14 925.9C1108.14 925.9 930.44 1059.5 739.58 996.64C585.5 945.89 568.7 841.02 593.27 769.55H593.28Z" fill="#1C1E23" stroke="#2A2D33" stroke-width="1.5"/>
+    <path d="M1209.77 755.03L1169.56 694.33L1443.19 542.83C1443.19 542.83 1595.97 597.89 1542.59 694.33C1489.2 790.77 1402.99 789.65 1402.99 789.65L1209.78 755.03H1209.77Z" fill="#1C1E23" stroke="#2A2D33" stroke-width="1.5"/>
+    <path d="M1209.77 789.65L1381.76 819.63L1386.23 862.24C1386.23 862.24 1324.13 994.43 1156.24 927.35L1209.77 789.64V789.65Z" fill="#1C1E23" stroke="#2A2D33" stroke-width="1.5"/>
+    <!-- Internal edge lines -->
+    <line x1="641.06" y1="462.89" x2="851.13" y2="397.34" stroke="#2A2D33" stroke-width="1.5"/>
+    <line x1="466.7" y1="657.7" x2="827.62" y2="602.97" stroke="#2A2D33" stroke-width="1.5"/>
+    <line x1="860.66" y1="531.54" x2="1431.46" y2="462.88" stroke="#2A2D33" stroke-width="1.5"/>
+    <line x1="587.27" y1="855.53" x2="1158.37" y2="798.05" stroke="#2A2D33" stroke-width="1.5"/>
+    <line x1="1189.12" y1="723.85" x2="1553.09" y2="664.72" stroke="#2A2D33" stroke-width="1.5"/>
+    <line x1="1386.23" y1="864.82" x2="1169.56" y2="932.35" stroke="#2A2D33" stroke-width="1.5"/>
   </g>
 
-  <!-- Cluster watermark bottom-right -->
-  <g opacity="0.05" transform="translate(530, 960) scale(0.26)">
-    <path d="M588.22 469.49C588.22 469.49 427.86 498.84 419.27 629.53C413.3 720.39 506.92 758.97 545.1 771.29C545.1 771.29 479.78 1008.35 801.32 1047.59C1032.33 1075.79 1132.53 950.84 1132.53 950.84C1132.53 950.84 1271.07 1002.44 1356.45 947.8C1441.83 893.15 1429.88 816.03 1429.88 816.03C1429.88 816.03 1557.95 778.74 1593.82 684.82C1629.68 590.9 1522.1 537.64 1464.04 513.91C1464.04 513.91 1527.37 350.22 1337.67 275.82C1074.92 172.78 890.06 332.97 890.06 332.97C890.06 332.97 804.64 274.63 679.73 326.82C567.44 373.74 588.22 469.49 588.22 469.49Z" fill="#1C1E23" stroke="#1C1E23" stroke-width="2"/>
+  <!-- Corner radiating lines bottom-right -->
+  <g opacity="0.15" stroke="#7A8599" stroke-width="1" fill="none">
+    <line x1="860" y1="1280" x2="660" y2="1080"/>
+    <line x1="860" y1="1280" x2="700" y2="1060"/>
+    <line x1="860" y1="1280" x2="740" y2="1050"/>
+    <line x1="860" y1="1280" x2="780" y2="1045"/>
+    <line x1="860" y1="1280" x2="815" y2="1045"/>
+    <line x1="860" y1="1280" x2="845" y2="1055"/>
+    <line x1="860" y1="1280" x2="640" y2="1120"/>
+    <line x1="860" y1="1280" x2="620" y2="1160"/>
+    <line x1="860" y1="1280" x2="610" y2="1210"/>
+    <line x1="860" y1="1280" x2="610" y2="1260"/>
   </g>
 
   <!-- ==================== TITLE ==================== -->
-  <text x="44" y="70" font-family="Inter, system-ui, -apple-system, sans-serif" font-size="48" font-weight="900" fill="#1C1E23" letter-spacing="-1.5">Mappings in Elasticsearch</text>
+  <text x="40" y="74" font-family="Inter, system-ui, -apple-system, sans-serif" font-size="56" font-weight="900" fill="#1C1E23" letter-spacing="-2">Mappings in Elasticsearch</text>
   
-  <text x="44" y="108" font-family="Inter, system-ui, -apple-system, sans-serif" font-size="16" fill="#3D4250">
+  <text x="40" y="118" font-family="Inter, system-ui, -apple-system, sans-serif" font-size="17.5" fill="#3D4250">
     <tspan>Mapping defines </tspan>
     <tspan font-weight="700">how a document and its fields are stored and indexed.</tspan>
     <tspan> Three</tspan>
   </text>
-  <text x="44" y="130" font-family="Inter, system-ui, -apple-system, sans-serif" font-size="16" fill="#3D4250">approaches trade speed of setup for control over indexing.</text>
+  <text x="40" y="142" font-family="Inter, system-ui, -apple-system, sans-serif" font-size="17.5" fill="#3D4250">approaches trade speed of setup for control over indexing.</text>
 
   <!-- ==================== SECTION 1: DYNAMIC MAPPING ==================== -->
-  <g transform="translate(36, 160)">
-    <rect x="0" y="0" width="788" height="275" rx="10" fill="white" stroke="#D3DAE6" stroke-width="1" filter="url(#cardShadow)"/>
+  <g transform="translate(32, 172)">
+    <!-- Card -->
+    <rect x="0" y="0" width="796" height="290" rx="10" fill="white" stroke="#8B95A5" stroke-width="2" filter="url(#cardShadow)"/>
     
-    <!-- Section header tab -->
-    <rect x="24" y="-15" width="348" height="30" rx="5" fill="white" stroke="#D3DAE6" stroke-width="1"/>
-    <rect x="24" y="-15" width="348" height="4" rx="2" fill="#36B37E"/>
-    <text x="40" y="7" font-family="Inter, system-ui, -apple-system, sans-serif" font-size="11.5" font-weight="700" fill="#1C1E23" letter-spacing="2.2">DYNAMIC MAPPING · FASTEST START</text>
+    <!-- Tab -->
+    <rect x="22" y="-16" width="370" height="32" rx="6" fill="white" stroke="#8B95A5" stroke-width="2"/>
+    <rect x="22" y="-16" width="370" height="5" rx="2" fill="#36B37E"/>
+    <text x="40" y="8" font-family="Inter, system-ui, -apple-system, sans-serif" font-size="13" font-weight="700" fill="#1C1E23" letter-spacing="2.5">DYNAMIC MAPPING · FASTEST START</text>
 
     <!-- Intro -->
-    <text x="26" y="44" font-family="Inter, system-ui, -apple-system, sans-serif" font-size="15" fill="#1C1E23">
+    <text x="28" y="48" font-family="Inter, system-ui, -apple-system, sans-serif" font-size="16.5" fill="#1C1E23">
       <tspan font-weight="700">Index first to test fast.</tspan>
       <tspan font-weight="400"> Elasticsearch detects field types automatically as documents arrive.</tspan>
     </text>
 
     <!-- Bullets -->
-    <g font-family="Inter, system-ui, -apple-system, sans-serif" font-size="14" fill="#3D4250">
-      <circle cx="40" cy="76" r="3" fill="#3D4250"/>
-      <text x="52" y="80">Index a document. No mapping required up</text>
-      <text x="52" y="98">front.</text>
+    <g font-family="Inter, system-ui, -apple-system, sans-serif" font-size="15" fill="#3D4250">
+      <circle cx="44" cy="82" r="3.5" fill="#3D4250"/>
+      <text x="56" y="87">Index a document. No mapping required up</text>
+      <text x="56" y="107">front.</text>
 
-      <circle cx="40" cy="120" r="3" fill="#3D4250"/>
-      <text x="52" y="124">Elasticsearch infers types for each field.</text>
+      <circle cx="44" cy="132" r="3.5" fill="#3D4250"/>
+      <text x="56" y="137">Elasticsearch infers types for each field.</text>
 
-      <circle cx="40" cy="150" r="3" fill="#3D4250"/>
-      <text x="52" y="154">New fields added automatically on later docs.</text>
+      <circle cx="44" cy="164" r="3.5" fill="#3D4250"/>
+      <text x="56" y="169">New fields added automatically on later docs.</text>
 
-      <circle cx="40" cy="182" r="3" fill="#3D4250"/>
-      <text x="52" y="186">Steer rules with</text>
-      <rect x="180" y="172" width="150" height="22" rx="4" fill="#E6EBF2"/>
-      <text x="188" y="188" font-family="'Source Code Pro', 'Courier New', monospace" font-size="12.5" fill="#1C1E23">dynamic_templates</text>
-      <text x="336" y="186">.</text>
+      <circle cx="44" cy="200" r="3.5" fill="#3D4250"/>
+      <text x="56" y="205">Steer rules with</text>
+      <rect x="196" y="190" width="162" height="24" rx="4" fill="#E0E5ED" stroke="#C5CCD8" stroke-width="1"/>
+      <text x="205" y="207" font-family="'Source Code Pro', 'Courier New', monospace" font-size="13.5" font-weight="600" fill="#1C1E23">dynamic_templates</text>
+      <text x="364" y="205">.</text>
     </g>
 
-    <!-- Code block: use char width 7.5 at font-size 12.5 for safer spacing -->
-    <!-- base x=420, char=7.5px -->
-    <rect x="406" y="56" width="368" height="200" rx="8" fill="#F5F7FA" stroke="#D3DAE6" stroke-width="1"/>
-    <g font-family="'Source Code Pro', 'Courier New', monospace" font-size="12.5">
-      <!-- POST /my-index/_doc -->
-      <text x="420" y="80"><tspan fill="#36B37E" font-weight="600">POST</tspan><tspan fill="#5A6068"> /my-index/_doc</tspan></text>
-      <!-- { -->
-      <text x="420" y="100" fill="#5A6068">{</text>
-      <!--   "title": "Hello",       // → text  -->
-      <text x="435" y="120"><tspan fill="#0B64DD">"title"</tspan><tspan fill="#5A6068">: </tspan><tspan fill="#36B37E">"Hello"</tspan><tspan fill="#5A6068">,</tspan></text>
-      <text x="645" y="120" fill="#98A2B3" font-style="italic">// → text</text>
-      <!--   "views": 42,            // → long  -->
-      <text x="435" y="140"><tspan fill="#0B64DD">"views"</tspan><tspan fill="#5A6068">: </tspan><tspan fill="#D94C4C">42</tspan><tspan fill="#5A6068">,</tspan></text>
-      <text x="645" y="140" fill="#98A2B3" font-style="italic">// → long</text>
-      <!--   "created": "2026-05-22" // → date  -->
-      <text x="435" y="160"><tspan fill="#0B64DD">"created"</tspan><tspan fill="#5A6068">: </tspan><tspan fill="#36B37E">"2026-05-22"</tspan></text>
-      <text x="645" y="160" fill="#98A2B3" font-style="italic">// → date</text>
-      <!-- } -->
-      <text x="420" y="180" fill="#5A6068">}</text>
+    <!-- Code block -->
+    <rect x="420" y="60" width="356" height="210" rx="8" fill="#F5F7FA" stroke="#8B95A5" stroke-width="1.5"/>
+    <g font-family="'Source Code Pro', 'Courier New', monospace" font-size="13.5">
+      <text x="436" y="86"><tspan fill="#36B37E" font-weight="600">POST</tspan><tspan fill="#5A6068"> /my-index/_doc</tspan></text>
+      <text x="436" y="108" fill="#5A6068">{</text>
+      <text x="452" y="130"><tspan fill="#0B64DD">"title"</tspan><tspan fill="#5A6068">: </tspan><tspan fill="#36B37E">"Hello"</tspan><tspan fill="#5A6068">,</tspan></text>
+      <text x="660" y="130" fill="#98A2B3" font-style="italic">// → text</text>
+      <text x="452" y="152"><tspan fill="#0B64DD">"views"</tspan><tspan fill="#5A6068">: </tspan><tspan fill="#D94C4C">42</tspan><tspan fill="#5A6068">,</tspan></text>
+      <text x="660" y="152" fill="#98A2B3" font-style="italic">// → long</text>
+      <text x="452" y="174"><tspan fill="#0B64DD">"created"</tspan><tspan fill="#5A6068">: </tspan><tspan fill="#36B37E">"2026-05-22"</tspan></text>
+      <text x="660" y="174" fill="#98A2B3" font-style="italic">// → date</text>
+      <text x="436" y="196" fill="#5A6068">}</text>
     </g>
   </g>
 
   <!-- ==================== SECTION 2: EXPLICIT MAPPING ==================== -->
-  <g transform="translate(36, 480)">
-    <rect x="0" y="0" width="788" height="305" rx="10" fill="white" stroke="#D3DAE6" stroke-width="1" filter="url(#cardShadow)"/>
+  <g transform="translate(32, 510)">
+    <!-- Card -->
+    <rect x="0" y="0" width="796" height="320" rx="10" fill="white" stroke="#8B95A5" stroke-width="2" filter="url(#cardShadow)"/>
     
-    <rect x="24" y="-15" width="476" height="30" rx="5" fill="white" stroke="#D3DAE6" stroke-width="1"/>
-    <rect x="24" y="-15" width="476" height="4" rx="2" fill="#0B64DD"/>
-    <text x="40" y="7" font-family="Inter, system-ui, -apple-system, sans-serif" font-size="11.5" font-weight="700" fill="#1C1E23" letter-spacing="2.2">EXPLICIT MAPPING · RECOMMENDED FOR PRODUCTION</text>
+    <!-- Tab -->
+    <rect x="22" y="-16" width="500" height="32" rx="6" fill="white" stroke="#8B95A5" stroke-width="2"/>
+    <rect x="22" y="-16" width="500" height="5" rx="2" fill="#0B64DD"/>
+    <text x="40" y="8" font-family="Inter, system-ui, -apple-system, sans-serif" font-size="13" font-weight="700" fill="#1C1E23" letter-spacing="2.5">EXPLICIT MAPPING · RECOMMENDED FOR PRODUCTION</text>
 
-    <text x="26" y="44" font-family="Inter, system-ui, -apple-system, sans-serif" font-size="15" fill="#1C1E23">
+    <!-- Intro -->
+    <text x="28" y="48" font-family="Inter, system-ui, -apple-system, sans-serif" font-size="16.5" fill="#1C1E23">
       <tspan font-weight="700">Define each field's data type up front.</tspan>
       <tspan font-weight="400"> Full control over how data is indexed.</tspan>
     </text>
 
-    <g font-family="Inter, system-ui, -apple-system, sans-serif" font-size="14" fill="#3D4250">
-      <circle cx="40" cy="76" r="3" fill="#3D4250"/>
-      <text x="52" y="80">Identify fields that need control: text,</text>
-      <text x="52" y="98">semantic, geo, dates.</text>
+    <!-- Bullets -->
+    <g font-family="Inter, system-ui, -apple-system, sans-serif" font-size="15" fill="#3D4250">
+      <circle cx="44" cy="82" r="3.5" fill="#3D4250"/>
+      <text x="56" y="87">Identify fields that need control: text,</text>
+      <text x="56" y="107">semantic, geo, dates.</text>
 
-      <circle cx="40" cy="122" r="3" fill="#3D4250"/>
-      <text x="52" y="126">Define</text>
-      <rect x="95" y="112" width="90" height="22" rx="4" fill="#E6EBF2"/>
-      <text x="103" y="128" font-family="'Source Code Pro', 'Courier New', monospace" font-size="12.5" fill="#1C1E23">properties</text>
-      <text x="190" y="126"> at index creation.</text>
+      <circle cx="44" cy="134" r="3.5" fill="#3D4250"/>
+      <text x="56" y="139">Define</text>
+      <rect x="104" y="124" width="96" height="24" rx="4" fill="#E0E5ED" stroke="#C5CCD8" stroke-width="1"/>
+      <text x="113" y="141" font-family="'Source Code Pro', 'Courier New', monospace" font-size="13.5" font-weight="600" fill="#1C1E23">properties</text>
+      <text x="205" y="139"> at index creation.</text>
 
-      <circle cx="40" cy="156" r="3" fill="#3D4250"/>
-      <text x="52" y="160">Mix &amp; match. Let unknown fields fall through</text>
-      <text x="52" y="178">to dynamic.</text>
+      <circle cx="44" cy="170" r="3.5" fill="#3D4250"/>
+      <text x="56" y="175">Mix &amp; match. Let unknown fields fall through</text>
+      <text x="56" y="195">to dynamic.</text>
 
-      <circle cx="40" cy="200" r="3" fill="#3D4250"/>
-      <text x="52" y="204">Evolve with</text>
-      <rect x="135" y="190" width="148" height="22" rx="4" fill="#E6EBF2"/>
-      <text x="143" y="206" font-family="'Source Code Pro', 'Courier New', monospace" font-size="12.5" fill="#1C1E23">Update mapping API</text>
-      <text x="288" y="204">.</text>
+      <circle cx="44" cy="220" r="3.5" fill="#3D4250"/>
+      <text x="56" y="225">Evolve with</text>
+      <rect x="148" y="210" width="158" height="24" rx="4" fill="#E0E5ED" stroke="#C5CCD8" stroke-width="1"/>
+      <text x="157" y="227" font-family="'Source Code Pro', 'Courier New', monospace" font-size="13.5" font-weight="600" fill="#1C1E23">Update mapping API</text>
+      <text x="312" y="225">.</text>
     </g>
 
     <!-- Code block -->
-    <rect x="406" y="56" width="368" height="230" rx="8" fill="#F5F7FA" stroke="#D3DAE6" stroke-width="1"/>
-    <g font-family="'Source Code Pro', 'Courier New', monospace" font-size="12.5">
-      <!-- PUT /my-index -->
-      <text x="420" y="80"><tspan fill="#0B64DD" font-weight="600">PUT</tspan><tspan fill="#5A6068"> /my-index</tspan></text>
-      <text x="420" y="100" fill="#5A6068">{</text>
-      <!--   "mappings": { -->
-      <text x="435" y="120"><tspan fill="#0B64DD">"mappings"</tspan><tspan fill="#5A6068">: {</tspan></text>
-      <!--     "properties": { -->
-      <text x="450" y="140"><tspan fill="#0B64DD">"properties"</tspan><tspan fill="#5A6068">: {</tspan></text>
-      <!--       "title":    { "type": "text" }, -->
-      <text x="465" y="160"><tspan fill="#0B64DD">"title"</tspan><tspan fill="#5A6068">:    { </tspan><tspan fill="#0B64DD">"type"</tspan><tspan fill="#5A6068">: </tspan><tspan fill="#36B37E">"text"</tspan><tspan fill="#5A6068"> },</tspan></text>
-      <!--       "location": { "type": "geo_point" } -->
-      <text x="465" y="180"><tspan fill="#0B64DD">"location"</tspan><tspan fill="#5A6068">: { </tspan><tspan fill="#0B64DD">"type"</tspan><tspan fill="#5A6068">: </tspan><tspan fill="#36B37E">"geo_point"</tspan><tspan fill="#5A6068"> }</tspan></text>
-      <text x="450" y="200" fill="#5A6068">}</text>
-      <text x="435" y="220" fill="#5A6068">}</text>
-      <text x="420" y="240" fill="#5A6068">}</text>
+    <rect x="420" y="60" width="356" height="240" rx="8" fill="#F5F7FA" stroke="#8B95A5" stroke-width="1.5"/>
+    <g font-family="'Source Code Pro', 'Courier New', monospace" font-size="13.5">
+      <text x="436" y="86"><tspan fill="#0B64DD" font-weight="600">PUT</tspan><tspan fill="#5A6068"> /my-index</tspan></text>
+      <text x="436" y="108" fill="#5A6068">{</text>
+      <text x="452" y="130"><tspan fill="#0B64DD">"mappings"</tspan><tspan fill="#5A6068">: {</tspan></text>
+      <text x="468" y="152"><tspan fill="#0B64DD">"properties"</tspan><tspan fill="#5A6068">: {</tspan></text>
+      <text x="484" y="174"><tspan fill="#0B64DD">"title"</tspan><tspan fill="#5A6068">:    { </tspan><tspan fill="#0B64DD">"type"</tspan><tspan fill="#5A6068">: </tspan><tspan fill="#36B37E">"text"</tspan><tspan fill="#5A6068"> },</tspan></text>
+      <text x="484" y="196"><tspan fill="#0B64DD">"location"</tspan><tspan fill="#5A6068">: { </tspan><tspan fill="#0B64DD">"type"</tspan><tspan fill="#5A6068">: </tspan><tspan fill="#36B37E">"geo_point"</tspan><tspan fill="#5A6068"> }</tspan></text>
+      <text x="468" y="218" fill="#5A6068">}</text>
+      <text x="452" y="240" fill="#5A6068">}</text>
+      <text x="436" y="262" fill="#5A6068">}</text>
     </g>
   </g>
 
   <!-- ==================== SECTION 3: RUNTIME FIELDS ==================== -->
-  <g transform="translate(36, 830)">
-    <rect x="0" y="0" width="788" height="340" rx="10" fill="white" stroke="#D3DAE6" stroke-width="1" filter="url(#cardShadow)"/>
-    
-    <rect x="24" y="-15" width="340" height="30" rx="5" fill="white" stroke="#D3DAE6" stroke-width="1"/>
-    <defs>
-      <clipPath id="tabClip3">
-        <rect x="24" y="-15" width="340" height="5"/>
-      </clipPath>
-    </defs>
-    <rect x="24" y="-15" width="170" height="5" fill="#00BFB3" clip-path="url(#tabClip3)"/>
-    <rect x="164" y="-15" width="200" height="5" fill="#E0558A" clip-path="url(#tabClip3)"/>
-    <text x="40" y="7" font-family="Inter, system-ui, -apple-system, sans-serif" font-size="11.5" font-weight="700" fill="#1C1E23" letter-spacing="2.2">RUNTIME FIELDS · SCHEMA-ON-READ</text>
+  <g transform="translate(32, 878)">
+    <!-- Card -->
+    <rect x="0" y="0" width="796" height="350" rx="10" fill="white" stroke="#8B95A5" stroke-width="2" filter="url(#cardShadow)"/>
 
-    <text x="26" y="44" font-family="Inter, system-ui, -apple-system, sans-serif" font-size="15" fill="#1C1E23">
+    <!-- Tab -->
+    <rect x="22" y="-16" width="370" height="32" rx="6" fill="white" stroke="#8B95A5" stroke-width="2"/>
+    <rect x="22" y="-16" width="370" height="5" rx="2" fill="#E0558A"/>
+    <text x="40" y="8" font-family="Inter, system-ui, -apple-system, sans-serif" font-size="13" font-weight="700" fill="#1C1E23" letter-spacing="2.5">RUNTIME FIELDS · SCHEMA-ON-READ</text>
+
+    <!-- Intro -->
+    <text x="28" y="48" font-family="Inter, system-ui, -apple-system, sans-serif" font-size="16.5" fill="#1C1E23">
       <tspan font-weight="700">Change the schema without reindexing.</tspan>
       <tspan font-weight="400"> Defined by script, evaluated at query time.</tspan>
     </text>
 
-    <g font-family="Inter, system-ui, -apple-system, sans-serif" font-size="14" fill="#3D4250">
-      <circle cx="40" cy="76" r="3" fill="#3D4250"/>
-      <text x="52" y="80">Declare a runtime field in the mapping or per-</text>
-      <text x="52" y="98">search.</text>
+    <!-- Bullets -->
+    <g font-family="Inter, system-ui, -apple-system, sans-serif" font-size="15" fill="#3D4250">
+      <circle cx="44" cy="82" r="3.5" fill="#3D4250"/>
+      <text x="56" y="87">Declare a runtime field in the mapping or per-</text>
+      <text x="56" y="107">search.</text>
 
-      <circle cx="40" cy="122" r="3" fill="#3D4250"/>
-      <rect x="52" y="108" width="72" height="22" rx="4" fill="#E6EBF2"/>
-      <text x="60" y="124" font-family="'Source Code Pro', 'Courier New', monospace" font-size="12.5" fill="#1C1E23">Painless</text>
-      <text x="129" y="126"> script </text>
-      <rect x="182" y="108" width="60" height="22" rx="4" fill="#E6EBF2"/>
-      <text x="190" y="124" font-family="'Source Code Pro', 'Courier New', monospace" font-size="12.5" fill="#1C1E23">emit()</text>
-      <text x="248" y="126"> s the value.</text>
+      <circle cx="44" cy="134" r="3.5" fill="#3D4250"/>
+      <rect x="56" y="120" width="78" height="24" rx="4" fill="#E0E5ED" stroke="#C5CCD8" stroke-width="1"/>
+      <text x="65" y="137" font-family="'Source Code Pro', 'Courier New', monospace" font-size="13.5" font-weight="600" fill="#1C1E23">Painless</text>
+      <text x="140" y="138"> script </text>
+      <rect x="196" y="120" width="64" height="24" rx="4" fill="#E0E5ED" stroke="#C5CCD8" stroke-width="1"/>
+      <text x="205" y="137" font-family="'Source Code Pro', 'Courier New', monospace" font-size="13.5" font-weight="600" fill="#1C1E23">emit()</text>
+      <text x="266" y="138"> s the value.</text>
 
-      <circle cx="40" cy="156" r="3" fill="#3D4250"/>
-      <text x="52" y="160">Query like any field: filter, aggregate, sort.</text>
+      <circle cx="44" cy="170" r="3.5" fill="#3D4250"/>
+      <text x="56" y="175">Query like any field: filter, aggregate, sort.</text>
 
-      <circle cx="40" cy="186" r="3" fill="#3D4250"/>
-      <text x="52" y="190">Smaller index, slower search. Promote if hot.</text>
+      <circle cx="44" cy="204" r="3.5" fill="#3D4250"/>
+      <text x="56" y="209">Smaller index, slower search. Promote if hot.</text>
     </g>
 
     <!-- Code block -->
-    <rect x="406" y="56" width="368" height="268" rx="8" fill="#F5F7FA" stroke="#D3DAE6" stroke-width="1"/>
-    <g font-family="'Source Code Pro', 'Courier New', monospace" font-size="12.5">
-      <text x="420" y="80"><tspan fill="#0B64DD" font-weight="600">PUT</tspan><tspan fill="#5A6068"> /my-index/_mapping</tspan></text>
-      <text x="420" y="100" fill="#5A6068">{</text>
-      <text x="435" y="120"><tspan fill="#0B64DD">"runtime"</tspan><tspan fill="#5A6068">: {</tspan></text>
-      <text x="450" y="140"><tspan fill="#0B64DD">"day_of_week"</tspan><tspan fill="#5A6068">: {</tspan></text>
-      <text x="465" y="160"><tspan fill="#0B64DD">"type"</tspan><tspan fill="#5A6068">: </tspan><tspan fill="#36B37E">"keyword"</tspan><tspan fill="#5A6068">,</tspan></text>
-      <text x="465" y="180"><tspan fill="#0B64DD">"script"</tspan><tspan fill="#5A6068">: </tspan><tspan fill="#36B37E">"emit(doc['created']</tspan></text>
-      <text x="495" y="200"><tspan fill="#36B37E">.value.dayOfWeekEnum.toString())"</tspan></text>
-      <text x="450" y="220" fill="#5A6068">}</text>
-      <text x="435" y="240" fill="#5A6068">}</text>
-      <text x="420" y="260" fill="#5A6068">}</text>
+    <rect x="420" y="60" width="356" height="280" rx="8" fill="#F5F7FA" stroke="#8B95A5" stroke-width="1.5"/>
+    <g font-family="'Source Code Pro', 'Courier New', monospace" font-size="13.5">
+      <text x="436" y="86"><tspan fill="#0B64DD" font-weight="600">PUT</tspan><tspan fill="#5A6068"> /my-index/_mapping</tspan></text>
+      <text x="436" y="108" fill="#5A6068">{</text>
+      <text x="452" y="130"><tspan fill="#0B64DD">"runtime"</tspan><tspan fill="#5A6068">: {</tspan></text>
+      <text x="468" y="152"><tspan fill="#0B64DD">"day_of_week"</tspan><tspan fill="#5A6068">: {</tspan></text>
+      <text x="484" y="174"><tspan fill="#0B64DD">"type"</tspan><tspan fill="#5A6068">: </tspan><tspan fill="#36B37E">"keyword"</tspan><tspan fill="#5A6068">,</tspan></text>
+      <text x="484" y="196"><tspan fill="#0B64DD">"script"</tspan><tspan fill="#5A6068">: </tspan><tspan fill="#36B37E">"emit(doc['created']</tspan></text>
+      <text x="516" y="218"><tspan fill="#36B37E">.value.dayOfWeekEnum.toString())"</tspan></text>
+      <text x="468" y="240" fill="#5A6068">}</text>
+      <text x="452" y="262" fill="#5A6068">}</text>
+      <text x="436" y="284" fill="#5A6068">}</text>
     </g>
   </g>
 </svg>

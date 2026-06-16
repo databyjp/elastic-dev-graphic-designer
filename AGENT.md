@@ -81,13 +81,15 @@ Use `<tspan>` elements inside a single `<text>` for syntax highlighting:
 | Accent green | `#36B37E` | Dynamic mapping section |
 | Accent blue | `#0B64DD` | Explicit mapping section |
 | Accent pink | `#E0558A` | Runtime fields section |
-| Accent teal | `#00BFB3` | Runtime fields gradient start |
+
 
 ### Section Accent Colors
 Each card section has a colored accent strip at the top of its header tab. The color communicates the "level" of the concept:
-- **Green** = easy/starter
-- **Blue** = recommended/production
-- **Pink/Magenta** = advanced/specialized
+- **Green** (`#36B37E`) = easy/starter
+- **Blue** (`#0B64DD`) = recommended/production
+- **Pink** (`#E0558A`) = advanced/specialized
+
+All three tabs use the same structural pattern: a white rounded-rect tab with a thin (5px) colored strip across the top. Do **not** add extra decorative ribbons or dual-color effects unless the reference explicitly shows them.
 
 ### Layout Grid
 - **Canvas**: 860 × 1280 (roughly 2:3 aspect ratio)
