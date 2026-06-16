@@ -258,6 +258,35 @@ Always compare the rendered output side-by-side with the reference image to veri
 **Problem**: Bullets that mix proportional body text with monospace inline code need multiple font switches within a single line.
 **Solution**: Use `<tspan>` elements inside a single `<text>` to switch `font-family` mid-line. Set monospace `<tspan>` to a slightly smaller `font-size` (12–13px vs 15.5px body) for visual balance. Apply `fill="#0B64DD"` to monospace spans to highlight them as code.
 
+### 15. Whitespace in `<tspan>` is collapsed — use explicit x-positions for indentation
+**Problem**: Using space characters inside `<tspan>` elements (e.g. `<tspan>    </tspan>` for indentation) doesn't work — SVG collapses multiple whitespace characters, so all code lines render flush-left regardless of intended indentation.
+**Solution**: Use separate `<text>` elements with explicit `x` coordinates for each indentation level. Calculate x-offsets from the monospace character width:
+- Base (0 indent): `x=354`
+- 2-space indent: `x=354 + 2×6.6 = 367` (at font-size 11)
+- 4-space indent: `x=354 + 4×6.6 = 380`
+- 8-space indent: `x=354 + 8×6.6 = 407`
+
+This is more reliable than `xml:space="preserve"` (which resvg may not fully support) and produces clean, predictable indentation.
+
+### 16. Dark code blocks for JSON/config content
+**Problem**: Light code blocks (white/grey backgrounds) don't visually distinguish code from surrounding card content strongly enough.
+**Solution**: Use `fill="#1C1E23"` (near-black) on the code block `<rect>` with colored text for syntax highlighting. This creates a "dark editor" aesthetic that stands out well against white cards. Use the standard syntax colors on the dark background:
+- Keys: `#0B64DD` (blue)
+- Strings: `#36B37E` (green)
+- Punctuation: `#5A6068` (muted grey)
+
+### 17. Long code lines — wrap with increased indentation
+**Problem**: JSON key-value pairs with long keys (e.g. `"CLAUDE_CODE_ENHANCED_TELEMETRY_BETA"`) and values don't fit on a single line in the code block.
+**Solution**: Break the line after the `:` and render the value on the next line with double indentation (8 spaces). This preserves readability while fitting within the code block width:
+```
+"OTEL_EXPORTER_OTLP_ENDPOINT":     ← key line at 4-space indent
+    "https://<elastic-endpoint>",   ← value line at 8-space indent
+```
+
+### 18. Hybrid layouts — full-width + 2-column rows
+**Problem**: Some infographics have a mix of wide content (like JSON configs) and compact content (bullet lists, metric tables).
+**Solution**: Use a hybrid layout: full-width cards for content that needs horizontal space (code blocks, tables), then 2-column rows for compact content. This keeps the canvas height within the 1000–1300px target while giving each card the width it needs. The full-width card uses the standard 788px width; the 2-column cards use 384px each.
+
 ---
 
 ## File Structure
