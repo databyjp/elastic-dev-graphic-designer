@@ -172,7 +172,7 @@ This applies to all inline code in prose: `dynamic_templates`, `properties`, `em
 ### Background Decorations
 - **Grid pattern**: 40px squares, very light (`#CBD2DC`, opacity 0.5, stroke-width 0.5)
 - **Radiating lines**: bottom-right corner, emanating from corner point, opacity 0.12
-- **Cluster watermark**: Use `assets/elastic-cluster-3d-lightonly.svg` — include the full SVG content (all paths, masks, shading) at **large scale (~0.8) and full opacity** (`opacity="1"`). The cluster's own colors (`#e6ebf2` fills, `#1c1e23` strokes, `#f5f7fa` panels) are already light/subtle, so no additional opacity reduction is needed. Position it **behind all cards** (immediately after the background rect/grid in SVG layer order), clipped with a `<clipPath>` to the card area (e.g. starting from y≈300). It should be large and bold, spanning most of the lower canvas and overflowing the right edge — see `references/example.svg` for the layering approach.
+- **Cluster watermark**: Use `assets/elastic-cluster-3d-lightonly.svg` — include the full SVG content (all paths, masks, shading) at **large scale (~0.8) and full opacity** (`opacity="1"`). The cluster's own colors (`#e6ebf2` fills, `#1c1e23` strokes, `#f5f7fa` panels) are already light/subtle, so no additional opacity reduction is needed. Position it **behind all cards** (immediately after the background rect/grid in SVG layer order), clipped with a `<clipPath>` to the card area (e.g. starting from y≈300). It should be large and bold, spanning most of the lower canvas and overflowing the right edge — see `references/mappings.svg` for the layering approach.
 
 ### Elastic Logo
 - Place the full-color horizontal Elastic logo (`assets/logo-elastic-horizontal-color.svg`) in the **bottom-right footer area**, in line with the SOURCE text.
@@ -209,7 +209,7 @@ Alternatively, use `filterUnits="objectBoundingBox"` with percentage-based regio
 **Solution**: Estimate ~1.3× the normal text width when using letter-spacing values > 1. Test and measure.
 
 ### 6. Two-column grid layouts
-**Problem**: Adapting the single-column card pattern from `example.svg` to a 2-column grid layout.
+**Problem**: Adapting the single-column card pattern from `references/mappings.svg` to a 2-column grid layout.
 **Solution**: Use `<g transform="translate(x, y)">` for each card's position. For an 860px canvas:
 - Left column: `translate(36, y)`
 - Right column: `translate(440, y)`
@@ -254,22 +254,22 @@ designer/
 ├── AGENT.md              ← This file (design learnings & rules)
 ├── PROMPT_TEMPLATE.md    ← Template prompt for creating new infographics
 ├── render.js             ← SVG → PNG rendering script
-├── output.svg            ← Current working SVG
-├── output.png            ← Current rendered PNG
 ├── references/
-│   ├── example.svg       ← Completed example infographic (SVG source)
-│   └── example.png       ← Completed example infographic (rendered)
+│   ├── mappings.svg      ← Completed example: single-column, 3-card (Elasticsearch mappings)
+│   ├── mappings.png      ← Rendered PNG of mappings.svg
+│   ├── vec-sims.svg      ← Completed example: 2-column grid, 5 metric cards (vector similarity)
+│   └── vec-sims.png      ← Rendered PNG of vec-sims.svg
 ├── assets/
 │   ├── elastic-cluster-3d-lightonly.svg  ← 3D cluster decoration (light bg variant, use this one)
 │   ├── elastic-3d-cluster.svg           ← Full cluster (both variants)
 │   └── logo-elastic-horizontal-color.svg ← Elastic horizontal logo (full color)
 └── old-examples/
-    ├── mappings.jpeg     ← Original reference for example.svg (single-column, 3-card)
-    └── vec-sims.jpeg     ← Another reference image (2-column grid, 5 metric cards + summary)
+    ├── mappings.jpeg     ← Original reference for mappings.svg (single-column, 3-card)
+    └── vec-sims.jpeg     ← Original reference for vec-sims.svg (2-column grid, 5 metric cards + summary)
 ```
 
 ## Iterative Workflow
-1. Write/edit `output.svg`
+1. Write/edit your SVG (e.g. `output.svg`)
 2. Run `node render.js output.svg output.png`
 3. Review the PNG — check for text overlap, alignment, missing fonts
 4. Adjust and repeat
