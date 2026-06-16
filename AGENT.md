@@ -246,6 +246,26 @@ Always compare the rendered output side-by-side with the reference image to veri
 **Problem**: Using a simplified silhouette path at low opacity produces a faint grey blob instead of the detailed 3D cluster.
 **Solution**: Include the full `elastic-cluster-3d-lightonly.svg` content (all paths, masks, shading groups) at **large scale (0.8+) and opacity 1.0**. The asset's own colors are already subtle. Place it behind all cards using SVG layer order + `<clipPath>` clipping. Do NOT reduce opacity further — the natural colors are the right level of subtlety.
 
+### 12. Table-like layouts in cards
+**Problem**: Displaying tabular data (metric names + descriptions) inside cards without using `<table>` (not supported in SVG).
+**Solution**: Use a header row with `<rect>` fill (`#E6EBF2`), then alternate `<text>` elements at fixed x-positions for columns. Use `<line>` separators between rows with `stroke-width="0.5" opacity="0.6"` for subtle dividers. Keep row spacing at ~34px intervals (y increment). Ensure the table area doesn't leave excessive dead space — size the card height precisely to the last row + footer gap.
+
+### 13. Tall single-column infographics
+**Problem**: Infographics with 5+ cards can exceed 2000px in height, requiring careful canvas sizing.
+**Solution**: For tall infographics, build all cards with absolute y-coordinates rather than `translate()` transforms. This makes it easier to adjust card positions when removing dead space. After the first render, measure exact dead space gaps and shift subsequent cards up by updating their y-coordinates. Update canvas `height`, `viewBox`, background `<rect>`, and radiating line endpoints to match.
+
+### 14. Code block with nested JSON — closing braces
+**Problem**: When manually placing JSON closing braces (`}`) in code blocks, it's easy to accidentally assign the same y-coordinate to multiple lines.
+**Solution**: Track y-positions carefully for every line in a code block. Use 18px line intervals consistently. For nested JSON, the inner `}` and outer `}` are on separate lines — give each its own y-position. Double-check by searching for duplicate y values in the code block section.
+
+### 15. Inline `<tspan>` for mixed font styling in bullets
+**Problem**: Bullets that mix proportional body text with monospace inline code need multiple font switches.
+**Solution**: Use `<tspan>` elements inside a single `<text>` to switch between `font-family` values mid-line. Set the monospace `<tspan>` to a slightly smaller `font-size` (13px vs 15.5px body) for visual balance. Apply `fill="#0B64DD"` to monospace spans to highlight them as code references. This works well for event names, metric names, and env var references.
+
+### 16. objectBoundingBox filter approach for tall SVGs
+**Problem**: With `filterUnits="userSpaceOnUse"`, the filter region must cover all cards in absolute coordinates, which is error-prone for tall canvases.
+**Solution**: Use `filterUnits="objectBoundingBox"` with percentage-based regions like `x="-5%" y="-3%" width="110%" height="112%"`. This automatically adapts to each card's bounding box regardless of its position on the canvas. Much simpler than maintaining absolute filter dimensions.
+
 ---
 
 ## File Structure
