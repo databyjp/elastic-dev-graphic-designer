@@ -198,14 +198,19 @@ Alternatively, use `filterUnits="objectBoundingBox"` with percentage-based regio
 ## File Structure
 ```
 designer/
-├── AGENT.md              ← This file (design learnings)
+├── AGENT.md              ← This file (design learnings & rules)
+├── PROMPT_TEMPLATE.md    ← Template prompt for creating new infographics
 ├── render.js             ← SVG → PNG rendering script
-├── output.svg            ← Generated infographic SVG
-├── output.png            ← Rendered PNG
+├── output.svg            ← Current working SVG
+├── output.png            ← Current rendered PNG
+├── references/
+│   ├── example.svg       ← Completed example infographic (SVG source)
+│   └── example.png       ← Completed example infographic (rendered)
 ├── assets/
 │   └── elastic-3d-cluster.svg  ← Cluster logo (two variants: light bg + blue bg)
-└── examples/
-    └── mappings.jpeg     ← Original reference image
+└── old-examples/
+    ├── mappings.jpeg     ← Original reference for example.svg
+    └── vec-sims.jpeg     ← Another reference image (different layout)
 ```
 
 ## Iterative Workflow
