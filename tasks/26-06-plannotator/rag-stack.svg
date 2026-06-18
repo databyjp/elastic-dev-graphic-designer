@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="860" height="1000" viewBox="0 0 860 1000"
+     xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="cardShadow" filterUnits="objectBoundingBox"
+            x="-5%" y="-5%" width="115%" height="120%">
+      <feDropShadow dx="2" dy="4" stdDeviation="6"
+                    flood-color="#000" flood-opacity="0.15"/>
+    </filter>
+    <filter id="heroShadow" filterUnits="objectBoundingBox"
+            x="-3%" y="-3%" width="112%" height="118%">
+      <feDropShadow dx="3" dy="6" stdDeviation="12"
+                    flood-color="#0B64DD" flood-opacity="0.22"/>
+    </filter>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none"
+            stroke="#CBD2DC" stroke-width="0.5" opacity="0.5"/>
+    </pattern>
+    <marker id="arr" markerWidth="10" markerHeight="7"
+            refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#8B95A5"/>
+    </marker>
+    <marker id="arrBlue" markerWidth="10" markerHeight="7"
+            refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#0B64DD"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="860" height="1000" fill="#F0F3F8"/>
+  <rect width="860" height="1000" fill="url(#grid)"/>
+
+  <!-- Cluster watermark (subtle, bottom right) -->
+  <g opacity="0.06">
+    <circle cx="820" cy="860" r="220" fill="none" stroke="#0B64DD" stroke-width="60"/>
+    <circle cx="820" cy="860" r="130" fill="none" stroke="#0B64DD" stroke-width="40"/>
+  </g>
+
+  <!-- ======================================================= -->
+  <!-- HEADER                                                   -->
+  <!-- ======================================================= -->
+  <rect x="40" y="28" width="5" height="42" rx="2" fill="#FEC514"/>
+  <text x="56" y="52"
+        font-family="Inter, system-ui, -apple-system, sans-serif"
+        font-weight="900" font-size="30" fill="#1C1E23" letter-spacing="-0.5">
+    RAG Stack Architecture
+  </text>
+  <text x="56" y="70"
+        font-family="Inter, system-ui, sans-serif"
+        font-size="12.5" fill="#5A6068">
+    Plannotator demo · Elasticsearch Serverless + Jina-v5-text-nano + Claude Haiku
+  </text>
+  <line x1="40" y1="82" x2="820" y2="82"
+        stroke="#D3DAE6" stroke-width="1"/>
+
+  <!-- ======================================================= -->
+  <!-- PHASE LABELS                                             -->
+  <!-- ======================================================= -->
+  <text x="40" y="102"
+        font-family="Inter, system-ui, sans-serif"
+        font-size="9.5" font-weight="700" fill="#98A2B3" letter-spacing="1.6">
+    INGESTION PIPELINE
+  </text>
+  <text x="465" y="102"
+        font-family="Inter, system-ui, sans-serif"
+        font-size="9.5" font-weight="700" fill="#98A2B3" letter-spacing="1.6">
+    QUERY PIPELINE
+  </text>
+
+  <!-- ======================================================= -->
+  <!-- BOX 1: Blog Articles (ingestion source)                 -->
+  <!-- ======================================================= -->
+  <g filter="url(#cardShadow)">
+    <rect x="40" y="110" width="355" height="82" rx="8"
+          fill="white" stroke="#D3DAE6" stroke-width="1.5"/>
+  </g>
+  <rect x="40" y="110" width="4" height="82" rx="2" fill="#FF957D"/>
+
+  <text x="56" y="133"
+        font-family="Inter, system-ui, sans-serif"
+        font-size="13" font-weight="700" fill="#1C1E23">Blog Articles</text>
+  <text x="56" y="151"
+        font-family="Inter, system-ui, sans-serif"
+        font-size="11.5" fill="#5A6068">/blogs directory · markdown files</text>
+  <text x="56" y="168"
+        font-family="'JetBrains Mono', 'Space Mono', monospace"
+        font-size="10" fill="#98A2B3">title · description · body</text>
+
+  <!-- Document stack icon (top right of box) -->
+  <rect x="360" y="122" width="20" height="26" rx="2"
+        fill="#FFE8E0" stroke="#FF957D" stroke-width="1"/>
+  <rect x="355" y="118" width="20" height="26" rx="2"
+        fill="white" stroke="#FF957D" stroke-width="1"/>
+  <rect x="360" y="124" width="10" height="1.5" rx="0.5" fill="#FF957D"/>
+  <rect x="360" y="128" width="10" height="1.5" rx="0.5" fill="#FF957D"/>
+  <rect x="360" y="132" width="7"  height="1.5" rx="0.5" fill="#FF957D"/>
+
+  <!-- Arrow 1: Blog Articles down to Jina -->
+  <line x1="217" y1="192" x2="217" y2="228"
+        stroke="#8B95A5" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="226" y="213"
+        font-family="Inter, system-ui, sans-serif"
+        font-size="9.5" fill="#B0B8C4">extract text</text>
+
+  <!-- ======================================================= -->
+  <!-- BOX 2: Jina Embeddings                                  -->
+  <!-- ======================================================= -->
+  <g filter="url(#cardShadow)">
+    <rect x="40" y="232" width="355" height="100" rx="8"
+          fill="white" stroke="#D3DAE6" stroke-width="1.5"/>
+  </g>
+  <rect x="40" y="232" width="4" height="100" rx="2" fill="#FEC514"/>
+
+  <text x="56" y="255"
+        font-family="Inter, system-ui, sans-serif"
+        font-size="13" font-weight="700" fill="#1C1E23">Jina-v5-text-nano</text>
+  <text x="56" y="273"
+        font-family="Inter, system-ui, sans-serif"
+        font-size="11.5" fill="#5A6068">Text embedding model</text>
+  <text x="56" y="291"
+        font-family="'JetBrains Mono', 'Space Mono', monospace"
+        font-size="10" fill="#98A2B3">768-dim dense vectors · multilingual</text>
+  <text x="56" y="308"
+        font-family="Inter, system-ui, sans-serif"
+        font-size="10.5" fill="#C0C7D2">Used for semantic similarity during retrieval</text>
+
+  <!-- Vector dots icon -->
+  <circle cx="363" cy="262" r="5" fill="#FEC514"/>
+  <circle cx="381" cy="255" r="5" fill="#FEC514"/>
+  <circle cx="378" cy="276" r="5" fill="#FEC514"/>
+  <line x1="363" y1="262" x2="381" y2="255"
+        stroke="#FEC514" stroke-width="1" opacity="0.6"/>
+  <line x1="381" y1="255" x2="378" y2="276"
+        stroke="#FEC514" stroke-width="1" opacity="0.6"/>
+  <line x1="363" y1="262" x2="378" y2="276"
+        stroke="#FEC514" stroke-width="1" opacity="0.6"/>
+
+  <!-- Arrow 2: Jina down to ES -->
+  <line x1="217" y1="332" x2="217" y2="375"
+        stroke="#8B95A5" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="226" y="357"
+        font-family="Inter, system-ui, sans-serif"
+        font-size="9.5" fill="#B0B8C4">index vectors</text>
+
+  <!-- ======================================================= -->
+  <!-- BOX 3: User Query (query pipeline source)               -->
+  <!-- ======================================================= -->
+  <g filter="url(#cardShadow)">
+    <rect x="465" y="110" width="355" height="82" rx="8"
+          fill="white" stroke="#D3DAE6" stroke-width="1.5"/>
+  </g>
+  <rect x="465" y="110" width="4" height="82" rx="2" fill="#48EFCF"/>
+
+  <text x="481" y="133"
+        font-family="Inter, system-ui, sans-serif"
+        font-size="13" font-weight="700" fill="#1C1E23">User Query</text>
+  <text x="481" y="151"
+        font-family="Inter, system-ui, sans-serif"
+        font-size="11.5" fill="#5A6068">Search input via TUI interface</text>
+  <text x="481" y="168"
+        font-family="'JetBrains Mono', 'Space Mono', monospace"
+        font-size="10" fill="#98A2B3">natural language query string</text>
+
+  <!-- Search icon -->
+  <circle cx="792" cy="142" r="11" fill="none"
+          stroke="#48EFCF" stroke-width="2"/>
+  <line x1="800" y1="150" x2="808" y2="158"
+        stroke="#48EFCF" stroke-width="2" stroke-linecap="round"/>
+
+  <!-- Arrow 3: User Query down to ES (dashed, longer drop) -->
+  <line x1="642" y1="192" x2="642" y2="375"
+        stroke="#8B95A5" stroke-width="1.5"
+        stroke-dasharray="6,4" marker-end="url(#arr)"/>
+  <text x="651" y="295"
+        font-family="Inter, system-ui, sans-serif"
+        font-size="9.5" fill="#B0B8C4">queries at</text>
+  <text x="651" y="309"
+        font-family="Inter, system-ui, sans-serif"
+        font-size="9.5" fill="#B0B8C4">runtime</text>
+
+  <!-- ======================================================= -->
+  <!-- ELASTICSEARCH SERVERLESS: HERO BOX                      -->
+  <!-- ======================================================= -->
+  <g filter="url(#heroShadow)">
+    <rect x="40" y="380" width="780" height="222" rx="10"
+          fill="#EBF3FF" stroke="#0B64DD" stroke-width="2.5"/>
+  </g>
+  <!-- Blue header bar inside ES box (rounded top, flat bottom) -->
+  <rect x="40" y="380" width="780" height="38" rx="10" fill="#0B64DD"/>
+  <rect x="40" y="400" width="780" height="18" fill="#0B64DD"/>
+
+  <!-- ES header text -->
+  <text x="62" y="404"
+        font-family="Inter, system-ui, sans-serif"
+        font-size="14.5" font-weight="700" fill="white">Elasticsearch Serverless</text>
+  <!-- ES badge -->
+  <rect x="578" y="387" width="230" height="20" rx="10" fill="rgba(255,255,255,0.12)"/>
+  <text x="693" y="401"
+        font-family="Inter, system-ui, sans-serif"
+        font-size="9.5" fill="rgba(255,255,255,0.8)"
+        text-anchor="middle">Hybrid search · BM25 + semantic + RRF</text>
+
+  <!-- Sub-box 1: BM25 -->
+  <rect x="55" y="428" width="230" height="120" rx="6"
+        fill="white" stroke="#D3DAE6" stroke-width="1.5"/>
+  <rect x="55" y="428" width="4"   height="120" rx="2" fill="#FF957D"/>
+
+  <text x="71" y="450"
+        font-family="Inter, system-ui, sans-serif"
+        font-size="13" font-weight="700" fill="#1C1E23">BM25</text>
+  <text x="71" y="467"
+        font-family="Inter, system-ui, sans-serif"
+        font-size="11" fill="#5A6068">Keyword relevance</text>
+  <text x="71" y="483"
+        font-family="'JetBrains Mono', 'Space Mono', monospace"
+        font-size="10" fill="#98A2B3">text, title, description</text>
+  <text x="71" y="499"
+        font-family="Inter, system-ui, sans-serif"
+        font-size="10.5" fill="#C0C7D2">Term frequency ranking</text>
+  <text x="71" y="515"
+        font-family="Inter, system-ui, sans-serif"
+        font-size="10.5" fill="#C0C7D2">Inverse document frequency</text>
+  <!-- "Aa" visual hint -->
+  <text x="245" y="530"
+        font-family="Inter, system-ui, sans-serif"
+        font-size="26" font-weight="700" fill="#FFE0D0"
+        text-anchor="middle">Aa</text>
+
+  <!-- Sub-box 2: semantic_text -->
+  <rect x="300" y="428" width="230" height="120" rx="6"
+        fill="white" stroke="#D3DAE6" stroke-width="1.5"/>
+  <rect x="300" y="428" width="4"   height="120" rx="2" fill="#FEC514"/>
+
+  <text x="316" y="450"
+        font-family="Inter, system-ui, sans-serif"
+        font-size="13" font-weight="700" fill="#1C1E23">semantic_text</text>
+  <text x="316" y="467"
+        font-family="Inter, system-ui, sans-serif"
+        font-size="11" fill="#5A6068">Dense vector similarity</text>
+  <text x="316" y="483"
+        font-family="'JetBrains Mono', 'Space Mono', monospace"
+        font-size="10" fill="#98A2B3">768-dim · cosine distance</text>
+  <text x="316" y="499"
+        font-family="Inter, system-ui, sans-serif"
+        font-size="10.5" fill="#C0C7D2">Jina-v5-text-nano model</text>
+  <text x="316" y="515"
+        font-family="Inter, system-ui, sans-serif"
+        font-size="10.5" fill="#C0C7D2">k-nearest neighbour search</text>
+  <!-- Vector dots visual hint -->
+  <circle cx="500" cy="527" r="4" fill="#FEE090" opacity="0.8"/>
+  <circle cx="514" cy="521" r="4" fill="#FEE090" opacity="0.8"/>
+  <circle cx="510" cy="535" r="4" fill="#FEE090" opacity="0.8"/>
+  <line x1="500" y1="527" x2="514" y2="521" stroke="#FEC514" stroke-width="1" opacity="0.5"/>
+  <line x1="514" y1="521" x2="510" y2="535" stroke="#FEC514" stroke-width="1" opacity="0.5"/>
+
+  <!-- Sub-box 3: RRF Merge -->
+  <rect x="545" y="428" width="262" height="120" rx="6"
+        fill="white" stroke="#48EFCF" stroke-width="1.5"/>
+  <rect x="545" y="428" width="4"   height="120" rx="2" fill="#48EFCF"/>
+
+  <text x="561" y="450"
+        font-family="Inter, system-ui, sans-serif"
+        font-size="13" font-weight="700" fill="#1C1E23">RRF Merge</text>
+  <text x="561" y="467"
+        font-family="Inter, system-ui, sans-serif"
+        font-size="11" fill="#5A6068">Reciprocal Rank Fusion</text>
+  <text x="561" y="483"
+        font-family="'JetBrains Mono', 'Space Mono', monospace"
+        font-size="10" fill="#98A2B3">BM25 rank + semantic rank</text>
+  <text x="561" y="499"
+        font-family="Inter, system-ui, sans-serif"
+        font-size="10.5" fill="#C0C7D2">Blends keyword + vector scores</text>
+  <text x="561" y="515"
+        font-family="Inter, system-ui, sans-serif"
+        font-size="10.5" fill="#C0C7D2">Best-of-both-worlds retrieval</text>
+
+  <!-- Inline arrows inside ES box showing BM25 + semantic converge to RRF -->
+  <!-- Small arrow from BM25 right edge toward RRF -->
+  <path d="M 285,488 Q 315,488 315,488 L 540,488"
+        stroke="#D3DAE6" stroke-width="1.5" fill="none"
+        stroke-dasharray="3,3" marker-end="url(#arr)"/>
+  <!-- Small arrow from semantic_text right edge toward RRF -->
+
+  <!-- ======================================================= -->
+  <!-- Arrow: ES down to Claude                                 -->
+  <!-- ======================================================= -->
+  <line x1="430" y1="602" x2="430" y2="648"
+        stroke="#0B64DD" stroke-width="2" marker-end="url(#arrBlue)"/>
+  <text x="440" y="629"
+        font-family="Inter, system-ui, sans-serif"
+        font-size="9.5" fill="#0B64DD" font-weight="600">top-k results + query</text>
+
+  <!-- ======================================================= -->
+  <!-- BOX 4: Claude Haiku                                     -->
+  <!-- ======================================================= -->
+  <g filter="url(#cardShadow)">
+    <rect x="215" y="652" width="430" height="82" rx="8"
+          fill="white" stroke="#D3DAE6" stroke-width="1.5"/>
+  </g>
+  <rect x="215" y="652" width="4" height="82" rx="2" fill="#F04E98"/>
+
+  <text x="231" y="675"
+        font-family="Inter, system-ui, sans-serif"
+        font-size="13" font-weight="700" fill="#1C1E23">Claude Haiku</text>
+  <text x="231" y="693"
+        font-family="Inter, system-ui, sans-serif"
+        font-size="11.5" fill="#5A6068">LLM · RAG answer generation</text>
+  <text x="231" y="710"
+        font-family="'JetBrains Mono', 'Space Mono', monospace"
+        font-size="10" fill="#98A2B3">context window: retrieved chunks + user query</text>
+
+  <!-- Sparkle icon (LLM hint) -->
+  <text x="598" y="697"
+        font-family="Inter, system-ui, sans-serif"
+        font-size="32" fill="#FEE0EF" text-anchor="middle">&#x2733;</text>
+
+  <!-- ======================================================= -->
+  <!-- Arrow: Claude down to TUI                               -->
+  <!-- ======================================================= -->
+  <line x1="430" y1="734" x2="430" y2="778"
+        stroke="#0B64DD" stroke-width="2" marker-end="url(#arrBlue)"/>
+  <text x="440" y="760"
+        font-family="Inter, system-ui, sans-serif"
+        font-size="9.5" fill="#0B64DD" font-weight="600">RAG answer</text>
+
+  <!-- ======================================================= -->
+  <!-- BOX 5: TUI Interface                                    -->
+  <!-- ======================================================= -->
+  <g filter="url(#cardShadow)">
+    <rect x="215" y="782" width="430" height="82" rx="8"
+          fill="white" stroke="#D3DAE6" stroke-width="1.5"/>
+  </g>
+  <rect x="215" y="782" width="4" height="82" rx="2" fill="#36B37E"/>
+
+  <text x="231" y="805"
+        font-family="Inter, system-ui, sans-serif"
+        font-size="13" font-weight="700" fill="#1C1E23">TUI Interface</text>
+  <text x="231" y="823"
+        font-family="Inter, system-ui, sans-serif"
+        font-size="11.5" fill="#5A6068">Search results + AI answer in terminal</text>
+  <text x="231" y="840"
+        font-family="'JetBrains Mono', 'Space Mono', monospace"
+        font-size="10" fill="#98A2B3">Built with Pi agent · Elasticsearch + Claude</text>
+
+  <!-- Code bracket icon -->
+  <text x="596" y="830"
+        font-family="'JetBrains Mono', 'Space Mono', monospace"
+        font-size="28" fill="#D0EDE2" text-anchor="middle">&gt;_</text>
+
+  <!-- ======================================================= -->
+  <!-- FOOTER                                                   -->
+  <!-- ======================================================= -->
+  <line x1="40" y1="886" x2="820" y2="886"
+        stroke="#D3DAE6" stroke-width="1"/>
+
+  <!-- Tech pills -->
+  <rect x="40"  y="898" width="184" height="24" rx="12"
+        fill="#EBF3FF" stroke="#0B64DD" stroke-width="1"/>
+  <text x="132" y="914"
+        font-family="Inter, system-ui, sans-serif"
+        font-size="10" fill="#0B64DD" font-weight="600"
+        text-anchor="middle">Elasticsearch Serverless</text>
+
+  <rect x="234" y="898" width="148" height="24" rx="12"
+        fill="#FFFBEB" stroke="#FEC514" stroke-width="1"/>
+  <text x="308" y="914"
+        font-family="Inter, system-ui, sans-serif"
+        font-size="10" fill="#92700A" font-weight="600"
+        text-anchor="middle">Jina-v5-text-nano</text>
+
+  <rect x="392" y="898" width="116" height="24" rx="12"
+        fill="#FEF0F6" stroke="#F04E98" stroke-width="1"/>
+  <text x="450" y="914"
+        font-family="Inter, system-ui, sans-serif"
+        font-size="10" fill="#A0185C" font-weight="600"
+        text-anchor="middle">Claude Haiku</text>
+
+  <rect x="518" y="898" width="80" height="24" rx="12"
+        fill="#F0FFF8" stroke="#36B37E" stroke-width="1"/>
+  <text x="558" y="914"
+        font-family="Inter, system-ui, sans-serif"
+        font-size="10" fill="#1A6940" font-weight="600"
+        text-anchor="middle">Pi agent</text>
+
+  <!-- Source ref text -->
+  <text x="40" y="956"
+        font-family="Inter, system-ui, sans-serif"
+        font-size="11" fill="#B0B8C4">
+    github.com/backnotprop/plannotator · elastic.co/elasticsearch-serverless
+  </text>
+
+  <!-- Elastic logo (bottom right, scale 0.18) -->
+  <g transform="translate(694, 926) scale(0.18)">
+    <path d="M232.957 153.223C232.971 147.219 231.128 141.358 227.681 136.442C224.234 131.526 219.352 127.797 213.703 125.764C214.217 123.144 214.476 120.48 214.476 117.809C214.481 108.971 211.684 100.358 206.485 93.2094C201.286 86.061 193.955 80.7452 185.545 78.0262C177.135 75.3072 168.079 75.3251 159.679 78.0774C151.28 80.8296 143.97 86.1744 138.8 93.3433C134.985 90.3875 130.311 88.7553 125.486 88.6939C120.661 88.6325 115.947 90.1454 112.059 93.0033C108.17 95.8612 105.32 99.9085 103.938 104.532C102.556 109.156 102.718 114.103 104.401 118.626C98.7383 120.69 93.8436 124.439 90.3751 129.368C86.9067 134.297 85.0309 140.17 85.0001 146.197C84.9844 152.221 86.8366 158.103 90.3018 163.031C93.767 167.959 98.6748 171.692 104.349 173.716C103.847 176.335 103.591 178.995 103.584 181.662C103.576 190.49 106.371 199.094 111.568 206.231C116.764 213.368 124.093 218.671 132.497 221.374C140.902 224.077 149.948 224.042 158.331 221.272C166.714 218.503 174 213.142 179.141 205.964C182.944 208.928 187.61 210.57 192.43 210.642C197.251 210.714 201.964 209.212 205.854 206.363C209.744 203.515 212.599 199.475 213.986 194.858C215.373 190.24 215.216 185.296 213.539 180.776C219.205 178.716 224.103 174.968 227.573 170.039C231.043 165.109 232.92 159.234 232.949 153.206" fill="#D8DEE6"/>
+    <path d="M143.168 139.48L175.546 154.263L208.225 125.643C208.695 123.282 208.929 120.879 208.921 118.471C208.92 110.676 206.423 103.085 201.797 96.8108C197.171 90.5362 190.658 85.907 183.211 83.6003C175.765 81.2937 167.775 81.4308 160.412 83.9917C153.049 86.5525 146.699 91.4026 142.291 97.8322L136.848 125.987L143.168 139.48Z" fill="#FEC514"/>
+    <path d="M109.655 173.767C109.178 176.166 108.939 178.606 108.941 181.051C108.942 188.879 111.451 196.501 116.101 202.798C120.752 209.095 127.298 213.736 134.78 216.039C142.261 218.342 150.284 218.186 157.671 215.594C165.057 213.003 171.419 208.112 175.821 201.639L181.213 173.544L174.015 159.784L141.517 144.976L109.655 173.767Z" fill="#02BCB7"/>
+    <path d="M109.457 117.74L131.644 122.978L136.503 97.7463C133.485 95.458 129.808 94.2088 126.02 94.1857C122.233 94.1627 118.541 95.367 115.495 97.6184C112.45 99.8698 110.216 103.047 109.127 106.674C108.039 110.302 108.155 114.184 109.457 117.74Z" fill="#F04E98"/>
+    <path d="M107.531 123.021C102.663 124.663 98.4279 127.782 95.4147 131.944C92.4015 136.105 90.7601 141.102 90.7188 146.24C90.7153 151.205 92.2231 156.054 95.0419 160.141C97.8607 164.229 101.857 167.362 106.499 169.123L137.63 140.985L131.911 128.774L107.531 123.021Z" fill="#45A8FF"/>
+    <path d="M181.514 201.639C184.527 203.916 188.196 205.157 191.972 205.177C195.748 205.197 199.43 203.995 202.467 201.75C205.503 199.506 207.733 196.339 208.822 192.723C209.911 189.107 209.801 185.236 208.508 181.688L186.339 176.528L181.514 201.639Z" fill="#9ADC30"/>
+    <path d="M186.02 170.689L210.426 176.39C215.297 174.752 219.535 171.634 222.549 167.472C225.563 163.309 227.202 158.31 227.239 153.171C227.234 148.216 225.723 143.38 222.906 139.304C220.09 135.227 216.1 132.104 211.467 130.348L179.545 158.296L186.02 170.689Z" fill="#0B64DD"/>
+    <path d="M291.873 179.546L294.832 179.245L295.038 185.265C288.455 186.259 281.812 186.805 275.156 186.899C267.817 186.899 262.617 184.775 259.556 180.526C256.494 176.278 254.966 169.668 254.972 160.696C254.972 142.826 262.075 133.888 276.282 133.882C283.162 133.882 288.293 135.803 291.676 139.644C295.058 143.485 296.755 149.505 296.767 157.703L296.362 163.516H262.72C262.72 169.158 263.741 173.337 265.782 176.055C267.823 178.772 271.372 180.131 276.428 180.131C281.496 180.148 286.645 179.953 291.873 179.546ZM289.121 157.428C289.121 151.173 288.121 146.756 286.12 144.176C284.119 141.596 280.857 140.303 276.334 140.297C271.81 140.297 268.411 141.656 266.135 144.374C263.859 147.091 262.686 151.442 262.617 157.428H289.121Z" fill="#1C1E23"/>
+    <path d="M307.43 186.495V119.417H315.075V186.495H307.43Z" fill="#1C1E23"/>
+    <path d="M363.225 150.29V176.003C363.225 178.583 369.571 178.446 369.571 178.446L369.184 185.205C363.81 185.205 359.364 185.652 356.698 183.064C350.925 185.628 344.671 186.932 338.355 186.89C333.671 186.89 330.102 185.563 327.648 182.909C325.194 180.254 323.97 176.439 323.976 171.463C323.976 166.498 325.234 162.843 327.751 160.498C330.268 158.153 334.21 156.72 339.576 156.198L355.58 154.676V150.29C355.58 146.85 354.835 144.368 353.344 142.843C352.527 142.076 351.563 141.483 350.511 141.099C349.459 140.714 348.34 140.547 347.221 140.607H327.132V133.874H346.714C352.493 133.874 356.689 135.201 359.303 137.855C361.918 140.51 363.225 144.655 363.225 150.29ZM331.81 171.084C331.81 177.339 334.39 180.466 339.55 180.466C344.205 180.461 348.825 179.667 353.215 178.119L355.554 177.302V160.481L340.496 161.908C337.435 162.184 335.224 163.066 333.866 164.557C332.507 166.048 331.822 168.223 331.81 171.084Z" fill="#1C1E23"/>
+    <path d="M393.074 140.71C385.661 140.71 381.955 143.29 381.955 148.45C381.955 150.835 382.815 152.518 384.535 153.498C386.255 154.478 390.127 155.499 396.153 156.559C402.207 157.62 406.49 159.099 409.001 160.997C411.512 162.894 412.77 166.46 412.776 171.695C412.776 176.935 411.093 180.776 407.728 183.218C404.363 185.661 399.452 186.885 392.997 186.89C388.783 186.89 374.714 185.325 374.714 185.325L375.127 178.703C383.21 179.477 389.049 180.054 392.997 180.054C396.944 180.054 399.945 179.426 402.018 178.17C404.09 176.915 405.122 174.808 405.122 171.85C405.122 168.891 404.262 166.888 402.474 165.83C400.685 164.772 396.832 163.774 390.855 162.82C384.879 161.865 380.622 160.472 378.111 158.64C375.6 156.809 374.335 153.403 374.335 148.441C374.335 143.479 376.055 139.842 379.59 137.434C383.124 135.026 387.459 133.865 392.687 133.865C396.832 133.865 411.219 134.923 411.219 134.923V141.587C403.626 141.252 397.417 140.71 393.074 140.71Z" fill="#1C1E23"/>
+    <path d="M449.626 141.519H433.415V165.89C433.415 171.732 433.84 175.57 434.688 177.405C435.548 179.245 437.56 180.157 440.751 180.157L449.824 179.546L450.34 185.867C446.904 186.502 443.426 186.879 439.934 186.993C434.637 186.993 430.967 185.701 428.926 183.115C426.885 180.529 425.868 175.602 425.874 168.332V141.519H418.667V134.897H425.908V119.297H433.45V134.897H449.626V141.519Z" fill="#1C1E23"/>
+    <path d="M460.254 128.387V119.512H467.899V128.387H460.254ZM460.254 186.495V134.897H467.899V186.495H460.254Z" fill="#1C1E23"/>
+    <path d="M501.017 133.874C504.835 134.037 508.638 134.447 512.403 135.103L514.845 135.404L514.544 141.622C510.549 141.116 506.531 140.811 502.505 140.71C496.726 140.71 492.802 142.086 490.732 144.838C488.662 147.59 487.625 152.687 487.619 160.128C487.619 167.581 488.588 172.764 490.526 175.676C492.463 178.589 496.505 180.051 502.651 180.062L514.691 179.151L515 185.471C510.314 186.265 505.579 186.742 500.828 186.899C492.882 186.899 487.395 184.858 484.368 180.776C481.341 176.694 479.828 169.814 479.828 160.137C479.828 150.454 481.459 143.657 484.721 139.747C487.983 135.837 493.415 133.879 501.017 133.874Z" fill="#1C1E23"/>
+  </g>
+
+</svg>
