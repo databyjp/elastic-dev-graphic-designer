@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="4800" height="2700" viewBox="0 0 4800 2700" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Background -->
+    <path fill="#f0f3f8" stroke="none" d="M 0 0 L 4800 0 L 4800 2700 L 0 2700 Z"/>
+
+    <!-- Grid pattern overlay -->
+    <defs>
+        <pattern id="gridPattern" x="0" y="0" width="360" height="360" patternUnits="userSpaceOnUse">
+            <path d="M 360 0 L 0 0 L 0 360" fill="none" stroke="#CBD2DC" stroke-width="0.5" opacity="0.5"/>
+        </pattern>
+        <!-- Card shadow filter -->
+        <filter id="cardShadow" filterUnits="userSpaceOnUse" x="-50" y="-50" width="5000" height="3000">
+            <feDropShadow dx="3" dy="6" stdDeviation="18" flood-color="#000000" flood-opacity="0.12"/>
+        </filter>
+        <!-- Checkmark -->
+        <symbol id="checkmark" viewBox="0 0 40 40">
+            <circle cx="20" cy="20" r="18" fill="#36B37E"/>
+            <path d="M 12 20 L 18 26 L 28 14" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </symbol>
+        <!-- Cross mark -->
+        <symbol id="crossmark" viewBox="0 0 40 40">
+            <circle cx="20" cy="20" r="18" fill="#D94C4C"/>
+            <path d="M 14 14 L 26 26 M 26 14 L 14 26" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round"/>
+        </symbol>
+        <!-- Partial mark (tilde/dash) -->
+        <symbol id="partialmark" viewBox="0 0 40 40">
+            <circle cx="20" cy="20" r="18" fill="#FEC514"/>
+            <path d="M 12 20 L 28 20" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round"/>
+        </symbol>
+    </defs>
+    <rect width="4800" height="2700" fill="url(#gridPattern)" opacity="0.3"/>
+
+    <!-- ============ TITLE BLOCK ============ -->
+    <text x="141" y="188" font-family="Inter, system-ui, sans-serif" font-size="144" font-weight="700" fill="#1c1e23" letter-spacing="-3.4">How to Search Videos?</text>
+    <text x="141" y="280" font-family="Inter, system-ui, sans-serif" font-size="60" font-weight="400" fill="#5A6068">Three approaches — from metadata to truly multimodal</text>
+
+    <!-- ============ BRANDING BADGE (top-right) ============ -->
+    <g transform="translate(4300, 40)">
+        <rect x="0" y="0" width="440" height="110" rx="40" fill="#F0F3F8" stroke="#FEC514" stroke-width="8"/>
+        <!-- placeholder for logo -->
+        <text x="60" y="70" font-family="Inter, system-ui, sans-serif" font-size="42" font-weight="700" fill="#1C1E23">elastic</text>
+        <line x1="240" y1="20" x2="240" y2="90" stroke="#D3DAE6" stroke-width="2"/>
+        <text x="270" y="70" font-family="Inter, system-ui, sans-serif" font-size="42" font-weight="700" fill="#F04E98">jina</text>
+    </g>
+
+    <!-- ============ COLUMN HEADERS ============ -->
+    <!-- Three columns: METADATA | TRANSCRIPT | VIDEO (OMNIMODAL) -->
+
+    <!-- Column positions -->
+    <!-- Col 1: x=100..1500  Col 2: x=1650..3050  Col 3: x=3200..4700 -->
+
+    <!-- ============ APPROACH 1: METADATA ============ -->
+    <g transform="translate(100, 360)">
+        <!-- Header label -->
+        <text x="0" y="50" font-family="Inter, system-ui, sans-serif" font-size="54" font-weight="700" fill="#0B64DD" letter-spacing="4">① METADATA</text>
+        <text x="0" y="110" font-family="Inter, system-ui, sans-serif" font-size="42" font-weight="400" fill="#5A6068">The classical approach</text>
+
+        <!-- Card -->
+        <rect x="0" y="150" width="1350" height="900" rx="24" fill="#ffffff" stroke="#0B64DD" stroke-width="7.5" filter="url(#cardShadow)"/>
+
+        <!-- Video icon placeholder -->
+        <rect x="60" y="200" width="280" height="180" rx="16" fill="#E6EBF2" stroke="#D3DAE6" stroke-width="3"/>
+        <text x="200" y="300" font-family="Inter, system-ui, sans-serif" font-size="72" fill="#98A2B3" text-anchor="middle">🎬</text>
+
+        <!-- Arrow -->
+        <path d="M 380 290 L 480 290" fill="none" stroke="#5A6068" stroke-width="6" stroke-linecap="round"/>
+        <polygon points="480,280 500,290 480,300" fill="#5A6068"/>
+
+        <!-- Metadata box -->
+        <rect x="520" y="200" width="770" height="180" rx="16" fill="#1C1E23"/>
+        <text x="560" y="260" font-family="'Space Mono', 'JetBrains Mono', monospace" font-size="32" fill="#0B64DD">"title"</text>
+        <text x="770" y="260" font-family="'Space Mono', 'JetBrains Mono', monospace" font-size="32" fill="#5A6068">: </text>
+        <text x="810" y="260" font-family="'Space Mono', 'JetBrains Mono', monospace" font-size="32" fill="#36B37E">"My Video"</text>
+        <text x="560" y="310" font-family="'Space Mono', 'JetBrains Mono', monospace" font-size="32" fill="#0B64DD">"description"</text>
+        <text x="920" y="310" font-family="'Space Mono', 'JetBrains Mono', monospace" font-size="32" fill="#5A6068">: </text>
+        <text x="960" y="310" font-family="'Space Mono', 'JetBrains Mono', monospace" font-size="32" fill="#36B37E">"..."</text>
+        <text x="560" y="360" font-family="'Space Mono', 'JetBrains Mono', monospace" font-size="32" fill="#0B64DD">"tags"</text>
+        <text x="720" y="360" font-family="'Space Mono', 'JetBrains Mono', monospace" font-size="32" fill="#5A6068">: </text>
+        <text x="760" y="360" font-family="'Space Mono', 'JetBrains Mono', monospace" font-size="32" fill="#36B37E">["cat","funny"]</text>
+
+        <!-- Divider -->
+        <line x1="60" y1="430" x2="1290" y2="430" stroke="#D3DAE6" stroke-width="3"/>
+
+        <!-- "What you can search" section -->
+        <text x="60" y="490" font-family="Inter, system-ui, sans-serif" font-size="42" font-weight="700" fill="#3D4250">What you can search</text>
+
+        <!-- Searchable items with check/cross -->
+        <g transform="translate(60, 520)">
+            <use href="#checkmark" x="0" y="0" width="40" height="40"/>
+            <text x="55" y="30" font-family="Inter, system-ui, sans-serif" font-size="38" font-weight="400" fill="#3D4250">Title &amp; description</text>
+        </g>
+        <g transform="translate(60, 580)">
+            <use href="#crossmark" x="0" y="0" width="40" height="40"/>
+            <text x="55" y="30" font-family="Inter, system-ui, sans-serif" font-size="38" font-weight="400" fill="#98A2B3">What was said</text>
+        </g>
+        <g transform="translate(60, 640)">
+            <use href="#crossmark" x="0" y="0" width="40" height="40"/>
+            <text x="55" y="30" font-family="Inter, system-ui, sans-serif" font-size="38" font-weight="400" fill="#98A2B3">What was shown</text>
+        </g>
+        <g transform="translate(60, 700)">
+            <use href="#crossmark" x="0" y="0" width="40" height="40"/>
+            <text x="55" y="30" font-family="Inter, system-ui, sans-serif" font-size="38" font-weight="400" fill="#98A2B3">Sounds &amp; music</text>
+        </g>
+
+        <!-- Summary callout -->
+        <text x="60" y="830" font-family="Inter, system-ui, sans-serif" font-size="36" font-weight="700" fill="#0B64DD">What it's about</text>
+        <text x="500" y="830" font-family="Inter, system-ui, sans-serif" font-size="36" font-weight="400" fill="#5A6068">— but not what's in it</text>
+    </g>
+
+    <!-- ============ APPROACH 2: TRANSCRIPT ============ -->
+    <g transform="translate(1650, 360)">
+        <!-- Header label -->
+        <text x="0" y="50" font-family="Inter, system-ui, sans-serif" font-size="54" font-weight="700" fill="#F04E98" letter-spacing="4">② TRANSCRIPT</text>
+        <text x="0" y="110" font-family="Inter, system-ui, sans-serif" font-size="42" font-weight="400" fill="#5A6068">The modern approach</text>
+
+        <!-- Card -->
+        <rect x="0" y="150" width="1350" height="900" rx="24" fill="#ffffff" stroke="#F04E98" stroke-width="7.5" filter="url(#cardShadow)"/>
+
+        <!-- Video icon placeholder -->
+        <rect x="60" y="200" width="280" height="180" rx="16" fill="#E6EBF2" stroke="#D3DAE6" stroke-width="3"/>
+        <text x="200" y="300" font-family="Inter, system-ui, sans-serif" font-size="72" fill="#98A2B3" text-anchor="middle">🎬</text>
+
+        <!-- Arrow -->
+        <path d="M 380 290 L 480 290" fill="none" stroke="#5A6068" stroke-width="6" stroke-linecap="round"/>
+        <polygon points="480,280 500,290 480,300" fill="#5A6068"/>
+
+        <!-- Whisper/Transcript box -->
+        <rect x="520" y="195" width="770" height="80" rx="12" fill="#FF957D" stroke="#FF957D" stroke-width="3"/>
+        <text x="560" y="248" font-family="'Space Mono', 'JetBrains Mono', monospace" font-size="36" font-weight="700" fill="#ffffff">Whisper</text>
+        <text x="800" y="248" font-family="Inter, system-ui, sans-serif" font-size="32" font-weight="400" fill="#ffffff">→ transcript</text>
+
+        <!-- Transcript text block -->
+        <rect x="520" y="290" width="770" height="90" rx="12" fill="#1C1E23"/>
+        <text x="560" y="335" font-family="'Space Mono', 'JetBrains Mono', monospace" font-size="28" fill="#36B37E">"Hello everyone, today we'll</text>
+        <text x="560" y="368" font-family="'Space Mono', 'JetBrains Mono', monospace" font-size="28" fill="#36B37E"> look at how to build..."</text>
+
+        <!-- Divider -->
+        <line x1="60" y1="430" x2="1290" y2="430" stroke="#D3DAE6" stroke-width="3"/>
+
+        <!-- "What you can search" section -->
+        <text x="60" y="490" font-family="Inter, system-ui, sans-serif" font-size="42" font-weight="700" fill="#3D4250">What you can search</text>
+
+        <!-- Searchable items -->
+        <g transform="translate(60, 520)">
+            <use href="#checkmark" x="0" y="0" width="40" height="40"/>
+            <text x="55" y="30" font-family="Inter, system-ui, sans-serif" font-size="38" font-weight="400" fill="#3D4250">Title &amp; description</text>
+        </g>
+        <g transform="translate(60, 580)">
+            <use href="#checkmark" x="0" y="0" width="40" height="40"/>
+            <text x="55" y="30" font-family="Inter, system-ui, sans-serif" font-size="38" font-weight="400" fill="#3D4250">What was said</text>
+        </g>
+        <g transform="translate(60, 640)">
+            <use href="#crossmark" x="0" y="0" width="40" height="40"/>
+            <text x="55" y="30" font-family="Inter, system-ui, sans-serif" font-size="38" font-weight="400" fill="#98A2B3">What was shown</text>
+        </g>
+        <g transform="translate(60, 700)">
+            <use href="#crossmark" x="0" y="0" width="40" height="40"/>
+            <text x="55" y="30" font-family="Inter, system-ui, sans-serif" font-size="38" font-weight="400" fill="#98A2B3">Sounds &amp; music</text>
+        </g>
+
+        <!-- Summary callout -->
+        <text x="60" y="830" font-family="Inter, system-ui, sans-serif" font-size="36" font-weight="700" fill="#F04E98">What was said</text>
+        <text x="440" y="830" font-family="Inter, system-ui, sans-serif" font-size="36" font-weight="400" fill="#5A6068">— but not what was shown</text>
+    </g>
+
+    <!-- ============ APPROACH 3: OMNIMODAL ============ -->
+    <g transform="translate(3200, 360)">
+        <!-- Header label -->
+        <text x="0" y="50" font-family="Inter, system-ui, sans-serif" font-size="54" font-weight="700" fill="#36B37E" letter-spacing="4">③ OMNIMODAL</text>
+        <text x="0" y="110" font-family="Inter, system-ui, sans-serif" font-size="42" font-weight="400" fill="#5A6068">The complete approach</text>
+
+        <!-- Card with thicker border to emphasize -->
+        <rect x="0" y="150" width="1500" height="900" rx="24" fill="#ffffff" stroke="#36B37E" stroke-width="9" filter="url(#cardShadow)"/>
+
+        <!-- Video icon placeholder -->
+        <rect x="60" y="200" width="280" height="180" rx="16" fill="#E6EBF2" stroke="#D3DAE6" stroke-width="3"/>
+        <text x="200" y="300" font-family="Inter, system-ui, sans-serif" font-size="72" fill="#98A2B3" text-anchor="middle">🎬</text>
+
+        <!-- Arrow -->
+        <path d="M 380 290 L 480 290" fill="none" stroke="#5A6068" stroke-width="6" stroke-linecap="round"/>
+        <polygon points="480,280 500,290 480,300" fill="#5A6068"/>
+
+        <!-- Omnimodal encoder box -->
+        <rect x="520" y="195" width="920" height="190" rx="16" fill="#FEC514" stroke="#FEC514" stroke-width="3"/>
+        <text x="560" y="250" font-family="Inter, system-ui, sans-serif" font-size="36" font-weight="700" fill="#1C1E23">EMBED</text>
+        <text x="560" y="300" font-family="'Space Mono', 'JetBrains Mono', monospace" font-size="34" font-weight="700" fill="#1C1E23">jina-embeddings-v5-omni</text>
+        <text x="560" y="350" font-family="Inter, system-ui, sans-serif" font-size="30" font-weight="400" fill="#3D4250">Embeds the entire video — visuals, audio, text</text>
+
+        <!-- Divider -->
+        <line x1="60" y1="430" x2="1440" y2="430" stroke="#D3DAE6" stroke-width="3"/>
+
+        <!-- "What you can search" section -->
+        <text x="60" y="490" font-family="Inter, system-ui, sans-serif" font-size="42" font-weight="700" fill="#3D4250">What you can search</text>
+
+        <!-- Searchable items — ALL checked -->
+        <g transform="translate(60, 520)">
+            <use href="#checkmark" x="0" y="0" width="40" height="40"/>
+            <text x="55" y="30" font-family="Inter, system-ui, sans-serif" font-size="38" font-weight="400" fill="#3D4250">Title &amp; description</text>
+        </g>
+        <g transform="translate(60, 580)">
+            <use href="#checkmark" x="0" y="0" width="40" height="40"/>
+            <text x="55" y="30" font-family="Inter, system-ui, sans-serif" font-size="38" font-weight="400" fill="#3D4250">What was said</text>
+        </g>
+        <g transform="translate(60, 640)">
+            <use href="#checkmark" x="0" y="0" width="40" height="40"/>
+            <text x="55" y="30" font-family="Inter, system-ui, sans-serif" font-size="38" font-weight="700" fill="#36B37E">What was shown</text>
+        </g>
+        <g transform="translate(60, 700)">
+            <use href="#checkmark" x="0" y="0" width="40" height="40"/>
+            <text x="55" y="30" font-family="Inter, system-ui, sans-serif" font-size="38" font-weight="700" fill="#36B37E">Sounds, music &amp; audio</text>
+        </g>
+
+        <!-- Modality pills -->
+        <g transform="translate(60, 780)">
+            <rect x="0" y="0" width="120" height="44" rx="10" fill="#02bcb7"/>
+            <text x="60" y="30" font-family="Inter, system-ui, sans-serif" font-size="28" font-weight="700" fill="white" text-anchor="middle">video</text>
+            <rect x="140" y="0" width="120" height="44" rx="10" fill="#02bcb7"/>
+            <text x="200" y="30" font-family="Inter, system-ui, sans-serif" font-size="28" font-weight="700" fill="white" text-anchor="middle">audio</text>
+            <rect x="280" y="0" width="120" height="44" rx="10" fill="#FEC514"/>
+            <text x="340" y="30" font-family="Inter, system-ui, sans-serif" font-size="28" font-weight="700" fill="#D4A017" text-anchor="middle">image</text>
+            <rect x="420" y="0" width="100" height="44" rx="10" fill="#F04E98"/>
+            <text x="470" y="30" font-family="Inter, system-ui, sans-serif" font-size="28" font-weight="700" fill="white" text-anchor="middle">text</text>
+        </g>
+
+        <!-- Summary callout -->
+        <text x="60" y="880" font-family="Inter, system-ui, sans-serif" font-size="36" font-weight="700" fill="#36B37E">Everything</text>
+        <text x="330" y="880" font-family="Inter, system-ui, sans-serif" font-size="36" font-weight="400" fill="#5A6068">— what's about, said, shown &amp; heard</text>
+    </g>
+
+    <!-- ============ BOTTOM COMPARISON TABLE ============ -->
+    <g transform="translate(100, 1440)">
+        <rect x="0" y="0" width="4600" height="720" rx="24" fill="#ffffff" stroke="#8B95A5" stroke-width="6" filter="url(#cardShadow)"/>
+
+        <!-- Table header -->
+        <text x="60" y="70" font-family="Inter, system-ui, sans-serif" font-size="48" font-weight="700" fill="#1C1E23" letter-spacing="5">COMPARISON</text>
+
+        <!-- Header row labels -->
+        <text x="60" y="140" font-family="Inter, system-ui, sans-serif" font-size="40" font-weight="700" fill="#5A6068">Approach</text>
+        <text x="900" y="140" font-family="Inter, system-ui, sans-serif" font-size="40" font-weight="700" fill="#5A6068">Source</text>
+        <text x="1800" y="140" font-family="Inter, system-ui, sans-serif" font-size="40" font-weight="700" fill="#5A6068">Captures</text>
+        <text x="3200" y="140" font-family="Inter, system-ui, sans-serif" font-size="40" font-weight="700" fill="#5A6068">Misses</text>
+
+        <line x1="40" y1="160" x2="4560" y2="160" stroke="#D3DAE6" stroke-width="3"/>
+
+        <!-- Row 1: Metadata -->
+        <g transform="translate(0, 180)">
+            <rect x="40" y="0" width="18" height="60" rx="4" fill="#0B64DD"/>
+            <text x="80" y="42" font-family="Inter, system-ui, sans-serif" font-size="42" font-weight="700" fill="#1C1E23">Metadata</text>
+            <text x="900" y="42" font-family="Inter, system-ui, sans-serif" font-size="38" font-weight="400" fill="#5A6068">Title, description, tags</text>
+            <text x="1800" y="42" font-family="Inter, system-ui, sans-serif" font-size="38" font-weight="400" fill="#3D4250">What the video is about</text>
+            <text x="3200" y="42" font-family="Inter, system-ui, sans-serif" font-size="38" font-weight="700" fill="#D94C4C">Spoken words, visuals, audio</text>
+        </g>
+
+        <line x1="40" y1="260" x2="4560" y2="260" stroke="#D3DAE6" stroke-width="2"/>
+
+        <!-- Row 2: Transcript -->
+        <g transform="translate(0, 280)">
+            <rect x="40" y="0" width="18" height="60" rx="4" fill="#F04E98"/>
+            <text x="80" y="42" font-family="Inter, system-ui, sans-serif" font-size="42" font-weight="700" fill="#1C1E23">Transcript</text>
+            <text x="900" y="42" font-family="Inter, system-ui, sans-serif" font-size="38" font-weight="400" fill="#5A6068">Whisper-extracted text</text>
+            <text x="1800" y="42" font-family="Inter, system-ui, sans-serif" font-size="38" font-weight="400" fill="#3D4250">What was said in the video</text>
+            <text x="3200" y="42" font-family="Inter, system-ui, sans-serif" font-size="38" font-weight="700" fill="#D94C4C">Visuals, music, non-verbal audio</text>
+        </g>
+
+        <line x1="40" y1="360" x2="4560" y2="360" stroke="#D3DAE6" stroke-width="2"/>
+
+        <!-- Row 3: Omnimodal (highlighted) -->
+        <g transform="translate(0, 380)">
+            <rect x="30" y="-10" width="4540" height="80" rx="12" fill="#f0fff4" stroke="#36B37E" stroke-width="2"/>
+            <rect x="40" y="0" width="18" height="60" rx="4" fill="#36B37E"/>
+            <text x="80" y="42" font-family="Inter, system-ui, sans-serif" font-size="42" font-weight="700" fill="#1C1E23">Omnimodal</text>
+            <text x="900" y="42" font-family="Inter, system-ui, sans-serif" font-size="38" font-weight="400" fill="#5A6068">Video, audio, images, text</text>
+            <text x="1800" y="42" font-family="Inter, system-ui, sans-serif" font-size="38" font-weight="700" fill="#36B37E">Everything — said, shown &amp; heard</text>
+            <text x="3200" y="42" font-family="Inter, system-ui, sans-serif" font-size="38" font-weight="400" fill="#3D4250">Nothing — full content</text>
+        </g>
+
+        <line x1="40" y1="480" x2="4560" y2="480" stroke="#D3DAE6" stroke-width="2"/>
+
+        <!-- Key insight row -->
+        <g transform="translate(40, 510)">
+            <text x="0" y="40" font-family="Inter, system-ui, sans-serif" font-size="40" font-weight="700" fill="#1C1E23">Key insight:</text>
+            <text x="290" y="40" font-family="Inter, system-ui, sans-serif" font-size="38" font-weight="400" fill="#5A6068">Metadata and transcripts tell you what a video is </text>
+            <text x="1590" y="40" font-family="Inter, system-ui, sans-serif" font-size="38" font-weight="700" fill="#1C1E23">about</text>
+            <text x="1710" y="40" font-family="Inter, system-ui, sans-serif" font-size="38" font-weight="400" fill="#5A6068"> or what was </text>
+            <text x="2090" y="40" font-family="Inter, system-ui, sans-serif" font-size="38" font-weight="700" fill="#1C1E23">said</text>
+            <text x="2210" y="40" font-family="Inter, system-ui, sans-serif" font-size="38" font-weight="400" fill="#5A6068">.</text>
+        </g>
+        <g transform="translate(40, 560)">
+            <text x="0" y="40" font-family="Inter, system-ui, sans-serif" font-size="38" font-weight="400" fill="#5A6068">Jina's </text>
+            <text x="140" y="40" font-family="'Space Mono', 'JetBrains Mono', monospace" font-size="36" font-weight="700" fill="#0B64DD">jina-embeddings-v5-omni</text>
+            <text x="920" y="40" font-family="Inter, system-ui, sans-serif" font-size="38" font-weight="400" fill="#5A6068"> embeds what was </text>
+            <text x="1430" y="40" font-family="Inter, system-ui, sans-serif" font-size="38" font-weight="700" fill="#36B37E">shown</text>
+            <text x="1590" y="40" font-family="Inter, system-ui, sans-serif" font-size="38" font-weight="400" fill="#5A6068">, </text>
+            <text x="1620" y="40" font-family="Inter, system-ui, sans-serif" font-size="38" font-weight="700" fill="#36B37E">heard</text>
+            <text x="1780" y="40" font-family="Inter, system-ui, sans-serif" font-size="38" font-weight="400" fill="#5A6068">, and </text>
+            <text x="1910" y="40" font-family="Inter, system-ui, sans-serif" font-size="38" font-weight="700" fill="#36B37E">said</text>
+            <text x="2030" y="40" font-family="Inter, system-ui, sans-serif" font-size="38" font-weight="400" fill="#5A6068"> — all into one vector space.</text>
+        </g>
+    </g>
+
+    <!-- ============ FOOTER ============ -->
+    <g transform="translate(100, 2620)">
+        <text x="0" y="40" font-family="'Space Mono', 'JetBrains Mono', monospace" font-size="33" font-weight="700" fill="#98A2B3" letter-spacing="2">SEARCH</text>
+        <text x="250" y="40" font-family="Inter, system-ui, sans-serif" font-size="33" font-weight="400" fill="#98A2B3">· Three approaches to video search</text>
+    </g>
+</svg>
