@@ -289,6 +289,171 @@ This is more reliable than `xml:space="preserve"` (which resvg may not fully sup
 
 ---
 
+## Design System — Pipeline & Architecture Diagrams
+
+For large-format pipeline/flow diagrams (e.g. ingestion flows, search architectures), a different set of patterns applies compared to the compact cheat-sheet style above. These diagrams are designed for **video/streaming presentation** at 16:9 aspect ratio.
+
+### Reference Examples
+All pipeline references are in `references/` with matching PNG renders:
+- **Search pipeline**: `references/202607-search-pipeline.svg` (.png) — multi-path search with converging kNN
+- **Ingestion pipeline**: `references/202607-omnimodal-ingestion.svg` (.png) — video indexing flow with forking paths, unified encoder, ES output
+- **Architecture overview**: `references/202607-omnimodal-architecture.svg` (.png) — system components diagram
+
+### Canvas & Aspect Ratio
+- **Canvas**: 4800×2700 (16:9 ratio) for YouTube/streaming-friendly dimensions
+- **Background**: `#F0F3F8` full-canvas fill, same as cheat-sheet style
+- **Grid overlay**: Use a `<pattern>` fill on the canvas border (`stroke="#5a6068" stroke-width="7.5"`) for subtle grid texture
+- **Decorative watermark**: Elastic cluster illustration at low opacity (`0.1–0.25`) behind content, clipped to canvas area
+
+### Font Size Hierarchy for Streaming Readability
+Pipeline diagrams must be readable on video streams and presentation screens. Use much larger fonts than cheat-sheets:
+
+| Element | Font | Size | Weight | Color | Notes |
+|---------|------|------|--------|-------|-------|
+| **Title** | Inter | 144px | 700 | `#1C1E23` | Negative letter-spacing (-3.4) for tight display type |
+| **Subtitle** | Inter / Space Mono mix | 72px | 400–700 | `#5A6068` | Use Space Mono bold for technical terms inline |
+| **Path/section headers** | Inter | 54px | 700 | Accent color | e.g. "TEXT PATH", "VOICE PIPELINE PATH" — use path's accent color |
+| **Category labels** | Inter | 54px | 700 | `#5A6068` | e.g. "INPUT", "TRANSCRIBE", "EMBED" — with `letter-spacing="6"` |
+| **Content names** | Space Mono | 54px | 700 | `#1C1E23` | e.g. "Whisper", "ffmpeg", "Text Query" |
+| **Featured text** | Inter | 66–84px | 700 | `#1C1E23` | e.g. "Omnimodal encoder", "kNN Search" — hero elements |
+| **Model names** | Space Mono | 51px | 700 | `#1C1E23` | e.g. "jina-embeddings / -v5-omni" |
+| **Description text** | Inter | 48px | 400 | `#5A6068` | Supporting info: "One model embeds all modalities..." |
+| **Section sub-headers** | Inter | 48px | 700 | `#5A6068` | e.g. "EMBEDS", "OUTPUT", "INPUTS" — with `letter-spacing="5"` |
+| **Modality items** | Inter | 54px | 400 | `#1C1E23` | e.g. "Text", "Audio", "Video", "Image" |
+| **Key callout text** | Space Mono | 51px | 700 | `#0B64DD` | e.g. "compatible vectors", "into one vector space" |
+| **Table row labels** | Inter | 54px | 700 | `#1C1E23` | Bottom comparison table path names |
+| **Table step counts** | Space Mono | 48px | 700 | Accent color | e.g. "1 step", "3 steps" — colored per path |
+| **Table descriptions** | Inter | 45px | 400 | `#5A6068` | e.g. "embed text → search" |
+| **Tech pills (small)** | Space Mono | 36px | 400 | `#1C1E23` | Tool names in comparison tables |
+| **Footer/source** | Space Mono | 33px | 700 | `#98A2B3` | Bottom attribution |
+
+**Key principle**: Structural labels (what the step IS) should be large and bold for at-a-glance scanning. Technical details (specific tool names, descriptions) can be smaller — they provide context without competing for attention.
+
+### Card/Box Structure
+Pipeline steps use **white rounded-rect cards** with colored borders and drop shadows:
+
+```
+┌─────────────────────────┐
+│  CATEGORY LABEL          │  ← Inter 54px bold, #5A6068, letter-spacing 6
+│  Content Name            │  ← Space Mono 54px bold, #1C1E23
+│                          │
+│  (optional description)  │  ← Inter 48px, #5A6068
+└─────────────────────────┘
+```
+
+**Card styling**:
+- `fill="#ffffff"` white background
+- `stroke-width="7.5"` colored border — each card uses a **different accent color** from the palette
+- `rx` for rounded corners (matching the card size — larger cards get larger radii)
+- Drop shadow via `<filter>` with `feGaussianBlur stdDeviation="18"` — prominent shadow for depth
+- **No header tab** (unlike cheat-sheet cards) — the colored border IS the accent
+
+**Accent color assignments** (one per logical group):
+| Color | Hex | Usage Example |
+|-------|-----|---------------|
+| Blue | `#0B64DD` | Text input path |
+| Pink | `#F04E98` | Voice pipeline path |
+| Green | `#9ADC30` | Direct audio path |
+| Orange | `#FF957D` | Processing steps (Whisper, LLM) |
+| Yellow | `#FEC514` | Encoder (spanning box) |
+| Teal | `#48EFCF` | Elasticsearch/output (spanning box) |
+| Dark | `#1C1E23` | Final output |
+| Muted | `#8B95A5` | Neutral/utility boxes (ffmpeg, comparison table) |
+
+### Spanning Boxes
+When a component serves multiple paths (e.g. an omnimodal encoder or kNN search), use a **tall spanning box** that visually bridges all paths:
+
+- Taller `stroke-width="9"` border (thicker than regular cards)
+- Contains multiple sub-sections separated by `#D3DAE6` divider lines
+- Internal structure: category label → model name → description → divider → sub-section → divider → output section
+- All paths' arrows converge into/emerge from this single box
+
+### Dashed-Border Grouping Regions
+Use dashed-stroke rounded rects to group related steps into logical phases:
+
+```svg
+<path fill="none" stroke="#8B95A5" stroke-width="6.85"
+      stroke-dasharray="27.4 13.7" d="M ... Z"/>
+```
+
+- **Outer group** (e.g. "FOR EACH SCENE"): `stroke="#8B95A5"` (gray), `stroke-width ~7`, larger dash pattern
+- **Sub-groups** (e.g. "EMBED TRANSCRIPT"): Path's accent color, `stroke-width ~3.4`, smaller dash pattern
+- Label the region with a bold Inter text element positioned at the top-left of the dashed border
+
+### Arrows & Flow Lines
+Connecting arrows between cards use simple straight lines:
+
+```svg
+<path fill="#000000" stroke="#5A6068" stroke-width="7.5"
+      d="M 684 630 L 1944 630"/>
+```
+
+- **Color**: `#5A6068` (muted gray) — uniform across all arrows
+- **Stroke width**: `7.5` for main flow lines
+- **No arrowheads** in the final designs — the flow direction is implied by left-to-right reading order and the visual hierarchy
+- **Dashed arrows** for secondary/internal flows: `stroke-dasharray="26 16"` with same gray color
+
+### Gradient & Color Indicator Dots
+Use small gradient-filled rounded rects as modality indicators:
+
+```svg
+<linearGradient id="gradient1">
+  <stop offset="0" stop-color="#02bcb7"/>  <!-- teal for audio/video -->
+  <stop offset="1" stop-color="#f04e98"/>  <!-- pink for text -->
+</linearGradient>
+<path fill="url(#gradient1)" d="M ... Z" rx="9"/>  <!-- 18×36 colored dot -->
+```
+
+These provide subtle visual cues for which modalities a component handles.
+
+### Modality Pills
+For encoder/model boxes that handle multiple modalities, show capability with colored pills:
+
+| Modality | Background | Text Color | Label Font |
+|----------|-----------|------------|------------|
+| video | `#02bcb7` | white | Inter 38px bold |
+| audio | `#02bcb7` | white | Inter 38px bold |
+| image | `#FEC514` | `#D4A017` | Inter 38px bold |
+| text | `#F04E98` | white | Inter 38px bold |
+
+Distribute pills evenly across the encoder box bottom area with consistent spacing.
+
+### Bottom Comparison Table
+Include a summary comparison table at the bottom of pipeline diagrams:
+
+- White rounded-rect container with muted border (`stroke="#8B95A5" stroke-width="6"`)
+- Horizontal divider lines (`stroke="#D3DAE6" stroke-width="3"`) between rows
+- **Column alignment** (use consistent x-positions across all rows):
+  - Path name: ~x=300
+  - Step count: ~x=860
+  - Description: ~x=1220
+  - Tech pills: ~x=2370+
+- **Key insight row** at the bottom with bold label + explanatory text
+
+### Branding Badge
+Top-right corner badge with colored border:
+
+```svg
+<path fill="#F0F3F8" stroke="#FEC514" stroke-width="8"
+      stroke-linecap="round" stroke-linejoin="round"
+      d="M ... Z" rx="40"/>  <!-- rounded rect -->
+```
+
+Contains logo or wordmark, with a vertical divider line inside.
+
+### Layout Principles for Pipeline Diagrams
+
+1. **Left-to-right flow**: Input → Processing → Encoding → Storage/Output
+2. **Parallel paths stack vertically**: Multiple input paths arranged top-to-bottom with consistent vertical spacing (~534px between path centers)
+3. **Convergence points**: Use spanning boxes where paths merge
+4. **Divergence points**: Show forking with dashed-border regions containing sub-paths
+5. **Generous spacing**: Cards need breathing room — minimum ~60px gaps between elements
+6. **Title block**: Top-left, with title (144px) and subtitle (72px) establishing context before the diagram
+7. **Comparison table**: Bottom section summarizing paths/options — always include for multi-path diagrams
+8. **Keep technical detail subordinate**: Category labels ("TRANSCRIBE") and structural labels ("FOR EACH SCENE") should dominate; tool names ("Whisper") and descriptions are supporting detail
+
+---
+
 ## File Structure
 ```
 designer/
@@ -296,18 +461,25 @@ designer/
 ├── PROMPT_TEMPLATE.md    ← Template prompt for creating new infographics
 ├── render.js             ← SVG → PNG rendering script
 ├── references/
-│   ├── mappings.svg      ← Completed example: single-column, 3-card (Elasticsearch mappings)
-│   ├── mappings.png      ← Rendered PNG of mappings.svg
-│   ├── vec-sims.svg      ← Completed example: 2-column grid, 5 metric cards (vector similarity)
-│   └── vec-sims.png      ← Rendered PNG of vec-sims.svg
+│   ├── mappings.svg      ← Cheat-sheet example: single-column, 3-card (Elasticsearch mappings)
+│   ├── mappings.png
+│   ├── vec-sims.svg      ← Cheat-sheet example: 2-column grid, 5 metric cards (vector similarity)
+│   ├── vec-sims.png
+│   ├── 202607-search-pipeline.svg      ← Pipeline example: multi-path search (16:9, 4800×2700)
+│   ├── 202607-search-pipeline.png
+│   ├── 202607-omnimodal-ingestion.svg  ← Pipeline example: video ingestion with forking paths
+│   ├── 202607-omnimodal-ingestion.png
+│   ├── 202607-omnimodal-architecture.svg ← Pipeline example: system architecture overview
+│   └── 202607-omnimodal-architecture.png
 ├── assets/
 │   ├── elastic-cluster-3d-lightonly.svg  ← 3D cluster decoration (light bg variant, use this one)
 │   ├── elastic-3d-cluster.svg           ← Full cluster (both variants)
 │   └── logo-elastic-horizontal-color.svg ← Elastic horizontal logo (full color)
-└── old-examples/
-    ├── mappings.jpeg     ← Original reference for mappings.svg (single-column, 3-card)
-    └── vec-sims.jpeg     ← Original reference for vec-sims.svg (2-column grid, 5 metric cards + summary)
-```
+├── old-examples/
+│   ├── mappings.jpeg     ← Original reference for mappings.svg (single-column, 3-card)
+│   └── vec-sims.jpeg     ← Original reference for vec-sims.svg (2-column grid, 5 metric cards + summary)
+└── tasks/
+    └── 26-06-omni-search/ ← Pipeline diagram task (original working files)
 
 ## Iterative Workflow
 1. Write/edit your SVG (e.g. `output.svg`)
