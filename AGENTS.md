@@ -29,7 +29,7 @@ The task defines **what** to show and **where** (content and layout). The refere
 
 These are the most commonly violated rules. Check every one before writing SVG.
 
-1. **Use the font size table.** On a 2400px canvas: title = 72px, body/labels = 24–27px, monospace = 25.5–27px, footer = 17px. On an 860px canvas: title = 48px, body = 15.5px. See the full Font Size Scaling table below. Do NOT guess — look up the sizes.
+1. **Use the font size table.** On a 2400px canvas: title = 100px, body/labels = 34–38px, monospace = 36–38px, footer = 24px. On an 860px canvas: title = 48px, body = 15.5px. See the full Font Size Scaling table below. Do NOT guess — look up the sizes.
 
 2. **Card fill is ALWAYS `#ffffff` (white).** Never use colored or tinted fills for card backgrounds, row backgrounds, or section backgrounds. No pastel tints (`#f0fff4`, `#f0f6ff`, `#fff8f0`). The card interior is white — always.
 
@@ -40,6 +40,43 @@ These are the most commonly violated rules. Check every one before writing SVG.
 5. **Render and compare.** After your first draft, run `node render.js` and visually compare to the closest reference PNG at the same zoom level. If your text looks noticeably smaller than the reference, it IS smaller — increase font sizes.
 
 6. **When the task assigns semantic meaning to colors** (e.g. quality=green, speed=blue, cost=orange), use those colors as the card **border stroke** color and in small label pills — not as background fills or header bar fills.
+
+---
+
+## ✅ Post-Render Checklist (Run After EVERY Render)
+
+After each `node render.js output.svg output.png`, open the PNG and check **every item** below. Fix any failures before moving on.
+
+### Completeness
+- [ ] **Title** is present at the top of the graphic (large, bold, Inter)
+- [ ] **Subtitle** is present below the title (explains what the graphic shows)
+- [ ] **All content from the task brief** is represented — no sections dropped or truncated
+- [ ] **Footer** with SOURCE attribution is present at the bottom
+- [ ] **Elastic logo** is placed in the footer area
+
+### Typography
+- [ ] **Title font size** matches the table (100px on 2400px canvas, 48px on 860px)
+- [ ] **Body text** is readable — compare side-by-side with reference PNG at same zoom. If yours looks smaller, it IS smaller.
+- [ ] **No text overlaps** — scan every card for text running into other text or card edges
+- [ ] **No text is cut off** — all text fits within its card/container with padding to spare
+
+### Card Styling
+- [ ] **Every card has white fill** (`#ffffff`) — no colored, tinted, or grey card backgrounds
+- [ ] **Every card has a thick colored stroke** from the accent palette — not thin grey lines
+- [ ] **Every card has a drop shadow** — cards should float above the background
+- [ ] **Accent colors are on borders only** — no full-width colored header bars or tinted row fills
+
+### Layout & Density
+- [ ] **No dead space inside cards** — cards are sized to fit content snugly. Measure from last text element to card bottom edge: should be ~20–30px padding, not 100px+. If a card is 50%+ empty, shrink it.
+- [ ] **No dead space between cards** — gaps between cards should be 20–40px, not 80px+. If cards look like islands floating in a sea of grey, reduce the gaps.
+- [ ] **Line spacing within cards is tight** — bullet items should be ~1.3–1.5× the font size apart (e.g. 34px font → ~45–50px between bullet y-positions). If bullets look like separate paragraphs with big gaps, tighten the spacing.
+- [ ] **Cards do NOT all need the same height.** Size each card to its content. A card with 2 bullets should be shorter than a card with 5. Grids with forced uniform height are the #1 cause of dead space.
+- [ ] **Consistent gaps** — spacing between cards is uniform (but card heights can vary)
+- [ ] **Visual hierarchy is clear** — title > section headers > content > descriptions > footer
+
+### Comparison to References
+- [ ] **Open a reference PNG** side-by-side. Does your output look like it belongs in the same family?
+- [ ] **If anything looks different from the references** (new visual element, different card style, unusual color usage), replace it with the reference pattern
 
 ---
 
@@ -190,10 +227,12 @@ Font sizes depend on canvas size and viewing context. These are guidelines — s
 | Context | Title | Body | Labels | Code | Footer |
 |---------|-------|------|--------|------|--------|
 | Cheat-sheet (860px wide) | 48px | 15.5px | 11.5px | 12.5px | 12px |
-| Pipeline/presentation (2400px wide) | 72px | 24–27px | 27px | 25.5px | 17px |
-| 16:9 overlay (1920px wide) | ~72px | ~24px | ~27px | ~24px | ~16px |
+| Pipeline/presentation (2400px wide) | 100px | 34–38px | 38px | 36px | 24px |
+| 16:9 overlay (1920px wide) | ~100px | ~34px | ~38px | ~34px | ~24px |
 
-For novel canvas sizes, scale from the pipeline reference proportionally (title ≈ 3% of width, body ≈ 1–1.2%, labels ≈ 1.1%, code ≈ 1.1%, footer ≈ 0.7%). The reference pipeline SVGs use a **2400px wide canvas** — scale up or down from there. When in doubt, go bigger.
+For novel canvas sizes, scale from the pipeline reference proportionally (title ≈ 4.2% of width, body ≈ 1.4–1.6%, labels ≈ 1.6%, code ≈ 1.5%, footer ≈ 1%). The reference pipeline SVGs use a **2400px wide canvas** — scale up or down from there. When in doubt, go bigger.
+
+**Note:** The font sizes specified here are intentionally ~40% larger than what the reference SVG files contain. The references were created at smaller sizes and we've learned they need to be bigger for YouTube/video readability. Follow the table above, not the raw font-size values you find in the reference SVGs.
 
 ### Using `<tspan>` for Inline Color Changes
 Use `<tspan>` elements inside a single `<text>` for syntax highlighting:
@@ -439,13 +478,23 @@ This is more reliable than `xml:space="preserve"` (which resvg may not fully sup
 |-----------------|---------------------|
 | Full-width colored fill headers (banner bars across card top) | Colored **border stroke** on the card; small accent pill for the label |
 | Pastel-tinted row/section backgrounds (`#f0fff4`, `#f0f6ff`) | White (`#ffffff`) card fill — always |
-| Font sizes chosen by gut feel (e.g. 30px body on 2400px canvas) | Look up the Font Size Scaling table |
+| Font sizes chosen by gut feel (e.g. 20px body on 2400px canvas) | Look up the Font Size Scaling table (body = 34px on 2400px canvas) |
 | Thin grey borders (`stroke-width="2"`, `#D3DAE6`) as the main card outline | Thick colored borders (`stroke-width="3.75"+`) from the accent palette |
 | "Spreadsheet" layouts with grid lines separating rows | Separate white cards with shadows for each content group |
 | Large persona/label badges (>30px tall) competing with content | Small subtle pills — labels are secondary to the content they describe |
 | Colored divider lines between rows within a card | White space or subtle `#D3DAE6` lines only |
+| All cards forced to same height in a grid | Size each card to its content; rows can vary in height |
+| Bullet items spaced 80–100px apart (2–3× font size) | Space bullets at ~1.3–1.5× font size (e.g. 45–50px for 34px text) |
 
 **Rule of thumb**: Before finalizing, compare every visual element to the reference PNGs. If you can't find a precedent for your design choice in any reference, replace it with the closest reference pattern.
+
+### 20. Forced uniform card heights cause massive dead space
+**Problem**: In grid layouts, making all cards the same height (e.g. all 385px tall) wastes huge amounts of space in cards with less content. A card with 2 bullet items doesn't need to be the same height as one with 5.
+**Solution**: Size each card to its content individually. In a grid, cards in the same row can share a height (the tallest card's height), but different rows should have different heights. Better yet, let each card be its own height — uneven grids look more dynamic and information-dense than uniform ones.
+
+### 21. Sparse bullet spacing makes cards look empty
+**Problem**: Bullet items spaced 90–100px apart vertically (e.g. y=105, 200, 295 with 34px font) create huge gaps that make cards feel underfilled.
+**Solution**: Space bullet items at ~1.3–1.5× the font size. For 34px body text, bullets should be ~45–50px apart (not 90–100px). For 38px bold text with a 34px description underneath, use ~40px from bold to description, then ~50px to the next bullet. The card should feel dense and information-rich, like a control panel — not like a PowerPoint slide with one bullet per third of the screen.
 
 ---
 
@@ -455,7 +504,7 @@ This is more reliable than `xml:space="preserve"` (which resvg may not fully sup
 
 When the task doesn't match a cheat-sheet or pipeline layout (e.g. comparison grids, feature matrices, decision trees, control panels), use these rules:
 
-1. **Use pipeline font sizes** for any canvas ≥ 1920px wide. Use cheat-sheet font sizes for canvas ≤ 860px. Interpolate for sizes in between. The pipeline font sizes (72px title, 27px labels, 24px body on a 2400px canvas) are calibrated for video/screen readability — don't shrink them.
+1. **Use pipeline font sizes** for any canvas ≥ 1920px wide. Use cheat-sheet font sizes for canvas ≤ 860px. Interpolate for sizes in between. The pipeline font sizes (100px title, 38px labels, 34px body on a 2400px canvas) are calibrated for video/screen readability — don't shrink them.
 
 2. **Decompose your layout into cards.** Every content group should be a white rounded-rect card with a thick colored accent border and drop shadow. This is the universal building block — there are no exceptions. See "Universal Card/Box Pattern" above.
 
@@ -492,22 +541,22 @@ Pipeline diagrams must be readable on video streams and presentation screens. Us
 
 | Element | Font | Size | Weight | Color | Notes |
 |---------|------|------|--------|-------|-------|
-| **Title** | Inter | 72px | 700 | `#1C1E23` | Negative letter-spacing (-1.7) for tight display type |
-| **Subtitle** | Inter / Space Mono mix | 36px | 400–700 | `#5A6068` | Use Space Mono bold for technical terms inline |
-| **Path/section headers** | Inter | 27px | 700 | Accent color | e.g. "TEXT PATH", "VOICE PIPELINE PATH" — use path's accent color |
-| **Category labels** | Inter | 27px | 700 | `#5A6068` | e.g. "INPUT", "TRANSCRIBE", "EMBED" — with `letter-spacing="3"` |
-| **Content names** | Space Mono | 27px | 700 | `#1C1E23` | e.g. "Whisper", "ffmpeg", "Text Query" |
-| **Featured text** | Inter | 33–42px | 700 | `#1C1E23` | e.g. "Omnimodal encoder", "kNN Search" — hero elements |
-| **Model names** | Space Mono | 25.5px | 700 | `#1C1E23` | e.g. "jina-embeddings / -v5-omni" |
-| **Description text** | Inter | 24px | 400 | `#5A6068` | Supporting info: "One model embeds all modalities..." |
-| **Section sub-headers** | Inter | 24px | 700 | `#5A6068` | e.g. "EMBEDS", "OUTPUT", "INPUTS" — with `letter-spacing="2.5"` |
-| **Modality items** | Inter | 27px | 400 | `#1C1E23` | e.g. "Text", "Audio", "Video", "Image" |
-| **Key callout text** | Space Mono | 25.5px | 700 | `#0B64DD` | e.g. "compatible vectors", "into one vector space" |
-| **Table row labels** | Inter | 27px | 700 | `#1C1E23` | Bottom comparison table path names |
-| **Table step counts** | Space Mono | 24px | 700 | Accent color | e.g. "1 step", "3 steps" — colored per path |
-| **Table descriptions** | Inter | 22.5px | 400 | `#5A6068` | e.g. "embed text → search" |
-| **Tech pills (small)** | Space Mono | 18px | 400 | `#1C1E23` | Tool names in comparison tables |
-| **Footer/source** | Space Mono | 17px | 700 | `#98A2B3` | Bottom attribution |
+| **Title** | Inter | 100px | 700 | `#1C1E23` | Negative letter-spacing (-2.4) for tight display type |
+| **Subtitle** | Inter / Space Mono mix | 50px | 400–700 | `#5A6068` | Use Space Mono bold for technical terms inline |
+| **Path/section headers** | Inter | 38px | 700 | Accent color | e.g. "TEXT PATH", "VOICE PIPELINE PATH" — use path's accent color |
+| **Category labels** | Inter | 38px | 700 | `#5A6068` | e.g. "INPUT", "TRANSCRIBE", "EMBED" — with `letter-spacing="4"` |
+| **Content names** | Space Mono | 38px | 700 | `#1C1E23` | e.g. "Whisper", "ffmpeg", "Text Query" |
+| **Featured text** | Inter | 46–59px | 700 | `#1C1E23` | e.g. "Omnimodal encoder", "kNN Search" — hero elements |
+| **Model names** | Space Mono | 36px | 700 | `#1C1E23` | e.g. "jina-embeddings / -v5-omni" |
+| **Description text** | Inter | 34px | 400 | `#5A6068` | Supporting info: "One model embeds all modalities..." |
+| **Section sub-headers** | Inter | 34px | 700 | `#5A6068` | e.g. "EMBEDS", "OUTPUT", "INPUTS" — with `letter-spacing="3.5"` |
+| **Modality items** | Inter | 38px | 400 | `#1C1E23` | e.g. "Text", "Audio", "Video", "Image" |
+| **Key callout text** | Space Mono | 36px | 700 | `#0B64DD` | e.g. "compatible vectors", "into one vector space" |
+| **Table row labels** | Inter | 38px | 700 | `#1C1E23` | Bottom comparison table path names |
+| **Table step counts** | Space Mono | 34px | 700 | Accent color | e.g. "1 step", "3 steps" — colored per path |
+| **Table descriptions** | Inter | 31px | 400 | `#5A6068` | e.g. "embed text → search" |
+| **Tech pills (small)** | Space Mono | 25px | 400 | `#1C1E23` | Tool names in comparison tables |
+| **Footer/source** | Space Mono | 24px | 700 | `#98A2B3` | Bottom attribution |
 
 **Key principle**: Structural labels (what the step IS) should be large and bold for at-a-glance scanning. Technical details (specific tool names, descriptions) can be smaller — they provide context without competing for attention.
 
@@ -516,10 +565,10 @@ Pipeline steps use **white rounded-rect cards** with colored borders and drop sh
 
 ```
 ┌─────────────────────────┐
-│  CATEGORY LABEL          │  ← Inter 27px bold, #5A6068, letter-spacing 3
-│  Content Name            │  ← Space Mono 27px bold, #1C1E23
+│  CATEGORY LABEL          │  ← Inter 38px bold, #5A6068, letter-spacing 4
+│  Content Name            │  ← Space Mono 38px bold, #1C1E23
 │                          │
-│  (optional description)  │  ← Inter 24px, #5A6068
+│  (optional description)  │  ← Inter 34px, #5A6068
 └─────────────────────────┘
 ```
 
@@ -593,10 +642,10 @@ For encoder/model boxes that handle multiple modalities, show capability with co
 
 | Modality | Background | Text Color | Label Font |
 |----------|-----------|------------|------------|
-| video | `#02bcb7` | white | Inter 19px bold |
-| audio | `#02bcb7` | white | Inter 19px bold |
-| image | `#FEC514` | `#D4A017` | Inter 19px bold |
-| text | `#F04E98` | white | Inter 19px bold |
+| video | `#02bcb7` | white | Inter 27px bold |
+| audio | `#02bcb7` | white | Inter 27px bold |
+| image | `#FEC514` | `#D4A017` | Inter 27px bold |
+| text | `#F04E98` | white | Inter 27px bold |
 
 Distribute pills evenly across the encoder box bottom area with consistent spacing.
 
@@ -630,7 +679,7 @@ Contains logo or wordmark, with a vertical divider line inside.
 3. **Convergence points**: Use spanning boxes where paths merge
 4. **Divergence points**: Show forking with dashed-border regions containing sub-paths
 5. **Generous spacing**: Cards need breathing room — minimum ~30px gaps between elements
-6. **Title block**: Top-left, with title (72px) and subtitle (36px) establishing context before the diagram
+6. **Title block**: Top-left, with title (100px) and subtitle (50px) establishing context before the diagram
 7. **Comparison table**: Bottom section summarizing paths/options — always include for multi-path diagrams
 8. **Keep technical detail subordinate**: Category labels ("TRANSCRIBE") and structural labels ("FOR EACH SCENE") should dominate; tool names ("Whisper") and descriptions are supporting detail
 
