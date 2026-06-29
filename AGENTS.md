@@ -47,6 +47,9 @@ These are the most commonly violated rules. Check every one before writing SVG.
 
 After each `node render.js output.svg output.png`, open the PNG and check **every item** below. Fix any failures before moving on.
 
+### Starting Point
+- [ ] **Did you start from the template?** For 16:9 video graphics, copy `templates/video-graphics-template-landscape1.svg` and modify — don't write SVG from scratch. The template has correct font sizes, card styling, shadows, and background already.
+
 ### Completeness
 - [ ] **Title** is present at the top of the graphic (large, bold, Inter)
 - [ ] **Subtitle** is present below the title (explains what the graphic shows)
@@ -272,7 +275,7 @@ These templates capture specific layout patterns for known graphic types. **Alwa
 |-----------|----------|-----------------|
 | Reference card / cheat-sheet | Elastic Infographic Style (below) | `references/mappings.*`, `references/vec-sims.*` |
 | Flow / pipeline / architecture | Pipeline & Architecture Diagrams (below) | `references/202607-*.svg` |
-| Any other graphic | Novel / Non-Template Graphics (below) | Start with `references/202607-search-pipeline.*` |
+| Any other graphic | Novel / Non-Template Graphics (below) | **Start from** `templates/video-graphics-template-landscape1.svg` |
 
 ---
 
@@ -502,6 +505,8 @@ This is more reliable than `xml:space="preserve"` (which resvg may not fully sup
 
 ## Design System — Novel / Non-Template Graphics
 
+**Start from the template file:** `templates/video-graphics-template-landscape1.svg` — this is a working 2400×1350 SVG with correct card styling, font sizes, accent tabs, shadows, background grid, cluster watermark, and Elastic logo. **Copy this file as your starting point** and modify the content, rather than writing SVG from scratch. The template demonstrates exactly what cards, spacing, and typography should look like.
+
 When the task doesn't match a cheat-sheet or pipeline layout (e.g. comparison grids, feature matrices, decision trees, control panels), use these rules:
 
 1. **Use pipeline font sizes** for any canvas ≥ 1920px wide. Use cheat-sheet font sizes for canvas ≤ 860px. Interpolate for sizes in between. The pipeline font sizes (100px title, 38px labels, 34px body on a 2400px canvas) are calibrated for video/screen readability — don't shrink them.
@@ -692,6 +697,8 @@ Contains logo or wordmark, with a vertical divider line inside.
 designer/
 ├── AGENT.md              ← This file (design learnings & rules)
 ├── render.js             ← SVG → PNG rendering script
+├── templates/
+│   └── video-graphics-template-landscape1.svg  ← Starter template for 16:9 video graphics (COPY THIS)
 ├── references/
 │   ├── mappings.svg      ← Cheat-sheet example: single-column, 3-card (Elasticsearch mappings)
 │   ├── mappings.png
