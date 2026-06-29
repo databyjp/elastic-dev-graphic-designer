@@ -25,6 +25,24 @@ The task defines **what** to show and **where** (content and layout). The refere
 
 ---
 
+## ⛔ Non-Negotiable Rules (Read These First)
+
+These are the most commonly violated rules. Check every one before writing SVG.
+
+1. **Use the font size table.** On a 2400px canvas: title = 72px, body/labels = 24–27px, monospace = 25.5–27px, footer = 17px. On an 860px canvas: title = 48px, body = 15.5px. See the full Font Size Scaling table below. Do NOT guess — look up the sizes.
+
+2. **Card fill is ALWAYS `#ffffff` (white).** Never use colored or tinted fills for card backgrounds, row backgrounds, or section backgrounds. No pastel tints (`#f0fff4`, `#f0f6ff`, `#fff8f0`). The card interior is white — always.
+
+3. **Accent color = stroke/border only, never fill.** A card's accent color goes on its `stroke` attribute, not its `fill`. The only place accent colors appear as fills are in small label pills/badges (e.g. a 100×30px rounded-rect pill with white text inside) — never on the card itself or on full-width header bars.
+
+4. **No invented visual patterns.** Every visual element in your output should have a clear precedent in the reference PNGs. If you can't point to a reference for a design choice (e.g. "full-width colored header banner", "tinted row backgrounds", "spreadsheet grid lines"), don't make that choice. Decompose your layout into the existing card building block instead.
+
+5. **Render and compare.** After your first draft, run `node render.js` and visually compare to the closest reference PNG at the same zoom level. If your text looks noticeably smaller than the reference, it IS smaller — increase font sizes.
+
+6. **When the task assigns semantic meaning to colors** (e.g. quality=green, speed=blue, cost=orange), use those colors as the card **border stroke** color and in small label pills — not as background fills or header bar fills.
+
+---
+
 The rest of this file provides detailed specifications and hard-won lessons. It is organized in three layers:
 1. **Universal fundamentals** — brand, fonts, rendering pipeline, resvg quirks. Applies to ALL graphics.
 2. **Design system templates** — specific patterns for known graphic types (cheat-sheets, pipelines). Use when the task matches.
@@ -32,7 +50,7 @@ The rest of this file provides detailed specifications and hard-won lessons. It 
 
 ---
 
-# PART 1 — UNIVERSAL FUNDAMENTALS
+# UNIVERSAL FUNDAMENTALS
 
 Everything in this section applies to every graphic, regardless of type.
 
@@ -172,10 +190,10 @@ Font sizes depend on canvas size and viewing context. These are guidelines — s
 | Context | Title | Body | Labels | Code | Footer |
 |---------|-------|------|--------|------|--------|
 | Cheat-sheet (860px wide) | 48px | 15.5px | 11.5px | 12.5px | 12px |
-| Pipeline/presentation (4800px wide) | 144px | 48–54px | 54px | 51px | 33px |
+| Pipeline/presentation (2400px wide) | 72px | 24–27px | 27px | 25.5px | 17px |
 | 16:9 overlay (1920px wide) | ~72px | ~24px | ~27px | ~24px | ~16px |
 
-For novel canvas sizes, scale from the pipeline reference proportionally (title ≈ 3% of width, body ≈ 1–1.2%, labels ≈ 1.1%, code ≈ 1.1%, footer ≈ 0.7%). When in doubt, go bigger.
+For novel canvas sizes, scale from the pipeline reference proportionally (title ≈ 3% of width, body ≈ 1–1.2%, labels ≈ 1.1%, code ≈ 1.1%, footer ≈ 0.7%). The reference pipeline SVGs use a **2400px wide canvas** — scale up or down from there. When in doubt, go bigger.
 
 ### Using `<tspan>` for Inline Color Changes
 Use `<tspan>` elements inside a single `<text>` for syntax highlighting:
@@ -207,7 +225,7 @@ When a task requires transparent backgrounds (e.g. for video compositing):
 
 ---
 
-# PART 2 — DESIGN SYSTEM TEMPLATES
+# DESIGN SYSTEM TEMPLATES
 
 These templates capture specific layout patterns for known graphic types. **Always study the actual reference SVGs/PNGs first** (per the Prime Directive above) — these written specs are for precise measurements and edge cases.
 
@@ -215,7 +233,7 @@ These templates capture specific layout patterns for known graphic types. **Alwa
 |-----------|----------|-----------------|
 | Reference card / cheat-sheet | Elastic Infographic Style (below) | `references/mappings.*`, `references/vec-sims.*` |
 | Flow / pipeline / architecture | Pipeline & Architecture Diagrams (below) | `references/202607-*.svg` |
-| Any other graphic | No template — adapt from closest reference | Start with `references/202607-search-pipeline.*` |
+| Any other graphic | Novel / Non-Template Graphics (below) | Start with `references/202607-search-pipeline.*` |
 
 ---
 
@@ -306,7 +324,9 @@ This applies to all inline code in prose: `dynamic_templates`, `properties`, `em
 
 ---
 
-# PART 3 — COMMON PITFALLS
+# COMMON PITFALLS
+
+Hard-won lessons from previous graphics. Pitfalls 1–18 are mostly SVG mechanics; Pitfall 19 covers visual design anti-patterns that apply to ALL graphic types.
 
 ### 1. Monospace text overlap
 **Problem**: Placing monospace `<text>` elements at manually-calculated x-positions often leads to overlap or gaps.
@@ -411,6 +431,44 @@ This is more reliable than `xml:space="preserve"` (which resvg may not fully sup
 **Problem**: Some infographics have a mix of wide content (like JSON configs) and compact content (bullet lists, metric tables).
 **Solution**: Use a hybrid layout: full-width cards for content that needs horizontal space (code blocks, tables), then 2-column rows for compact content. This keeps the canvas height within the 1000–1300px target while giving each card the width it needs. The full-width card uses the standard 788px width; the 2-column cards use 384px each.
 
+### 19. Visual anti-patterns — design choices that break the brand style
+**Problem**: Agent invents visual patterns not present in any reference.
+**Common violations and fixes**:
+
+| ❌ Anti-pattern | ✅ Correct approach |
+|-----------------|---------------------|
+| Full-width colored fill headers (banner bars across card top) | Colored **border stroke** on the card; small accent pill for the label |
+| Pastel-tinted row/section backgrounds (`#f0fff4`, `#f0f6ff`) | White (`#ffffff`) card fill — always |
+| Font sizes chosen by gut feel (e.g. 30px body on 2400px canvas) | Look up the Font Size Scaling table |
+| Thin grey borders (`stroke-width="2"`, `#D3DAE6`) as the main card outline | Thick colored borders (`stroke-width="3.75"+`) from the accent palette |
+| "Spreadsheet" layouts with grid lines separating rows | Separate white cards with shadows for each content group |
+| Large persona/label badges (>30px tall) competing with content | Small subtle pills — labels are secondary to the content they describe |
+| Colored divider lines between rows within a card | White space or subtle `#D3DAE6` lines only |
+
+**Rule of thumb**: Before finalizing, compare every visual element to the reference PNGs. If you can't find a precedent for your design choice in any reference, replace it with the closest reference pattern.
+
+---
+
+# DESIGN SYSTEM TEMPLATES (continued)
+
+## Design System — Novel / Non-Template Graphics
+
+When the task doesn't match a cheat-sheet or pipeline layout (e.g. comparison grids, feature matrices, decision trees, control panels), use these rules:
+
+1. **Use pipeline font sizes** for any canvas ≥ 1920px wide. Use cheat-sheet font sizes for canvas ≤ 860px. Interpolate for sizes in between. The pipeline font sizes (72px title, 27px labels, 24px body on a 2400px canvas) are calibrated for video/screen readability — don't shrink them.
+
+2. **Decompose your layout into cards.** Every content group should be a white rounded-rect card with a thick colored accent border and drop shadow. This is the universal building block — there are no exceptions. See "Universal Card/Box Pattern" above.
+
+3. **One accent color per major group**, not per row or sub-element. Three panels = three accent colors. The accent goes on the card's `stroke`. Interior content uses the standard text colors (`#1C1E23` for headings, `#5A6068` for body, `#98A2B3` for muted).
+
+4. **Small label pills for categories**, not full-width banners. If a card has sub-categories (e.g. Quality / Speed / Cost), show them as small rounded-rect pills (~100×30px) with the category color fill and white bold text. These sit *inside* the card as labels, not as header bars spanning the card width.
+
+5. **Study `references/202607-search-pipeline.svg` and its PNG** — its card style is the most transferable to novel layouts. Note specifically: white fill, thick colored stroke, prominent shadow, uppercase category label in Inter bold, content name in Space Mono bold.
+
+6. **Tight sizing.** Cards should be sized to fit their content with ~20px padding. Don't create cards that are 50%+ empty space. If content only fills 150px of a 480px card, shrink the card.
+
+7. **Visual hierarchy via font weight and size**, not via background colors. Distinguish sections using bold/regular weight, larger/smaller sizes, and accent-colored text — not by tinting backgrounds different colors.
+
 ---
 
 ## Design System — Pipeline & Architecture Diagrams
@@ -424,9 +482,9 @@ All pipeline references are in `references/` with matching PNG renders:
 - **Architecture overview**: `references/202607-omnimodal-architecture.svg` (.png) — system components diagram
 
 ### Canvas & Aspect Ratio
-- **Canvas**: 4800×2700 (16:9 ratio) for YouTube/streaming-friendly dimensions
+- **Canvas**: 2400×1350 (16:9 ratio) for YouTube/streaming-friendly dimensions
 - **Background**: `#F0F3F8` full-canvas fill, same as cheat-sheet style
-- **Grid overlay**: Use a `<pattern>` fill on the canvas border (`stroke="#5a6068" stroke-width="7.5"`) for subtle grid texture
+- **Grid overlay**: Use a `<pattern>` fill on the canvas border (`stroke="#5a6068" stroke-width="3.75"`) for subtle grid texture
 - **Decorative watermark**: Elastic cluster illustration at low opacity (`0.1–0.25`) behind content, clipped to canvas area
 
 ### Font Size Hierarchy for Streaming Readability
@@ -434,22 +492,22 @@ Pipeline diagrams must be readable on video streams and presentation screens. Us
 
 | Element | Font | Size | Weight | Color | Notes |
 |---------|------|------|--------|-------|-------|
-| **Title** | Inter | 144px | 700 | `#1C1E23` | Negative letter-spacing (-3.4) for tight display type |
-| **Subtitle** | Inter / Space Mono mix | 72px | 400–700 | `#5A6068` | Use Space Mono bold for technical terms inline |
-| **Path/section headers** | Inter | 54px | 700 | Accent color | e.g. "TEXT PATH", "VOICE PIPELINE PATH" — use path's accent color |
-| **Category labels** | Inter | 54px | 700 | `#5A6068` | e.g. "INPUT", "TRANSCRIBE", "EMBED" — with `letter-spacing="6"` |
-| **Content names** | Space Mono | 54px | 700 | `#1C1E23` | e.g. "Whisper", "ffmpeg", "Text Query" |
-| **Featured text** | Inter | 66–84px | 700 | `#1C1E23` | e.g. "Omnimodal encoder", "kNN Search" — hero elements |
-| **Model names** | Space Mono | 51px | 700 | `#1C1E23` | e.g. "jina-embeddings / -v5-omni" |
-| **Description text** | Inter | 48px | 400 | `#5A6068` | Supporting info: "One model embeds all modalities..." |
-| **Section sub-headers** | Inter | 48px | 700 | `#5A6068` | e.g. "EMBEDS", "OUTPUT", "INPUTS" — with `letter-spacing="5"` |
-| **Modality items** | Inter | 54px | 400 | `#1C1E23` | e.g. "Text", "Audio", "Video", "Image" |
-| **Key callout text** | Space Mono | 51px | 700 | `#0B64DD` | e.g. "compatible vectors", "into one vector space" |
-| **Table row labels** | Inter | 54px | 700 | `#1C1E23` | Bottom comparison table path names |
-| **Table step counts** | Space Mono | 48px | 700 | Accent color | e.g. "1 step", "3 steps" — colored per path |
-| **Table descriptions** | Inter | 45px | 400 | `#5A6068` | e.g. "embed text → search" |
-| **Tech pills (small)** | Space Mono | 36px | 400 | `#1C1E23` | Tool names in comparison tables |
-| **Footer/source** | Space Mono | 33px | 700 | `#98A2B3` | Bottom attribution |
+| **Title** | Inter | 72px | 700 | `#1C1E23` | Negative letter-spacing (-1.7) for tight display type |
+| **Subtitle** | Inter / Space Mono mix | 36px | 400–700 | `#5A6068` | Use Space Mono bold for technical terms inline |
+| **Path/section headers** | Inter | 27px | 700 | Accent color | e.g. "TEXT PATH", "VOICE PIPELINE PATH" — use path's accent color |
+| **Category labels** | Inter | 27px | 700 | `#5A6068` | e.g. "INPUT", "TRANSCRIBE", "EMBED" — with `letter-spacing="3"` |
+| **Content names** | Space Mono | 27px | 700 | `#1C1E23` | e.g. "Whisper", "ffmpeg", "Text Query" |
+| **Featured text** | Inter | 33–42px | 700 | `#1C1E23` | e.g. "Omnimodal encoder", "kNN Search" — hero elements |
+| **Model names** | Space Mono | 25.5px | 700 | `#1C1E23` | e.g. "jina-embeddings / -v5-omni" |
+| **Description text** | Inter | 24px | 400 | `#5A6068` | Supporting info: "One model embeds all modalities..." |
+| **Section sub-headers** | Inter | 24px | 700 | `#5A6068` | e.g. "EMBEDS", "OUTPUT", "INPUTS" — with `letter-spacing="2.5"` |
+| **Modality items** | Inter | 27px | 400 | `#1C1E23` | e.g. "Text", "Audio", "Video", "Image" |
+| **Key callout text** | Space Mono | 25.5px | 700 | `#0B64DD` | e.g. "compatible vectors", "into one vector space" |
+| **Table row labels** | Inter | 27px | 700 | `#1C1E23` | Bottom comparison table path names |
+| **Table step counts** | Space Mono | 24px | 700 | Accent color | e.g. "1 step", "3 steps" — colored per path |
+| **Table descriptions** | Inter | 22.5px | 400 | `#5A6068` | e.g. "embed text → search" |
+| **Tech pills (small)** | Space Mono | 18px | 400 | `#1C1E23` | Tool names in comparison tables |
+| **Footer/source** | Space Mono | 17px | 700 | `#98A2B3` | Bottom attribution |
 
 **Key principle**: Structural labels (what the step IS) should be large and bold for at-a-glance scanning. Technical details (specific tool names, descriptions) can be smaller — they provide context without competing for attention.
 
@@ -458,18 +516,18 @@ Pipeline steps use **white rounded-rect cards** with colored borders and drop sh
 
 ```
 ┌─────────────────────────┐
-│  CATEGORY LABEL          │  ← Inter 54px bold, #5A6068, letter-spacing 6
-│  Content Name            │  ← Space Mono 54px bold, #1C1E23
+│  CATEGORY LABEL          │  ← Inter 27px bold, #5A6068, letter-spacing 3
+│  Content Name            │  ← Space Mono 27px bold, #1C1E23
 │                          │
-│  (optional description)  │  ← Inter 48px, #5A6068
+│  (optional description)  │  ← Inter 24px, #5A6068
 └─────────────────────────┘
 ```
 
 **Card styling**:
 - `fill="#ffffff"` white background
-- `stroke-width="7.5"` colored border — each card uses a **different accent color** from the palette
+- `stroke-width="3.75"` colored border — each card uses a **different accent color** from the palette
 - `rx` for rounded corners (matching the card size — larger cards get larger radii)
-- Drop shadow via `<filter>` with `feGaussianBlur stdDeviation="18"` — prominent shadow for depth
+- Drop shadow via `<filter>` with `feGaussianBlur stdDeviation="9"` — prominent shadow for depth
 - **No header tab** (unlike cheat-sheet cards) — the colored border IS the accent
 
 **Accent color assignments** (one per logical group):
@@ -487,7 +545,7 @@ Pipeline steps use **white rounded-rect cards** with colored borders and drop sh
 ### Spanning Boxes
 When a component serves multiple paths (e.g. an omnimodal encoder or kNN search), use a **tall spanning box** that visually bridges all paths:
 
-- Taller `stroke-width="9"` border (thicker than regular cards)
+- Taller `stroke-width="4.5"` border (thicker than regular cards)
 - Contains multiple sub-sections separated by `#D3DAE6` divider lines
 - Internal structure: category label → model name → description → divider → sub-section → divider → output section
 - All paths' arrows converge into/emerge from this single box
@@ -496,26 +554,26 @@ When a component serves multiple paths (e.g. an omnimodal encoder or kNN search)
 Use dashed-stroke rounded rects to group related steps into logical phases:
 
 ```svg
-<path fill="none" stroke="#8B95A5" stroke-width="6.85"
-      stroke-dasharray="27.4 13.7" d="M ... Z"/>
+<path fill="none" stroke="#8B95A5" stroke-width="3.4"
+      stroke-dasharray="13.7 6.85" d="M ... Z"/>
 ```
 
-- **Outer group** (e.g. "FOR EACH SCENE"): `stroke="#8B95A5"` (gray), `stroke-width ~7`, larger dash pattern
-- **Sub-groups** (e.g. "EMBED TRANSCRIPT"): Path's accent color, `stroke-width ~3.4`, smaller dash pattern
+- **Outer group** (e.g. "FOR EACH SCENE"): `stroke="#8B95A5"` (gray), `stroke-width ~3.4`, larger dash pattern
+- **Sub-groups** (e.g. "EMBED TRANSCRIPT"): Path's accent color, `stroke-width ~1.7`, smaller dash pattern
 - Label the region with a bold Inter text element positioned at the top-left of the dashed border
 
 ### Arrows & Flow Lines
 Connecting arrows between cards use simple straight lines:
 
 ```svg
-<path fill="#000000" stroke="#5A6068" stroke-width="7.5"
-      d="M 684 630 L 1944 630"/>
+<path fill="#000000" stroke="#5A6068" stroke-width="3.75"
+      d="M 342 315 L 972 315"/>
 ```
 
 - **Color**: `#5A6068` (muted gray) — uniform across all arrows
-- **Stroke width**: `7.5` for main flow lines
+- **Stroke width**: `3.75` for main flow lines
 - **No arrowheads** in the final designs — the flow direction is implied by left-to-right reading order and the visual hierarchy
-- **Dashed arrows** for secondary/internal flows: `stroke-dasharray="26 16"` with same gray color
+- **Dashed arrows** for secondary/internal flows: `stroke-dasharray="13 8"` with same gray color
 
 ### Gradient & Color Indicator Dots
 Use small gradient-filled rounded rects as modality indicators:
@@ -535,10 +593,10 @@ For encoder/model boxes that handle multiple modalities, show capability with co
 
 | Modality | Background | Text Color | Label Font |
 |----------|-----------|------------|------------|
-| video | `#02bcb7` | white | Inter 38px bold |
-| audio | `#02bcb7` | white | Inter 38px bold |
-| image | `#FEC514` | `#D4A017` | Inter 38px bold |
-| text | `#F04E98` | white | Inter 38px bold |
+| video | `#02bcb7` | white | Inter 19px bold |
+| audio | `#02bcb7` | white | Inter 19px bold |
+| image | `#FEC514` | `#D4A017` | Inter 19px bold |
+| text | `#F04E98` | white | Inter 19px bold |
 
 Distribute pills evenly across the encoder box bottom area with consistent spacing.
 
@@ -558,9 +616,9 @@ Include a summary comparison table at the bottom of pipeline diagrams:
 Top-right corner badge with colored border:
 
 ```svg
-<path fill="#F0F3F8" stroke="#FEC514" stroke-width="8"
+<path fill="#F0F3F8" stroke="#FEC514" stroke-width="4"
       stroke-linecap="round" stroke-linejoin="round"
-      d="M ... Z" rx="40"/>  <!-- rounded rect -->
+      d="M ... Z" rx="20"/>  <!-- rounded rect -->
 ```
 
 Contains logo or wordmark, with a vertical divider line inside.
@@ -568,30 +626,29 @@ Contains logo or wordmark, with a vertical divider line inside.
 ### Layout Principles for Pipeline Diagrams
 
 1. **Left-to-right flow**: Input → Processing → Encoding → Storage/Output
-2. **Parallel paths stack vertically**: Multiple input paths arranged top-to-bottom with consistent vertical spacing (~534px between path centers)
+2. **Parallel paths stack vertically**: Multiple input paths arranged top-to-bottom with consistent vertical spacing (~267px between path centers)
 3. **Convergence points**: Use spanning boxes where paths merge
 4. **Divergence points**: Show forking with dashed-border regions containing sub-paths
-5. **Generous spacing**: Cards need breathing room — minimum ~60px gaps between elements
-6. **Title block**: Top-left, with title (144px) and subtitle (72px) establishing context before the diagram
+5. **Generous spacing**: Cards need breathing room — minimum ~30px gaps between elements
+6. **Title block**: Top-left, with title (72px) and subtitle (36px) establishing context before the diagram
 7. **Comparison table**: Bottom section summarizing paths/options — always include for multi-path diagrams
 8. **Keep technical detail subordinate**: Category labels ("TRANSCRIBE") and structural labels ("FOR EACH SCENE") should dominate; tool names ("Whisper") and descriptions are supporting detail
 
 ---
 
-# PART 4 — PROJECT STRUCTURE
+# PROJECT STRUCTURE
 
 ## File Structure
 ```
 designer/
 ├── AGENT.md              ← This file (design learnings & rules)
-├── PROMPT_TEMPLATE.md    ← Template prompt for creating new infographics
 ├── render.js             ← SVG → PNG rendering script
 ├── references/
 │   ├── mappings.svg      ← Cheat-sheet example: single-column, 3-card (Elasticsearch mappings)
 │   ├── mappings.png
 │   ├── vec-sims.svg      ← Cheat-sheet example: 2-column grid, 5 metric cards (vector similarity)
 │   ├── vec-sims.png
-│   ├── 202607-search-pipeline.svg      ← Pipeline example: multi-path search (16:9, 4800×2700)
+│   ├── 202607-search-pipeline.svg      ← Pipeline example: multi-path search (16:9, 2400×1350)
 │   ├── 202607-search-pipeline.png
 │   ├── 202607-omnimodal-ingestion.svg  ← Pipeline example: video ingestion with forking paths
 │   ├── 202607-omnimodal-ingestion.png
