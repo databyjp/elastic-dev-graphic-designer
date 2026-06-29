@@ -1,47 +1,47 @@
-# Infographic Creation Prompt Template
+# Graphic Creation Prompt Template
 
-Use this template to instruct an agent to create a new Elastic-branded SVG infographic.
+Use this template to instruct an agent to create a new Elastic-branded SVG graphic.
 
 ---
 
 ## Prompt
 
 ```
-I need you to create an SVG infographic in the Elastic dev-advocacy style.
+I need you to create an SVG graphic in the Elastic dev-advocacy style.
 
-**Before you begin, read these files carefully:**
-1. `AGENT.md` — contains all design rules, color palette, typography, spacing conventions, and common pitfalls for SVG creation and rendering with resvg.
-2. `references/mappings.svg` — a completed single-column example infographic. Study its structure (cards, tabs, code blocks, inline badges, background decoration) as a template.
-3. `references/mappings.png` — the rendered output, so you can see how it looks.
-4. `references/vec-sims.svg` — a completed 2-column grid example with diagrams, formula badges, and a summary callout.
-5. `references/vec-sims.png` — the rendered output of the 2-column example.
-6. `assets/elastic-cluster-3d-lightonly.svg` — the Elastic cluster decoration for the background.
-7. `assets/logo-elastic-horizontal-color.svg` — the Elastic logo (place in bottom-right footer).
+**Before you begin:**
+1. Read `AGENTS.md` — especially the Prime Directive at the top, plus rendering pipeline and common pitfalls.
+2. Study ALL reference files in `references/` — both the `.svg` source and rendered `.png` for each. These define the visual style you must match.
+3. Review `assets/` for brand elements (Elastic logo, cluster decoration).
+
+Your visual style — colors, card patterns, typography, spacing, tone — must match the existing references. The task below defines the **content**; the references define the **look**.
 
 **Topic:** [DESCRIBE THE TOPIC HERE]
 
 **Content / key points to include:**
 [LIST THE KEY CONTENT, CODE SNIPPETS, STEPS, ETC.]
 
+**Format constraints (if any):**
+[E.G. "16:9 for video", "transparent background", "1920×1080 overlay", OR "default" for standard infographic]
+
 **Reference image (if available):**
 [PATH TO REFERENCE IMAGE, OR "None — design from scratch based on content above"]
 
 ---
 
-Analyse the content and create an SVG infographic. Key instructions:
+Analyse the content, study the references, and create an SVG. Key instructions:
 
-- Follow the design system in AGENT.md (colors, fonts, spacing, borders, shadows)
-- Study **both** reference SVGs before choosing a layout. The references are 1000–1300px tall — aim for a similar canvas height. Choose whatever layout (single-column, 2-column, hybrid) achieves that for the given content. Not every card needs the same width.
-- Use a **different accent color** for each card tab from the Elastic palette: #FEC514, #48EFCF, #FF957D, #F04E98, #0B64DD, #153385
-- Place the Elastic logo in the **bottom-right footer** area (scale 0.16, alongside the SOURCE line)
-- Place the cluster watermark **behind cards at full opacity** using `assets/elastic-cluster-3d-lightonly.svg` at large scale (~0.8)
+- **Match the visual style of the references** — pick the closest one and adapt its patterns
+- Follow `AGENTS.md` for precise measurements, resvg quirks, and edge cases
+- Use a **different accent color** for each section/card from the Elastic palette: #FEC514, #48EFCF, #FF957D, #F04E98, #0B64DD, #153385
+- Include the Elastic logo in footer/attribution area (see references for placement)
 - Use `render.js` to render after each iteration: `node render.js output.svg output.png`
 - Review each render visually — check for text overflow, badge spacing, dead space, shadow clipping
-- **Dead space is the #1 issue.** Footer separator should be ~14px below last content. Check every card after the first render.
-- Use large, readable text sizes (title 48px, body 15.5px, card footer 12px — see AGENT.md)
-- Canvas is 860px wide; height should fit the content snugly
+- **Dead space is the #1 issue.** Check every card/section after the first render.
+- Err on the side of **larger text** — see font size scaling table in AGENTS.md
+- Size the canvas to fit the content and match the format constraints above
 
-**Important:** After completing the work, update `AGENT.md` with any new learnings you discover (new pitfalls, layout patterns, font quirks, etc.).
+**Important:** After completing the work, update `AGENTS.md` with any new learnings you discover (new pitfalls, layout patterns, font quirks, etc.).
 
 Write the SVG to `output.svg` and render to `output.png`.
 ```

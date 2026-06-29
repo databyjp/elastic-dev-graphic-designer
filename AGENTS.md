@@ -1,9 +1,40 @@
 # Agent Design Notes — SVG Infographic Creation
 
 ## Overview
-This project creates SVG infographics (e.g. Elastic dev-advocacy cheat-sheets) and renders them to PNG via `@resvg/resvg-js`. This file captures key learnings for any agent recreating or extending these designs.
+This project creates SVG infographics and graphics for Elastic dev-advocacy content, rendered to PNG via `@resvg/resvg-js`. Graphics range from cheat-sheet cards to pipeline diagrams to standalone presentation visuals.
+
+## ⚡ Prime Directive — Style From References, Content From Task
+
+**Before writing any SVG, study the reference examples in `references/`.** Your job is to:
+1. **Follow the content and layout** specified in the task brief — what to show and how it's arranged
+2. **Match the visual style** (colors, card patterns, typography, tone) of the existing references
+
+The task defines **what** to show and **where** (content and layout). The references define **how** it looks (colors, styling, typography treatment). Do not invent a new visual style — adapt from what already exists in this repo.
+
+- **Content** = text, data, labels, descriptions — comes from the task
+- **Layout** = spatial arrangement, grid, grouping, flow direction — comes from the task (layout is part of the content)
+- **Styling** = colors, fonts, card borders, shadows, backgrounds, accent treatments — comes from the references
+
+**Workflow:**
+1. Read the task brief to understand the content, layout, and format requirements
+2. Study `references/*.svg` and their rendered `*.png` files — look at colors, cards, font treatments, and overall feel
+3. Pick the closest reference as your styling starting point and apply its visual language to the task's content and layout
+4. Use this AGENTS.md for specific measurements, resvg quirks, and edge cases
+
+**If the task specifies style constraints** (e.g. transparent background, dark-bg compatible), respect those — but still derive your visual language from the references. A transparent-bg overlay should use the same card style, fonts, and colors as the references, just without the background fill.
 
 ---
+
+The rest of this file provides detailed specifications and hard-won lessons. It is organized in three layers:
+1. **Universal fundamentals** — brand, fonts, rendering pipeline, resvg quirks. Applies to ALL graphics.
+2. **Design system templates** — specific patterns for known graphic types (cheat-sheets, pipelines). Use when the task matches.
+3. **Common pitfalls** — hard-won lessons that apply broadly.
+
+---
+
+# PART 1 — UNIVERSAL FUNDAMENTALS
+
+Everything in this section applies to every graphic, regardless of type.
 
 ## Rendering Pipeline
 
@@ -12,6 +43,11 @@ This project creates SVG infographics (e.g. Elastic dev-advocacy cheat-sheets) a
 - Use `render.js` to convert SVG → PNG: `node render.js <input.svg> <output.png>`
 - resvg loads system fonts, so `font-family` values should include fallbacks (e.g. `Inter, system-ui, -apple-system, sans-serif`)
 
+### Output Resolution & Aspect Ratio
+- `render.js` scales all SVGs to **1600px wide**, preserving the SVG's aspect ratio. This is for preview/QA purposes only — final assets can be up/downscaled in an editor.
+- **Do not modify `render.js`** to hit a specific pixel target. If the task requires e.g. 1920×1080, set the SVG `viewBox` to a **16:9 ratio** (e.g. `4800 2700`, `1920 1080`, `3840 2160` — any multiple works). The render will produce a 1600×900 preview at the correct aspect ratio.
+- **Aspect ratio is what matters**, not exact pixel dimensions. Get the `viewBox` ratio right; the user handles final scaling.
+
 ### Important: resvg Limitations
 - **No CSS `@import` or Google Fonts loading.** resvg does not fetch external resources. It only uses locally installed system fonts. If the font isn't installed on the system, it falls back silently.
 - **`<style>` blocks are partially supported.** Inline `style=""` attributes or direct SVG attributes (e.g. `font-weight="700"`) are more reliable than `<style>` rules.
@@ -19,12 +55,88 @@ This project creates SVG infographics (e.g. Elastic dev-advocacy cheat-sheets) a
 
 ---
 
-## Typography & Font Sizing
+## Brand Identity
 
-### Monospace Font Choice
-- **Preferred**: `'Space Mono'` (Elastic brand-aligned), with fallback to `'JetBrains Mono', monospace`
-- resvg only uses locally installed fonts. If Space Mono isn't installed, JetBrains Mono is a solid fallback.
-- Previous iterations used Source Code Pro / Courier New / Helvetica — `Space Mono` or `JetBrains Mono` give a more distinctive, branded look.
+All graphics use the Elastic brand identity. These elements are consistent across every graphic type.
+
+### Color Palette (Universal)
+| Role | Color | Usage |
+|------|-------|-------|
+| Background (light) | `#F0F3F8` | Default page fill for opaque backgrounds |
+| Card/box fill | `white` | Card backgrounds |
+| Card border | `#D3DAE6` | Subtle borders |
+| Strong border | `#8B95A5` | More visible borders, muted UI elements |
+| Title text | `#1C1E23` | Headings, bold text, primary content |
+| Body text | `#3D4250` | Paragraphs, descriptions |
+| Muted text | `#5A6068` | Secondary text, labels, punctuation |
+| Dimmed text | `#98A2B3` | Comments, footnotes, attribution |
+| Code key / link | `#0B64DD` | JSON keys, verbs, highlighted terms |
+| Code string / success | `#36B37E` | String values, positive indicators |
+| Code number / error | `#D94C4C` | Numeric values, warnings |
+| Inline code bg | `#E6EBF2` | Badge/pill background for inline code |
+
+### Accent Color Palette
+Use a **different accent color** for each visual group/section/card. These are purely decorative — no semantic meaning.
+
+**Primary accents** (prefer these first):
+| Color | Hex |
+|-------|-----|
+| Yellow | `#FEC514` |
+| Teal | `#48EFCF` |
+| Coral | `#FF957D` |
+| Pink | `#F04E98` |
+| Blue | `#0B64DD` |
+| Navy | `#153385` |
+
+**Extended accents** (when >6 groups needed): `#101C3F`, `#343741`, `#36B37E`, `#E0558A`, `#9ADC30`, `#02bcb7`.
+
+### Fonts
+- **Proportional**: `Inter, system-ui, -apple-system, sans-serif` — for headings, body text, labels
+- **Monospace**: `'Space Mono', 'JetBrains Mono', monospace` — for code, technical values, model names
+- Always include fallback chains — resvg only uses locally installed fonts
+
+### Elastic Logo & Branding
+- Logo asset: `assets/logo-elastic-horizontal-color.svg` — full-color horizontal Elastic logo
+- Cluster decoration: `assets/elastic-cluster-3d-lightonly.svg` — 3D cluster for background watermarks
+- Place the logo in footer/attribution areas. Scale to fit context (e.g. `scale(0.16)` for cheat-sheets, larger for presentation graphics)
+
+### Universal Card/Box Pattern
+The fundamental building block across ALL graphic types is a **white rounded-rect card with an accent-colored border and drop shadow**. This pattern appears in cheat-sheets, pipelines, and standalone presentation graphics alike.
+
+```
+┌─────────────────────────┐
+│  LABEL (uppercase)       │  ← Inter bold, muted or accent color
+│  Content Name            │  ← Space Mono bold, #1C1E23
+│                          │
+│  (description or detail) │  ← Inter regular, #5A6068
+└─────────────────────────┘
+```
+
+**Core card styling:**
+- `fill="#ffffff"` white background
+- Colored `stroke` from the accent palette — each card uses a **different accent color**
+- Rounded corners (`rx` proportional to card size)
+- Drop shadow via `<filter>` with `feGaussianBlur` — prominent enough to give depth
+- Text hierarchy inside: uppercase label → bold content → regular description
+
+Template-specific variations:
+- **Cheat-sheets** add a header tab with an accent strip overlapping the top border
+- **Pipelines** use the colored border itself as the accent (no tab)
+- **Novel graphics** should use the base pattern and adapt as needed
+
+**Reference**: `references/202607-search-pipeline.svg` is the most adaptable reference — its card style, colors, and typography work for almost any graphic type. **Start here when no specific template applies.**
+
+### Universal Background Pattern
+For opaque graphics (non-transparent):
+- `#F0F3F8` full-canvas fill
+- Optional grid overlay: `<pattern>` with light strokes (`#5a6068` or `#CBD2DC`, low opacity)
+- Optional cluster watermark: `assets/elastic-cluster-3d-lightonly.svg` behind content at large scale
+
+These decorative elements add texture and brand identity. They are optional — use them when the graphic benefits from a richer background.
+
+---
+
+## Typography & Font Sizing
 
 ### Monospace Character Width Rule
 **At `font-size: 12.5` with monospace fonts, each character is approximately 7.5px wide.**
@@ -52,6 +164,19 @@ For other monospace sizes, scale proportionally:
 - For inline code badges within prose, estimate width by character count × ~7.5px (for the monospace portion) and add ~12px padding.
 - For section header text with `letter-spacing: 2.2`, the text will be roughly 20-30% wider than default.
 
+### Font Size Scaling by Context
+Font sizes depend on canvas size and viewing context. These are guidelines — scale proportionally.
+
+**Err on the side of larger text.** Text that looks fine in an SVG editor often appears small when rendered to PNG or viewed on screen. Always compare rendered output to references.
+
+| Context | Title | Body | Labels | Code | Footer |
+|---------|-------|------|--------|------|--------|
+| Cheat-sheet (860px wide) | 48px | 15.5px | 11.5px | 12.5px | 12px |
+| Pipeline/presentation (4800px wide) | 144px | 48–54px | 54px | 51px | 33px |
+| 16:9 overlay (1920px wide) | ~72px | ~24px | ~27px | ~24px | ~16px |
+
+For novel canvas sizes, scale from the pipeline reference proportionally (title ≈ 3% of width, body ≈ 1–1.2%, labels ≈ 1.1%, code ≈ 1.1%, footer ≈ 0.7%). When in doubt, go bigger.
+
 ### Using `<tspan>` for Inline Color Changes
 Use `<tspan>` elements inside a single `<text>` for syntax highlighting:
 ```xml
@@ -71,41 +196,40 @@ Use `<tspan>` elements inside a single `<text>` for syntax highlighting:
 
 ---
 
+## Transparent Background Graphics
+
+When a task requires transparent backgrounds (e.g. for video compositing):
+- **Do NOT set a background fill** on the canvas — leave it transparent
+- Use `fill="none"` or omit background `<rect>` elements entirely
+- Test visibility against both light and dark backgrounds — elements need sufficient contrast for both if the task says "dark background compatible"
+- Grid patterns and watermark decorations typically don't apply — those are for opaque infographic backgrounds
+- The Elastic cluster watermark can still be used but may need adjusted opacity
+
+---
+
+# PART 2 — DESIGN SYSTEM TEMPLATES
+
+These templates capture specific layout patterns for known graphic types. **Always study the actual reference SVGs/PNGs first** (per the Prime Directive above) — these written specs are for precise measurements and edge cases.
+
+| Task Type | Template | Reference Files |
+|-----------|----------|-----------------|
+| Reference card / cheat-sheet | Elastic Infographic Style (below) | `references/mappings.*`, `references/vec-sims.*` |
+| Flow / pipeline / architecture | Pipeline & Architecture Diagrams (below) | `references/202607-*.svg` |
+| Any other graphic | No template — adapt from closest reference | Start with `references/202607-search-pipeline.*` |
+
+---
+
 ## Design System — Elastic Infographic Style
 
-### Color Palette
+Uses the universal color palette and accent colors from Part 1. Additional cheat-sheet-specific color roles:
 | Role | Color | Usage |
 |------|-------|-------|
-| Background | `#F0F3F8` | Page fill |
-| Card fill | `white` | Card backgrounds |
-| Card border | `#D3DAE6` | Subtle borders |
-| Title text | `#1C1E23` | Headings (font-weight 900), bold text |
-| Body text | `#3D4250` | Paragraphs, bullets |
-| Muted text | `#98A2B3` | Code comments |
-| Code key | `#0B64DD` | JSON keys, PUT/GET verbs |
-| Code string | `#36B37E` | String values, POST verb |
-| Code number | `#D94C4C` | Numeric values |
-| Code punct | `#5A6068` | Brackets, colons, commas |
-| Inline code bg | `#E6EBF2` | Badge background for inline code |
 | Accent green | `#36B37E` | Dynamic mapping section |
 | Accent blue | `#0B64DD` | Explicit mapping section |
 | Accent pink | `#E0558A` | Runtime fields section |
 
-
 ### Section Accent Colors
-Each card section has a colored accent strip at the top of its header tab. Use a **different color for each card** from the Elastic brand palette to add visual variety. There is no semantic meaning to the color assignments — they are purely decorative highlights.
-
-**Preferred accent palette** (from Elastic branding):
-| Color | Hex |
-|-------|-----|
-| Yellow | `#FEC514` |
-| Teal | `#48EFCF` |
-| Coral | `#FF957D` |
-| Pink | `#F04E98` |
-| Blue | `#0B64DD` |
-| Navy | `#153385` |
-
-If more than 6 cards are needed, these additional colors can be used: `#101C3F`, `#343741`, `#36B37E`, `#E0558A`.
+Each card has a colored accent strip at the top of its header tab. Use a **different accent color per card** (see universal accent palette in Part 1).
 
 All tabs use the same structural pattern: a white rounded-rect tab with a thin (5px) colored strip across the top. Do **not** add extra decorative ribbons or dual-color effects unless the reference explicitly shows them.
 
@@ -182,7 +306,7 @@ This applies to all inline code in prose: `dynamic_templates`, `properties`, `em
 
 ---
 
-## Common Pitfalls
+# PART 3 — COMMON PITFALLS
 
 ### 1. Monospace text overlap
 **Problem**: Placing monospace `<text>` elements at manually-calculated x-positions often leads to overlap or gaps.
@@ -453,6 +577,8 @@ Contains logo or wordmark, with a vertical divider line inside.
 8. **Keep technical detail subordinate**: Category labels ("TRANSCRIBE") and structural labels ("FOR EACH SCENE") should dominate; tool names ("Whisper") and descriptions are supporting detail
 
 ---
+
+# PART 4 — PROJECT STRUCTURE
 
 ## File Structure
 ```
