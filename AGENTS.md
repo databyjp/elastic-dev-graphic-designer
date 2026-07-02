@@ -163,13 +163,37 @@ designer/
 │   ├── elastic-cluster-3d-lightonly.svg
 │   ├── elastic-3d-cluster.svg
 │   └── logo-elastic-horizontal-color.svg
+├── output/                ← ALL generated files go here
 └── tasks/
+```
+
+## Output Naming — MANDATORY
+
+**Never write to `output.svg`, `output.png`, or any file in the project root.**
+
+All output files **must** go in `output/` and use this naming scheme:
+
+```
+output/YYYY-MM-DD-<task-slug>-<shorthash>.svg
+output/YYYY-MM-DD-<task-slug>-<shorthash>.png
+```
+
+- `YYYY-MM-DD` — today's date (e.g. `2026-07-01`)
+- `<task-slug>` — 2–4 word kebab-case summary of the task (e.g. `search-pipeline`, `omnimodal-arch`)
+- `<shorthash>` — 6 random hex characters (e.g. `a3f9c1`) to avoid collisions
+
+**Example:** `output/2026-07-01-search-pipeline-a3f9c1.svg`
+
+Create the `output/` directory if it doesn't exist. Render commands follow the same pattern:
+```
+node render.js output/2026-07-01-search-pipeline-a3f9c1.svg output/2026-07-01-search-pipeline-a3f9c1.png
 ```
 
 ## Workflow
 
-1. Copy the template → `output.svg`
-2. Modify content, layout, and card structure to match the task
-3. Run `node render.js output.svg output.png`
-4. Compare rendered output to reference PNGs — fix any issues
-5. Repeat from step 3 until output matches the reference style
+1. Determine your output filename: `output/YYYY-MM-DD-<task-slug>-<shorthash>.svg` (see Output Naming above)
+2. Copy the template → that path
+3. Modify content, layout, and card structure to match the task
+4. Run `node render.js <file>.svg <file>.png`
+5. Compare rendered output to reference PNGs — fix any issues
+6. Repeat from step 4 until output matches the reference style
